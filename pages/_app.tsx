@@ -29,6 +29,14 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
         <MantineProvider
           theme={{
             colorScheme,
+            globalStyles: (theme) => ({
+              body: {
+                ...theme.fn.fontStyles(),
+                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+                color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.black,
+                lineHeight: theme.lineHeight,
+              },
+            }),
             colors: {
               brand: [
                 '#FAFAFA',
@@ -43,6 +51,19 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
                 '#18181B',
               ],
               accent: ['#FFCA05'],
+            },
+            components: {
+              Accordian: {
+                defaultProps: {},
+              },
+              Title: {
+                styles: {
+                  root: {
+                    color: '#dee2e6',
+                    fontFamily: 'Montserrat',
+                  },
+                },
+              },
             },
           }}
           withGlobalStyles

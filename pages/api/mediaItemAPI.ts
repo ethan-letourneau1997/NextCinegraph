@@ -67,22 +67,53 @@ export async function fetchMediaDetails(
 
   // Find the US certification (MPAA rating) for the media
   let certification;
+
   if (mediaType === 'movie') {
     const usRelease = data.release_dates.results.find(
       (release: any) => release.iso_3166_1 === 'US'
     );
-    certification = usRelease?.release_dates.find(
-      (date: any) => date.certification !== ''
-    )?.certification;
+
+    if (usRelease) {
+      certification = usRelease.release_dates.find(
+        (date: any) => date.certification !== ''
+      )?.certification;
+    } else {
+      const ukRelease = data.release_dates.results.find(
+        (release: any) => release.iso_3166_1 === 'GB'
+      );
+
+      if (ukRelease) {
+        certification = ukRelease.release_dates.find(
+          (date: any) => date.certification !== ''
+        )?.certification;
+      } else {
+        certification = '';
+      }
+    }
+
     data.certification = certification; // Append certification to data
   } else if (mediaType === 'tv') {
     const usRelease = data.content_ratings.results.find(
       (release: any) => release.iso_3166_1 === 'US'
     );
-    certification = usRelease?.rating;
+
+    if (usRelease) {
+      certification = usRelease.rating;
+    } else {
+      const ukRelease = data.content_ratings.results.find(
+        (release: any) => release.iso_3166_1 === 'GB'
+      );
+
+      if (ukRelease) {
+        certification = ukRelease.rating;
+      } else {
+        certification = '';
+      }
+    }
+
     data.certification = certification; // Append certification to data
   } else {
-    certification = 'N/A';
+    certification = '';
     data.certification = certification; // Append certification to data
   }
 

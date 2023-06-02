@@ -315,6 +315,7 @@ export interface SimilarResult {
 }
 
 export interface Seasons {
+  map(arg0: (season: any) => JSX.Element): import('react').ReactNode;
   forEach(arg0: (season: any) => void): unknown;
   seasons?: SeasonType[];
   length: number;

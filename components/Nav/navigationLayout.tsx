@@ -1,4 +1,4 @@
-import { Box, Burger, Center, Collapse, Flex, Title, createStyles } from '@mantine/core';
+import { Box, Burger, Center, Collapse, Flex, Text, createStyles } from '@mantine/core';
 
 import { useDisclosure } from '@mantine/hooks';
 import { useEffect } from 'react';
@@ -38,11 +38,7 @@ export function NavigationLayout() {
   }, [opened]);
 
   return (
-    <Box
-      // bg="#27272A"
-      // bg="dark.9"
-      bg="transparent"
-    >
+    <Box>
       <Flex justify="space-between" p="sm">
         <Center>
           <Burger
@@ -51,9 +47,9 @@ export function NavigationLayout() {
             onClick={toggle}
             aria-label={label}
           />
-          <Title c="yellow.5" size="h2" ml="xs" fw={700}>
+          <Text size={25} c="yellow.5" ml="xs" fw={700}>
             Cinegraph
-          </Title>
+          </Text>
         </Center>
 
         <DesktopNavigation />
