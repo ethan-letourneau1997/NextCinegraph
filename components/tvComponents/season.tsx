@@ -1,20 +1,18 @@
-import { Anchor, Box, Title } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import { Anchor, Box, Title } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 
-import Link from "next/link";
-import { SeasonType } from "../../../types";
-import { useRouter } from "next/router";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { SeasonType } from '../../Types/types';
 
 interface SeasonProps {
-  showId: number;
   seasonNumber: number;
-  onSeasonChange: (seasonNumber: number) => void;
 }
 
 export default function Season(props: SeasonProps) {
   const [season, setSeason] = useState<SeasonType | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const apiKey = "0fd7a8764e6522629a3b7e78c452c348";
+  const apiKey = '0fd7a8764e6522629a3b7e78c452c348';
 
   const router = useRouter();
   const { showId, showName } = router.query;
@@ -25,7 +23,7 @@ export default function Season(props: SeasonProps) {
     )
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Error fetching data");
+          throw new Error('Error fetching data');
         }
         return response.json();
       })
@@ -33,9 +31,9 @@ export default function Season(props: SeasonProps) {
         setSeason(data);
         setError(null);
       })
-      .catch((error) => {
-        setError("Error fetching data");
-        console.error(error);
+      .catch((errorFetchingData) => {
+        setError('Error fetching data');
+        console.error(errorFetchingData);
       });
   }, [showId, props.seasonNumber, apiKey]);
 
@@ -49,7 +47,7 @@ export default function Season(props: SeasonProps) {
 
   return (
     <Box>
-      <Anchor component={Link} href="#"></Anchor>
+      <Anchor component={Link} href="#" />
 
       <Title order={1}>{season.name}</Title>
 
@@ -61,15 +59,11 @@ export default function Season(props: SeasonProps) {
                 component={Link}
                 href={{
                   pathname: `/shows/${showId}/${
-                    typeof showName === "string"
-                      ? encodeURIComponent(showName)
-                      : ""
-                  }/season/${episode.season_number}/episode/${
-                    episode.episode_number
-                  }`,
+                    typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                  }/season/${episode.season_number}/episode/${episode.episode_number}`,
                 }}
               >
-                {" "}
+                {' '}
                 {episode.name}
               </Anchor>
             </Box>

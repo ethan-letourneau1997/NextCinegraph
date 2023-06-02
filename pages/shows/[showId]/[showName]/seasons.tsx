@@ -72,11 +72,7 @@ export default function Seasons() {
         seasons.map((season) => (
           <Box key={season.id}>
             {currentSeason === season.season_number && (
-              <Season
-                showId={Number(showId)}
-                seasonNumber={season.season_number}
-                onSeasonChange={handleSeasonChange}
-              />
+              <Season seasonNumber={season.season_number} />
             )}
           </Box>
         ))}

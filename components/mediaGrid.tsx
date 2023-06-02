@@ -1,21 +1,10 @@
-import {
-  Anchor,
-  AspectRatio,
-  Box,
-  Image,
-  SimpleGrid,
-  Skeleton,
-  Title,
-} from "@mantine/core";
+import { Anchor, AspectRatio, Box, Image, SimpleGrid, Skeleton, Title } from '@mantine/core';
 
-import Link from "next/link";
-import { MediaItemType } from "../../types";
+import Link from 'next/link';
+import { MediaItemType } from '../Types/types';
 
-export default function MediaGrid(props: {
-  items: MediaItemType[];
-  title: string;
-}) {
-  const items = props.items;
+export default function MediaGrid(props: { items: MediaItemType[]; title: string }) {
+  const { items } = props;
 
   return (
     <Box>
@@ -26,7 +15,7 @@ export default function MediaGrid(props: {
             item.poster_path && (
               <Box key={item.id}>
                 <AspectRatio ratio={2 / 3}>
-                  <Skeleton visible></Skeleton>
+                  <Skeleton visible />
                   <Image
                     placeholder="blur"
                     src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
@@ -35,11 +24,11 @@ export default function MediaGrid(props: {
                 </AspectRatio>
                 <Anchor
                   component={Link}
-                  href={`/${item.title ? "movies" : "shows"}/${item.id}/${
+                  href={`/${item.title ? 'movies' : 'shows'}/${item.id}/${
                     item.title ? item.title : item.name
                   }`}
                 >
-                  {" "}
+                  {' '}
                   {item.title ? item.title : item.name}
                 </Anchor>
               </Box>
