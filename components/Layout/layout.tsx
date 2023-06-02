@@ -1,11 +1,10 @@
 import React, { PropsWithChildren } from 'react';
-
-import { Nav } from '../Nav/nav';
+import { NavigationLayout } from '../Nav/navigationLayout';
 
 export function Layout({ children }: PropsWithChildren) {
   return (
     <>
-      <Nav />
+      <NavigationLayout />
       {children}
     </>
   );

@@ -4,6 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: false,
+  images: {
+    domains: ['image.tmdb.org'],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

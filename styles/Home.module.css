@@ -1,0 +1,9 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between !important;
+}
+
+.dropdown {
+  z-index: 600 !important;
+}
