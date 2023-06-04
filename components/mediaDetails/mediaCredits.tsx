@@ -32,7 +32,7 @@ export default function MediaCredits(props: { credits: Credits }) {
         <Title size="h3">Top Cast</Title>
       </Group>
       <Grid gutter="lg" pt="sm">
-        {credits.cast.slice(0, tablet ? 6 : 12).map((castMember) => (
+        {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (
           <Grid.Col key={castMember.id} span={11} xs={11} sm={6} lg={6}>
             <Grid
               gutter={0}
@@ -60,7 +60,7 @@ export default function MediaCredits(props: { credits: Credits }) {
                   <Box
                     h={80}
                     w={80}
-                    bg="brand.4"
+                    bg="dark.4"
                     sx={{
                       borderTopLeftRadius: '4px',
                       borderBottomLeftRadius: '4px',

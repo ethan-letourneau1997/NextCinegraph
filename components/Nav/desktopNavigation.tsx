@@ -250,12 +250,12 @@ export default function DesktopNavigation() {
       </Menu>
       <NavLink
         fw={600}
-        label="Watch"
+        label="People"
         sx={{
           whiteSpace: 'nowrap',
         }}
         component={Link}
-        href="/"
+        href="/people/people"
         styles={(theme) => ({
           root: {
             '&:hover': {

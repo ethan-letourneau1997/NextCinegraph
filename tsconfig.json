@@ -15,6 +15,12 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/movies/[movieId]/[movieName]/casttsx",
+    "components/mediaDetails"
+  ],
   "exclude": ["node_modules"]
 }

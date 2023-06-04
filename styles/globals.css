@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* .test {
   font-family: "Montserrat", sans-serif;
@@ -26,13 +26,13 @@
   border-radius: 4px;
   width: 36px;
   height: 44px;
-  content: "" !important;
+  content: '' !important;
   position: absolute;
   background-position: center;
   top: -11px;
   left: 3px;
   background-size: cover;
-  background-image: url("https://res.cloudinary.com/eletourneau/image/upload/v1685583470/prevButton_qmmciv.png");
+  background-image: url('https://res.cloudinary.com/eletourneau/image/upload/v1685583470/prevButton_qmmciv.png');
 }
 .slick-next:before {
   background-color: hsla(220, 9%, 7%, 0.6) !important;
@@ -40,14 +40,14 @@
   border-radius: 4px;
   width: 36px;
   height: 44px;
-  content: "" !important;
+  content: '' !important;
   position: absolute;
   background-position: center;
   top: -11px;
   right: 3px;
 
   background-size: cover;
-  background-image: url("https://res.cloudinary.com/eletourneau/image/upload/v1685583470/nextButton_exxjod.png");
+  background-image: url('https://res.cloudinary.com/eletourneau/image/upload/v1685583470/nextButton_exxjod.png');
 }
 
 .slick-prev {

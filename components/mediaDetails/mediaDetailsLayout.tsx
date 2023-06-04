@@ -60,7 +60,9 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
         {mediaDetails.images.backdrops.length > 4 && mediaDetails.images.posters.length > 4 ? (
           <MediaCarousel images={mediaDetails.images} />
         ) : null}
-        {mediaDetails.similar ? <MediaSimilar similar={mediaDetails.recommendations} /> : null}
+        {mediaDetails.similar ? (
+          <MediaSimilar mediaType={mediaType} similar={mediaDetails.recommendations} />
+        ) : null}
       </Container>
     </Box>
   );

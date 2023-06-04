@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import MediaDetailsLayout from '../../../../components/mediaDetails.tsx/mediaDetailsLayout';
+import MediaDetailsLayout from '../../../../components/mediaDetails/mediaDetailsLayout';
 
 export default function MediaItem() {
   const router = useRouter();

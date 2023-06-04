@@ -101,9 +101,9 @@ export interface Video {
 export interface Credits {
   length?: number;
   slice: any;
-  cast: Cast[];
-  crew: Crew[];
-  id: number;
+  cast?: Cast[];
+  crew?: Crew[];
+  id?: number;
 }
 
 export interface KnownFor {
@@ -256,6 +256,7 @@ export interface SpokenLanguage {
 }
 
 export interface Cast {
+  total_episode_count: number;
   roles: Role[];
   adult?: boolean;
   gender?: number;
@@ -352,7 +353,7 @@ export interface EpisodeDetails {
 
 export interface Crew {
   job?: string;
-  department?: string;
+  department: string;
   credit_id?: string;
   adult?: boolean;
   gender?: number;
@@ -386,4 +387,9 @@ export interface WatchProvider {
   provider_id: string;
   provider_name?: string;
   logo_path?: string;
+}
+
+export interface Department {
+  department: string;
+  jobs: string[];
 }
