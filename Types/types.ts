@@ -352,6 +352,7 @@ export interface EpisodeDetails {
 }
 
 export interface Crew {
+  jobs: Job[];
   job?: string;
   department: string;
   credit_id?: string;
@@ -363,6 +364,12 @@ export interface Crew {
   original_name?: string;
   popularity?: number;
   profile_path?: string;
+}
+
+export interface Job {
+  credit_id: string;
+  episode_count: 43;
+  job: string;
 }
 
 export interface GuestStar {

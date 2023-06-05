@@ -1,20 +1,26 @@
 import {
   Accordion,
+  Affix,
   Anchor,
   Box,
+  Button,
   Container,
   Divider,
   Flex,
   Grid,
-  Paper,
+  List,
+  Menu,
   Stack,
   Table,
   Text,
+  rem,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { BsChevronUp, BsPersonFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
+
+import { Link as ScrollLink, Element } from 'react-scroll';
 
 import Link from 'next/link';
 
@@ -27,7 +33,8 @@ interface FullCastAndCrewProps {
 
 export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
+
+  const mobile = useMediaQuery('(max-width: 500px)');
 
   const router = useRouter();
 
@@ -118,60 +125,143 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
     }));
 
   return (
-    <Container fluid>
-      <Grid>
-        <Grid.Col span={4} lg={2}>
-          <Paper
-            display={tablet ? 'none' : 'block'}
-            p="md"
-            shadow="md"
-            sx={{
-              position: 'sticky',
-              top: 100,
-            }}
-          >
-            <Stack spacing="xs">
-              <Text fz="xl" fw={600}>
-                Jump To
-              </Text>
-              <Divider />
-              <Anchor pl="xs" c="dark.0" href="#Cast">
-                Cast
-              </Anchor>
-              <Anchor fz="sm" pl="xs" c="dark.0" href="#CrewHeader">
-                Crew
-              </Anchor>
-              {departments.map((department) => (
-                <Anchor fz="sm" pl="xs" c="dark.0" href={`#${department.department}`}>
-                  {department.department}
-                </Anchor>
-              ))}
-            </Stack>
-          </Paper>
-        </Grid.Col>
-        <Grid.Col span={tablet ? 12 : 8}>
-          <Container size="sm" px={0}>
-            <h1>{mediaName}</h1>
-            <Box>
-              <h1 id="Cast"> Cast</h1>
-              {castAndCrew.cast?.map((castMember, index) => (
-                // <tr key={castMember.id}>
-                <Accordion
-                  defaultValue="customization"
-                  chevron={castMember.roles && castMember.roles.length > 1 ? <BsChevronUp /> : null}
-                  styles={(theme) => ({
-                    control: {
-                      '&:hover': {
-                        backgroundColor: theme.colors.dark[6],
-                        cursor:
-                          castMember.roles && castMember.roles.length === 1 ? 'auto' : 'pointer',
-                        // backgroundColor: '',
-                      },
+    <Container fluid p={mobile ? 0 : ''}>
+      <Affix position={{ bottom: rem(20), right: rem(40) }}>
+        <Menu>
+          <Menu.Target>
+            <Button>Jump To</Button>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item>
+              {' '}
+              <ScrollLink activeClass="active" to="Cast" spy smooth offset={-70} duration={500}>
+                <Text
+                  fz="sm"
+                  c="dark.0"
+                  sx={{
+                    '&:hover': {
+                      cursor: 'pointer',
                     },
-                  })}
+                  }}
                 >
-                  <Accordion.Item value={index.toString()}>
-                    <Accordion.Control p={0} pr="sm" bg={index % 2 === 0 ? 'dark.7' : 'dark.8'}>
+                  Cast
+                </Text>
+              </ScrollLink>
+            </Menu.Item>
+            {departments.map((department) => (
+              <Menu.Item>
+                <ScrollLink
+                  key={department.department}
+                  activeClass="active"
+                  to={department.department}
+                  spy
+                  smooth
+                  offset={-70}
+                  duration={500}
+                >
+                  <Text
+                    fz="sm"
+                    c="dark.0"
+                    sx={{
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                  >
+                    {department.department}
+                  </Text>
+                </ScrollLink>
+              </Menu.Item>
+            ))}
+
+            {/* Other items ... */}
+          </Menu.Dropdown>
+        </Menu>
+      </Affix>
+
+      <Container mt="xs" size="sm" px={0}>
+        <Element name="Cast" className="element">
+          <Flex gap={5} pl={mobile ? 8 : 0}>
+            <Text size={mobile ? 28 : 30} fw={600}>
+              {mediaName}
+            </Text>
+
+            <Text size={mobile ? 28 : 30} fw={300}>
+              Credits
+            </Text>
+          </Flex>
+          <Box>
+            <Text mt="xs" mb={6} pl={mobile ? 8 : 0} size={mobile ? 24 : 28} id="Cast">
+              {' '}
+              Crew
+            </Text>
+            {castAndCrew.cast?.map((castMember, index) => (
+              // <tr key={castMember.id}>
+              <Accordion
+                transitionDuration={200}
+                defaultValue="customization"
+                chevron={castMember.roles && castMember.roles.length > 1 ? <BsChevronUp /> : null}
+                styles={(theme) => ({
+                  control: {
+                    '&:hover': {
+                      backgroundColor: theme.colors.dark[6],
+                      cursor:
+                        castMember.roles && castMember.roles.length === 1 ? 'auto' : 'pointer',
+                      // backgroundColor: '',
+                    },
+                  },
+                })}
+              >
+                <Accordion.Item value={index.toString()}>
+                  <Accordion.Control
+                    p={mobile ? 8 : 0}
+                    pr="sm"
+                    bg={index % 2 === 0 ? 'dark.7' : 'dark.8'}
+                  >
+                    {mobile ? (
+                      <Flex gap="md" align="center">
+                        {castMember.profile_path ? (
+                          <Image
+                            height={90}
+                            width={60}
+                            alt=""
+                            src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
+                          />
+                        ) : (
+                          <Flex h={90} w={60} bg="dark.4" align="center">
+                            <BsPersonFill size={60} color="#18181B" />
+                          </Flex>
+                        )}
+                        <Flex direction="column">
+                          <Anchor
+                            component={Link}
+                            href={`/people/${castMember.id}/${encodeURIComponent(
+                              castMember.name || ''
+                            )}`}
+                            // underline={false}
+                            sx={(theme) => ({
+                              textDecorationColor: theme.colors.dark[0],
+                              textDecorationThickness: 1,
+                              '&:hover': {
+                                textDecorationColor: theme.colors.accent[0],
+                              },
+                            })}
+                          >
+                            {' '}
+                            <Text color="gray.4" fz="sm" fw={600} truncate>
+                              {castMember.name}
+                            </Text>
+                          </Anchor>
+                          <Text fz="sm" truncate>
+                            {castMember.character || castMember.roles[0].character}
+                          </Text>
+                          {mediaType === 'tv' && (
+                            <Text fz="sm">{castMember.total_episode_count}ep</Text>
+                          )}
+                        </Flex>
+                      </Flex>
+                    ) : (
                       <Grid>
                         <Grid.Col span={mediaType === 'tv' ? 4 : 6}>
                           <Flex align="center" gap="xs" fw={600}>
@@ -183,7 +273,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                                 src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
                               />
                             ) : (
-                              <Flex h={60} w={40} bg="dark.4" align="center">
+                              <Flex h={52.5} w={35} bg="dark.4" align="center">
                                 <BsPersonFill size={40} color="#18181B" />
                               </Flex>
                             )}
@@ -202,7 +292,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                               })}
                             >
                               {' '}
-                              <Text color="gray.4" fw={400} truncate>
+                              <Text color="gray.4" fz="sm" fw={600} truncate>
                                 {castMember.name}
                               </Text>
                             </Anchor>
@@ -235,77 +325,113 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                           </Grid.Col>
                         )}
                       </Grid>
-                    </Accordion.Control>
-                    {castMember.roles && castMember.roles.length > 1 && (
-                      <Accordion.Panel bg={index % 2 === 0 ? 'dark.7' : 'dark.8'} py="xs">
+                    )}
+                  </Accordion.Control>
+                  {castMember.roles && castMember.roles.length > 1 && (
+                    <Accordion.Panel bg={index % 2 === 0 ? 'dark.7' : 'dark.8'} py="xs">
+                      <List spacing="xs" withPadding>
                         {castMember.roles.map((role) => (
-                          <Box pl={50}>
-                            <Grid>
-                              <Grid.Col span={10}>
-                                <li>
-                                  <Flex align="center">
-                                    <Text fz="sm" c="dark.2">
-                                      {role.character}...
-                                    </Text>
-                                    <Text fz="sm">{role.episode_count}ep</Text>
-                                  </Flex>
-                                </li>
-                              </Grid.Col>
-                              <Grid.Col span="content">
-                                {/* <Text fz="sm">{role.episode_count}ep</Text> */}
-                              </Grid.Col>
-                            </Grid>
-                            {/* {index < castMember.roles.length - 1 && <Divider my="xs" />} */}
+                          <Box>
+                            {role.character && castMember.total_episode_count ? (
+                              <List.Item>
+                                <Box>
+                                  <Text component="span" fz="sm">
+                                    {' '}
+                                    {role.character}
+                                  </Text>
+                                  <Text component="span" fz="sm" c="dark.1">
+                                    ...{castMember.total_episode_count}ep
+                                  </Text>
+                                </Box>
+                              </List.Item>
+                            ) : null}
                           </Box>
                         ))}
-                      </Accordion.Panel>
-                    )}
-                  </Accordion.Item>
-                </Accordion>
-              ))}
-              <Table striped verticalSpacing="md">
-                {/* <tbody> */}
-                {/* </tbody> */}
-              </Table>
-            </Box>
-            <Box>
-              <h1 id="CrewHeader"> Crew</h1>
-              <Stack spacing={50}>
-                {departments.map((department, index) => (
-                  <Box key={index}>
-                    <Flex pr="sm" gap={3} align="center">
-                      <Text size="xl" fw={800} id={department.department}>
-                        {' '}
-                        {department.department}
-                      </Text>
-                      <Text c="dark.1" fw={300} fz="xl">
-                        ({department.crew.length})
-                      </Text>
-                      <Divider
-                        my="sm"
-                        variant="dotted"
-                        sx={{
-                          flexGrow: 1,
-                        }}
-                      />
-                    </Flex>
-                    <Table mt="sm" striped>
-                      <tbody>
-                        {department.crew.map((crewMember) => (
-                          <tr key={crewMember.id}>
-                            <td>{crewMember.name}</td>
-                            <td>{crewMember.job}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </Box>
-                ))}
-              </Stack>
-            </Box>
-          </Container>
-        </Grid.Col>
-      </Grid>
+                      </List>
+                    </Accordion.Panel>
+                  )}
+                </Accordion.Item>
+              </Accordion>
+            ))}
+            <Table striped verticalSpacing="md">
+              {/* <tbody> */}
+              {/* </tbody> */}
+            </Table>
+          </Box>
+        </Element>
+        <Box>
+          <Text mt="xl" mb={6} pl={mobile ? 8 : 0} size={mobile ? 24 : 28} id="Cast">
+            Crew
+          </Text>
+          <Stack spacing={50}>
+            {departments.map((department, index) => (
+              <Element key={index} name={department.department} className="element">
+                <Box>
+                  <Flex pl={mobile ? 8 : 0} pr="sm" gap={3} align="center">
+                    <Text size={mobile ? 'lg' : 'xl'} fw={800} id={department.department}>
+                      {' '}
+                      {department.department}
+                    </Text>
+                    <Text c="dark.1" fw={300} fz={mobile ? 'lg' : 'xl'}>
+                      ({department.crew.length})
+                    </Text>
+                    <Divider
+                      my="sm"
+                      variant="dotted"
+                      sx={{
+                        flexGrow: 1,
+                      }}
+                    />
+                  </Flex>
+                  <Table withBorder mt="sm" striped>
+                    <tbody>
+                      {department.crew.map((crewMember) => (
+                        <tr key={crewMember.id}>
+                          <td width="40%">
+                            <Anchor
+                              component={Link}
+                              href={`/people/${crewMember.id}/${encodeURIComponent(
+                                crewMember.name || ''
+                              )}`}
+                              // underline={false}
+                              sx={(theme) => ({
+                                textDecorationColor: theme.colors.dark[0],
+                                textDecorationThickness: 1,
+                                '&:hover': {
+                                  textDecorationColor: theme.colors.accent[0],
+                                },
+                              })}
+                            >
+                              {' '}
+                              <Text color="gray.4" fw={600}>
+                                {crewMember.name}
+                              </Text>
+                            </Anchor>
+                          </td>
+                          <td>
+                            {mediaType === 'movie' ? (
+                              <Text>{crewMember.job}</Text>
+                            ) : (
+                              <Box>
+                                {crewMember.jobs.map((job) => (
+                                  <Box>
+                                    <Text component="span">{job.job}</Text>
+                                    <Text component="span">...({job.episode_count}ep)</Text>
+                                  </Box>
+                                ))}
+                              </Box>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Box>
+              </Element>
+            ))}
+          </Stack>
+        </Box>
+      </Container>
     </Container>
   );
 }
