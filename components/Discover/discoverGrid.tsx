@@ -15,6 +15,7 @@ import { BsFillStarFill } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
+
 import { MediaItemType } from '../../Types/types';
 import { useStore } from '../../store/store';
 

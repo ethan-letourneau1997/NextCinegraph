@@ -2,6 +2,7 @@ import {
   Accordion,
   Affix,
   Anchor,
+  AspectRatio,
   Box,
   Button,
   Container,
@@ -25,7 +26,7 @@ import { Link as ScrollLink, Element } from 'react-scroll';
 import Link from 'next/link';
 
 import { useMediaQuery } from '@mantine/hooks';
-import { Credits, Crew, Department } from '../../Types/types';
+import { Credits, Crew, Department, MediaItemType } from '../../Types/types';
 
 interface FullCastAndCrewProps {
   mediaType: string;
@@ -51,8 +52,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
 
   const [, setDepartments] = useState<Department[]>([]);
   const [castAndCrew, setCastAndCrew] = useState<Credits>([]);
-
-  console.log(mediaType);
+  const [media, setMedia] = useState<MediaItemType>();
 
   useEffect(() => {
     const options = {
@@ -69,15 +69,12 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
       options
     )
       .then((response) => response.json())
-      .then((response) =>
-        setCastAndCrew(mediaType === 'movie' ? response.credits : response.aggregate_credits)
-      )
+      .then((response) => {
+        setCastAndCrew(mediaType === 'movie' ? response.credits : response.aggregate_credits);
+        setMedia(response);
+      })
       .catch((err) => console.error(err));
   }, []);
-
-  console.log(
-    `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=credits&language=en-US`
-  );
 
   useEffect(() => {
     const options = {
@@ -126,17 +123,28 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
 
   return (
     <Container fluid p={mobile ? 0 : ''}>
-      <Affix position={{ bottom: rem(20), right: rem(40) }}>
+      <Affix position={{ bottom: rem(20), right: rem(50) }}>
         <Menu>
           <Menu.Target>
-            <Button>Jump To</Button>
+            <Button variant="outline" color="yellow.5">
+              Jump To
+            </Button>
           </Menu.Target>
-
           <Menu.Dropdown>
-            <Menu.Item>
-              {' '}
-              <ScrollLink activeClass="active" to="Cast" spy smooth offset={-70} duration={500}>
+            <Menu.Item p={0}>
+              <ScrollLink
+                key="Cast"
+                activeClass="active"
+                to="Cast"
+                spy
+                smooth
+                offset={-70}
+                duration={500}
+              >
                 <Text
+                  py={10}
+                  px={12}
+                  display="flex"
                   fz="sm"
                   c="dark.0"
                   sx={{
@@ -149,8 +157,9 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                 </Text>
               </ScrollLink>
             </Menu.Item>
+
             {departments.map((department) => (
-              <Menu.Item>
+              <Menu.Item p={0}>
                 <ScrollLink
                   key={department.department}
                   activeClass="active"
@@ -161,6 +170,8 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                   duration={500}
                 >
                   <Text
+                    py={10}
+                    px={12}
                     fz="sm"
                     c="dark.0"
                     sx={{
@@ -179,23 +190,59 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
           </Menu.Dropdown>
         </Menu>
       </Affix>
-
-      <Container mt="xs" size="sm" px={0}>
-        <Element name="Cast" className="element">
-          <Flex gap={5} pl={mobile ? 8 : 0}>
-            <Text size={mobile ? 28 : 30} fw={600}>
+      <Container
+        size="sm"
+        p="xs"
+        pb="xl"
+        sx={(theme) => ({
+          border: `1px solid ${theme.colors.dark[4]}`,
+          borderBottom: 'none',
+        })}
+      >
+        <Flex gap="sm">
+          <AspectRatio ratio={2 / 3} w={70}>
+            <Image fill alt="" src={`https://image.tmdb.org/t/p/w342${media?.poster_path}`} />
+          </AspectRatio>
+          <Flex justify="center" direction="column" w="fit-content">
+            <Text size={mobile ? 28 : 28} fw={600} inline>
+              Full Cast and Crew
+              <Divider mt={5} />
+            </Text>
+            <Text pl={3} size={mobile ? 28 : 20} fw={300}>
               {mediaName}
             </Text>
-
-            <Text size={mobile ? 28 : 30} fw={300}>
-              Credits
-            </Text>
           </Flex>
-          <Box>
-            <Text mt="xs" mb={6} pl={mobile ? 8 : 0} size={mobile ? 24 : 28} id="Cast">
+        </Flex>
+      </Container>
+
+      <Container
+        mt="pt"
+        size="sm"
+        p={0}
+        py="xl"
+        //sx with theme prop
+        sx={(theme) => ({
+          border: `1px solid ${theme.colors.dark[4]}`,
+        })}
+      >
+        <Element name="Cast" className="element">
+          <Flex pl={12} pr="sm" gap={3} align="center">
+            <Text size={mobile ? 'lg' : 'xl'} fw={800}>
               {' '}
-              Crew
+              Cast
             </Text>
+            <Text c="dark.1" fw={300} fz={mobile ? 'md' : 'lg'}>
+              ({castAndCrew.cast?.length})
+            </Text>
+            <Divider
+              my="sm"
+              variant="dotted"
+              sx={{
+                flexGrow: 1,
+              }}
+            />
+          </Flex>
+          <Box mt="xs" px={mobile ? 0 : 12}>
             {castAndCrew.cast?.map((castMember, index) => (
               // <tr key={castMember.id}>
               <Accordion
@@ -205,7 +252,8 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                 styles={(theme) => ({
                   control: {
                     '&:hover': {
-                      backgroundColor: theme.colors.dark[6],
+                      backgroundColor:
+                        index % 2 === 0 ? theme.colors.dark[7] : theme.colors.dark[8],
                       cursor:
                         castMember.roles && castMember.roles.length === 1 ? 'auto' : 'pointer',
                       // backgroundColor: '',
@@ -353,84 +401,125 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                 </Accordion.Item>
               </Accordion>
             ))}
-            <Table striped verticalSpacing="md">
-              {/* <tbody> */}
-              {/* </tbody> */}
-            </Table>
           </Box>
         </Element>
-        <Box>
-          <Text mt="xl" mb={6} pl={mobile ? 8 : 0} size={mobile ? 24 : 28} id="Cast">
-            Crew
-          </Text>
-          <Stack spacing={50}>
-            {departments.map((department, index) => (
-              <Element key={index} name={department.department} className="element">
-                <Box>
-                  <Flex pl={mobile ? 8 : 0} pr="sm" gap={3} align="center">
-                    <Text size={mobile ? 'lg' : 'xl'} fw={800} id={department.department}>
-                      {' '}
-                      {department.department}
-                    </Text>
-                    <Text c="dark.1" fw={300} fz={mobile ? 'lg' : 'xl'}>
-                      ({department.crew.length})
-                    </Text>
-                    <Divider
-                      my="sm"
-                      variant="dotted"
-                      sx={{
-                        flexGrow: 1,
-                      }}
-                    />
-                  </Flex>
-                  <Table withBorder mt="sm" striped>
-                    <tbody>
-                      {department.crew.map((crewMember) => (
-                        <tr key={crewMember.id}>
-                          <td width="40%">
-                            <Anchor
-                              component={Link}
-                              href={`/people/${crewMember.id}/${encodeURIComponent(
-                                crewMember.name || ''
-                              )}`}
-                              // underline={false}
-                              sx={(theme) => ({
-                                textDecorationColor: theme.colors.dark[0],
-                                textDecorationThickness: 1,
-                                '&:hover': {
-                                  textDecorationColor: theme.colors.accent[0],
-                                },
-                              })}
+
+        <Stack spacing={50} mt="xl">
+          {departments.map((department, index) => (
+            <Element key={index} name={department.department} className="element">
+              <Box>
+                <Flex pl={12} pr="sm" gap={3} align="center">
+                  <Text size={mobile ? 'lg' : 'xl'} fw={800} id={department.department}>
+                    {' '}
+                    {department.department}
+                  </Text>
+                  <Text c="dark.1" fw={300} fz={mobile ? 'md' : 'lg'}>
+                    ({department.crew.length})
+                  </Text>
+                  <Divider
+                    my="sm"
+                    variant="dotted"
+                    sx={{
+                      flexGrow: 1,
+                    }}
+                  />
+                </Flex>
+                <Table mt="sm">
+                  <tbody
+                    style={{
+                      paddingLeft: 12,
+                      paddingRight: 12,
+                    }}
+                  >
+                    {department.crew.map((crewMember) => (
+                      <tr
+                        style={
+                          {
+                            // backgroundColor: crewIndex % 2 === 0 ? '#1A1B1E' : '#141517'
+                          }
+                        }
+                        key={crewMember.id}
+                      >
+                        <td
+                          style={{
+                            width: '30%',
+                            verticalAlign: 'top',
+
+                            border: 0,
+                            padding: 0,
+                            paddingLeft: 20,
+                          }}
+                        >
+                          <Anchor
+                            component={Link}
+                            href={`/people/${crewMember.id}/${encodeURIComponent(
+                              crewMember.name || ''
+                            )}`}
+                            // underline={false}
+                            sx={(theme) => ({
+                              textDecorationColor: theme.colors.dark[0],
+                              textDecorationThickness: 1,
+                              '&:hover': {
+                                textDecorationColor: theme.colors.accent[0],
+                              },
+                            })}
+                          >
+                            {' '}
+                            <Text
+                              sx={{
+                                wordWrap: 'normal',
+                              }}
+                              color="gray.4"
+                              fw={600}
                             >
-                              {' '}
-                              <Text color="gray.4" fw={600}>
-                                {crewMember.name}
-                              </Text>
-                            </Anchor>
-                          </td>
-                          <td>
-                            {mediaType === 'movie' ? (
-                              <Text>{crewMember.job}</Text>
-                            ) : (
-                              <Box>
-                                {crewMember.jobs.map((job) => (
-                                  <Box>
-                                    <Text component="span">{job.job}</Text>
-                                    <Text component="span">...({job.episode_count}ep)</Text>
-                                  </Box>
-                                ))}
-                              </Box>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Box>
-              </Element>
-            ))}
-          </Stack>
-        </Box>
+                              {crewMember.name}
+                            </Text>
+                          </Anchor>
+                        </td>
+                        <td
+                          style={{
+                            width: 30,
+                            verticalAlign: 'top',
+                            border: 0,
+                            paddingBottom: 0,
+                            paddingTop: 0,
+                          }}
+                        >
+                          <Text>&#183;&#183;&#183;</Text>
+                        </td>
+                        <td
+                          style={{
+                            verticalAlign: 'top',
+                            border: 0,
+                            paddingBottom: 0,
+                            paddingTop: 0,
+                          }}
+                        >
+                          {mediaType === 'movie' ? (
+                            <Text>{crewMember.job}</Text>
+                          ) : (
+                            <Box>
+                              {crewMember.jobs.map((job, crewJobIndex) => (
+                                <Text inline fz="sm" component="span">
+                                  {job.job} ({job.episode_count} ep
+                                  {job.episode_count > 1 && 's'})
+                                  {crewMember.jobs.length > 1 &&
+                                  crewJobIndex < crewMember.jobs.length - 1
+                                    ? ' / '
+                                    : null}
+                                </Text>
+                              ))}
+                            </Box>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Box>
+            </Element>
+          ))}
+        </Stack>
       </Container>
     </Container>
   );

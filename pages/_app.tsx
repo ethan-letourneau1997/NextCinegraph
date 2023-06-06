@@ -1,6 +1,7 @@
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import NextApp, { AppContext, AppProps } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
+import '../styles/globals.css';
 
 import Head from 'next/head';
 import { Notifications } from '@mantine/notifications';

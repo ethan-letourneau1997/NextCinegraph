@@ -1,9 +1,13 @@
-import { Anchor, Box, Title } from '@mantine/core';
+import { Anchor, Box, AspectRatio, Grid, Flex, Text, Divider, Skeleton } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { BsFillStarFill } from 'react-icons/bs';
 import { SeasonType } from '../../Types/types';
+import { formatReleaseDate } from '../Discover/discoverGrid';
+import { formatRuntime } from '../../utils/utils';
 
 interface SeasonProps {
   seasonNumber: number;
@@ -45,30 +49,73 @@ export default function Season(props: SeasonProps) {
     return <div>Loading...</div>;
   }
 
+  console.log(season);
+
   return (
     <Box>
-      <Anchor component={Link} href="#" />
-
-      <Title order={1}>{season.name}</Title>
-
-      <Box>
-        {season.episodes &&
-          season.episodes.map((episode) => (
-            <Box key={episode.id}>
-              <Anchor
-                component={Link}
-                href={{
-                  pathname: `/shows/${showId}/${
-                    typeof showName === 'string' ? encodeURIComponent(showName) : ''
-                  }/season/${episode.season_number}/episode/${episode.episode_number}`,
+      {season.episodes &&
+        season.episodes.map((episode) => (
+          <Box key={episode.id}>
+            <Anchor
+              c="gray.5"
+              component={Link}
+              href={{
+                pathname: `/shows/${showId}/${
+                  typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                }/season/${episode.season_number}/episode/${episode.episode_number}`,
+              }}
+            >
+              <Grid
+                gutter="xs"
+                mb="xl"
+                columns={20}
+                justify="center"
+                maw="100%"
+                sx={{
+                  overflow: 'hidden',
                 }}
               >
-                {' '}
-                {episode.name}
-              </Anchor>
-            </Box>
-          ))}
-      </Box>
+                <Grid.Col span={20}>
+                  <AspectRatio ratio={16 / 7}>
+                    <Skeleton />
+                    <Image
+                      fill
+                      alt=""
+                      src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
+                    />
+                  </AspectRatio>
+                </Grid.Col>
+                <Grid.Col span={19}>
+                  <Text fz="xl" c="gray.0">
+                    {episode.episode_number}.&nbsp;{episode.name}
+                  </Text>
+
+                  <Flex align="center" gap="xs" pl={3} mt={3}>
+                    <Flex gap={6}>
+                      <Flex pb={1} align="center">
+                        <BsFillStarFill size={12} color="#ffd452" />
+                      </Flex>
+                      <Text fz="sm"> {episode.vote_average}</Text>
+                    </Flex>
+                    <Text fz="sm">{formatReleaseDate(episode.air_date)}</Text>
+                    <Text fz="sm" c="brand.4">
+                      {formatRuntime(episode.runtime)}
+                    </Text>
+                  </Flex>
+
+                  <Box>
+                    <Text lineClamp={3} mt="xs" fz="sm" c="gray.4">
+                      {episode.overview}
+                    </Text>
+                  </Box>
+                </Grid.Col>
+                <Grid.Col span={20}>
+                  <Divider mt="md" />
+                </Grid.Col>
+              </Grid>
+            </Anchor>
+          </Box>
+        ))}
     </Box>
   );
 }

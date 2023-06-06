@@ -14,10 +14,29 @@ import { BsPersonFill } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
+import { useRouter } from 'next/router';
+
+import { IconChevronRight } from '@tabler/icons';
 import { Credits } from '../../Types/types';
 
-export default function MediaCredits(props: { credits: Credits }) {
-  const { credits } = props;
+interface MediaCreditsProps {
+  credits: Credits;
+  mediaType: String;
+}
+
+export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) {
+  const router = useRouter();
+
+  let mediaId: string | string[] | undefined;
+  let mediaName: string | string[] | undefined;
+
+  if (mediaType === 'movie') {
+    mediaId = router.query.movieId;
+    mediaName = router.query.movieName;
+  } else if (mediaType === 'tv') {
+    mediaId = router.query.showId;
+    mediaName = router.query.showName;
+  }
 
   const theme = useMantineTheme();
 
@@ -29,7 +48,26 @@ export default function MediaCredits(props: { credits: Credits }) {
     <Box mt={75}>
       <Group spacing="xs">
         <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" />
-        <Title size="h3">Top Cast</Title>
+        <Anchor
+          component={Link}
+          href={{
+            pathname: `/${mediaType === 'tv' ? 'shows' : 'movies'}/${mediaId}/${
+              typeof mediaName === 'string' ? encodeURIComponent(mediaName) : ''
+            }/cast`,
+          }}
+          sx={{
+            // change color on hover
+            '&:hover': {
+              color: theme.colors.yellow[5],
+            },
+          }}
+        >
+          <Flex align="center" c="gray.0">
+            <Title size="h3">Top Cast</Title>
+
+            <IconChevronRight size={28} style={{ paddingBottom: 1.5 }} />
+          </Flex>
+        </Anchor>
       </Group>
       <Grid gutter="lg" pt="sm">
         {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (

@@ -54,6 +54,7 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
         {mediaDetails.credits ? (
           <MediaCredits
             credits={mediaType === 'movie' ? mediaDetails.credits : mediaDetails.aggregate_credits}
+            mediaType={mediaType}
           />
         ) : null}
 

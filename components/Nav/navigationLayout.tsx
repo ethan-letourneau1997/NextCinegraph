@@ -1,7 +1,8 @@
-import { Box, Burger, Center, Collapse, Flex, Text, createStyles } from '@mantine/core';
+import { Box, Burger, Center, Collapse, Flex, NavLink, createStyles } from '@mantine/core';
 
 import { useDisclosure } from '@mantine/hooks';
 import { useEffect } from 'react';
+import Link from 'next/link';
 import Autocomplete from '../Autocomplete/autocomplete';
 import DesktopNavigation from './desktopNavigation';
 import { MobileNavigation } from './mobileNavigation';
@@ -47,9 +48,22 @@ export function NavigationLayout() {
             onClick={toggle}
             aria-label={label}
           />
-          <Text size={25} c="yellow.5" ml="xs" fw={700}>
-            Cinegraph
-          </Text>
+          <NavLink
+            c="yellow.5"
+            ml="xs"
+            fw={700}
+            component={Link}
+            href="/"
+            styles={() => ({
+              label: {
+                fontSize: 25,
+                '&:hover': {
+                  color: 'white',
+                },
+              },
+            })}
+            label="Cinegraph"
+          />
         </Center>
 
         <DesktopNavigation />

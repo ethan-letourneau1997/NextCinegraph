@@ -52,7 +52,22 @@ export default function Trailer({ trailer }: trailerProps) {
           </Box>
         </Box>
       </Modal>
-      <Button onClick={open} fullWidth leftIcon={<FaPlay />} mt="md">
+      <Button
+        color="dark.6"
+        onClick={open}
+        fullWidth
+        leftIcon={<FaPlay />}
+        mt="md"
+        styles={{
+          root: {
+            '&:hover': {
+              // backgroundColor: theme.colors.yellow[8],
+              color: theme.colors.yellow[5],
+            },
+            color: theme.colors.dark[0],
+          },
+        }}
+      >
         Watch Trailer{' '}
       </Button>
     </Box>

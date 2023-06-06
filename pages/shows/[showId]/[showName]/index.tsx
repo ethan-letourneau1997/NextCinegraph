@@ -4,7 +4,6 @@ import MediaDetailsLayout from '../../../../components/mediaDetails/mediaDetails
 export default function MediaItem() {
   const router = useRouter();
   const { showId } = router.query;
-  console.log(showId);
 
   return <MediaDetailsLayout mediaType="tv" mediaId={showId as string} />;
 }
