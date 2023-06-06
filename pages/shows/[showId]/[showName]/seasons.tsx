@@ -1,12 +1,18 @@
-import { Anchor, Flex, ScrollArea, Space, Tabs, Text } from '@mantine/core';
+import { Anchor, Flex, ScrollArea, Space, Tabs, Text, Container } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
+import { useMediaQuery } from '@mantine/hooks';
 import { SeasonType } from '../../../../Types/types';
 import Season from '../../../../components/tvComponents/season';
 
 export default function Seasons() {
+  // responsive styles
+  const tablet = useMediaQuery('(max-width: 950px)');
+
+  //return to top state
+
   //* Get query params
   const router = useRouter();
   const { showId, showName } = router.query;
@@ -50,7 +56,7 @@ export default function Seasons() {
 
   return (
     <div>
-      <Flex bg="dark.7" p="xs">
+      <Flex bg={tablet ? 'dark.7' : 'transparent'} p="xs">
         <Anchor
           sx={(theme) => ({
             display: 'flex',
@@ -69,62 +75,62 @@ export default function Seasons() {
           <Text fz="md">{showName}</Text>
         </Anchor>
       </Flex>
-
-      <Text pl={7} fz="sm" mt="xs">
-        Season
-      </Text>
-      <Tabs
-        pt={6}
-        pl="xs"
-        defaultValue="1"
-        unstyled
-        // styles with theme
-        styles={(theme) => ({
-          root: {
-            padding: 0,
-            // maxWidth: '100vw',
-          },
-          tab: {
-            height: 40,
-            width: 40,
-            marginRight: 8,
-            color: theme.colors.gray[5],
-            paddingBottom: 8,
-            backgroundColor: 'transparent',
-            border: 'none',
-            '&[data-active]': {
-              backgroundColor: theme.colors.yellow[5],
-              borderRadius: theme.radius.xl,
-              color: theme.colors.dark[5],
+      <Container>
+        <Text pl={7} fz="sm" mt="xs">
+          Season
+        </Text>
+        <Tabs
+          pt={6}
+          pl="xs"
+          defaultValue="1"
+          unstyled
+          // styles with theme
+          styles={(theme) => ({
+            root: {
+              padding: 0,
             },
-          },
-          tabLabel: {
-            fontWeight: 400,
+            tab: {
+              height: 40,
+              width: 40,
+              marginRight: 8,
+              color: theme.colors.gray[5],
+              paddingBottom: 8,
+              backgroundColor: 'transparent',
+              border: 'none',
+              '&[data-active]': {
+                backgroundColor: theme.colors.yellow[5],
+                borderRadius: theme.radius.xl,
+                color: theme.colors.dark[5],
+              },
+            },
+            tabLabel: {
+              fontWeight: 400,
 
-            fontSize: theme.fontSizes.lg,
-          },
-        })}
-      >
-        <Tabs.List>
-          <ScrollArea scrollbarSize={0}>
-            <Flex>
-              {seasons &&
-                seasons.map((season) => (
-                  <Tabs.Tab key={season.id} value={season.season_number.toString()} pt="xs">
-                    {season.season_number}
-                  </Tabs.Tab>
-                ))}
-            </Flex>
-          </ScrollArea>
-        </Tabs.List>
+              fontSize: theme.fontSizes.lg,
+            },
+          })}
+        >
+          <Tabs.List>
+            <ScrollArea scrollbarSize={0}>
+              <Flex>
+                {seasons &&
+                  seasons.map((season) => (
+                    <Tabs.Tab key={season.id} value={season.season_number.toString()} pt="xs">
+                      {season.season_number}
+                    </Tabs.Tab>
+                  ))}
+              </Flex>
+            </ScrollArea>
+          </Tabs.List>
 
-        {seasons &&
-          seasons.map((season) => (
-            <Tabs.Panel key={season.id} value={season.season_number.toString()} pt="xs">
-              {season.season_number && <Season seasonNumber={season.season_number} />}
-            </Tabs.Panel>
-          ))}
-      </Tabs>
+          {seasons &&
+            seasons.map((season) => (
+              <Tabs.Panel key={season.id} value={season.season_number.toString()} pt="xs">
+                {season.season_number && <Season seasonNumber={season.season_number} />}
+              </Tabs.Panel>
+            ))}
+        </Tabs>
+      </Container>
 
       {/* <Select
         data={seasonSelectData}

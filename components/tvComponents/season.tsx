@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { BsFillStarFill } from 'react-icons/bs';
+import { useMediaQuery } from '@mantine/hooks';
+
 import { SeasonType } from '../../Types/types';
 import { formatReleaseDate } from '../Discover/discoverGrid';
 import { formatRuntime } from '../../utils/utils';
@@ -14,6 +16,9 @@ interface SeasonProps {
 }
 
 export default function Season(props: SeasonProps) {
+  // responsive styles
+  const tablet = useMediaQuery('(max-width: 950px)');
+
   const [season, setSeason] = useState<SeasonType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const apiKey = '0fd7a8764e6522629a3b7e78c452c348';
@@ -49,14 +54,13 @@ export default function Season(props: SeasonProps) {
     return <div>Loading...</div>;
   }
 
-  console.log(season);
-
   return (
     <Box>
       {season.episodes &&
         season.episodes.map((episode) => (
           <Box key={episode.id}>
             <Anchor
+              underline={false}
               c="gray.5"
               component={Link}
               href={{
@@ -75,8 +79,8 @@ export default function Season(props: SeasonProps) {
                   overflow: 'hidden',
                 }}
               >
-                <Grid.Col span={20}>
-                  <AspectRatio ratio={16 / 7}>
+                <Grid.Col span={20} xs={10} sm={8} lg={6}>
+                  <AspectRatio ratio={tablet ? 16 / 7 : 16 / 9}>
                     <Skeleton />
                     <Image
                       fill
@@ -85,7 +89,7 @@ export default function Season(props: SeasonProps) {
                     />
                   </AspectRatio>
                 </Grid.Col>
-                <Grid.Col span={19}>
+                <Grid.Col px="xs" span={20} xs={10} sm={12} lg={14}>
                   <Text fz="xl" c="gray.0">
                     {episode.episode_number}.&nbsp;{episode.name}
                   </Text>
