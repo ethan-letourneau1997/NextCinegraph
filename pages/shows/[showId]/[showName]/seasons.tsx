@@ -10,6 +10,7 @@ import Season from '../../../../components/tvComponents/season';
 export default function Seasons() {
   // responsive styles
   const tablet = useMediaQuery('(max-width: 950px)');
+  const mobile = useMediaQuery('(max-width: 600px)');
 
   //return to top state
 
@@ -70,9 +71,9 @@ export default function Seasons() {
             }`,
           }}
         >
-          <FaChevronLeft size={12} />
+          <FaChevronLeft size={tablet ? 12 : 16} />
           <Space w={3} />
-          <Text fz="md">{showName}</Text>
+          <Text fz={mobile ? 'sm' : 'lg'}>{showName}</Text>
         </Anchor>
       </Flex>
       <Container>
@@ -88,6 +89,10 @@ export default function Seasons() {
           styles={(theme) => ({
             root: {
               padding: 0,
+              //show select pointer on hover
+              '&:hover': {
+                cursor: 'pointer',
+              },
             },
             tab: {
               height: 40,

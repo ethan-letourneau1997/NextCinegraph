@@ -1,4 +1,4 @@
-import { Button, Flex, Menu, NavLink, createStyles } from '@mantine/core';
+import { Flex, Menu, NavLink, UnstyledButton, createStyles } from '@mantine/core';
 
 import Link from 'next/link';
 
@@ -43,31 +43,19 @@ export default function DesktopNavigation() {
       />
       <Menu shadow="md" trigger="hover" zIndex={1500}>
         <Menu.Target>
-          <Button
+          <UnstyledButton
             p={0}
             fz="md"
             fw={600}
-            styles={{
-              root: {
-                height: '100%',
+            sx={{
+              '&:hover': {
+                color: 'white',
                 backgroundColor: 'transparent',
-                border: 0,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-              },
-              inner: {
-                color: 'rgb(193, 194, 197)',
-                fontWeight: 600,
-
-                '&:hover': {
-                  color: 'white',
-                },
               },
             }}
           >
             Movies
-          </Button>
+          </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown
           bg="hsl(300, 12%, 6%)"
@@ -160,31 +148,19 @@ export default function DesktopNavigation() {
       </Menu>
       <Menu shadow="md" trigger="hover" zIndex={1500}>
         <Menu.Target>
-          <Button
+          <UnstyledButton
             p={0}
             fz="md"
             fw={600}
-            styles={{
-              root: {
-                height: '100%',
-                border: 0,
+            sx={{
+              '&:hover': {
+                color: 'white',
                 backgroundColor: 'transparent',
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-              },
-              inner: {
-                color: 'rgb(193, 194, 197)',
-                fontWeight: 600,
-
-                '&:hover': {
-                  color: 'white',
-                },
               },
             }}
           >
-            TV Shows
-          </Button>
+            TV&nbsp;Shows
+          </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown
           bg="hsl(300, 12%, 6%)"

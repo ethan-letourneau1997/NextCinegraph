@@ -174,9 +174,9 @@ export default function Episode() {
             }/seasons`,
           }}
         >
-          <FaChevronLeft size={12} />
+          <FaChevronLeft size={tablet ? 12 : 16} />
           <Space w={3} />
-          <Text fz={tablet ? 'sm' : 'md'}>Back to Seasons</Text>
+          <Text fz={mobile ? 'sm' : 'lg'}>Back to Seasons</Text>
         </Anchor>
       </Flex>
       <Container p={0}>
