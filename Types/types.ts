@@ -331,7 +331,7 @@ export interface SeasonType {
   id: number;
   poster_path?: string;
   season_number: number;
-  episode_count?: number;
+  episode_count: number;
 }
 
 export interface EpisodeDetails {

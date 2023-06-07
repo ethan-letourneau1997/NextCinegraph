@@ -119,21 +119,25 @@ export default function Seasons() {
             <ScrollArea scrollbarSize={0}>
               <Flex>
                 {seasons &&
-                  seasons.map((season) => (
-                    <Tabs.Tab key={season.id} value={season.season_number.toString()} pt="xs">
-                      {season.season_number}
-                    </Tabs.Tab>
-                  ))}
+                  seasons
+                    .filter((season) => season.episode_count > 0)
+                    .map((season) => (
+                      <Tabs.Tab key={season.id} value={season.season_number.toString()} pt="xs">
+                        {season.season_number}
+                      </Tabs.Tab>
+                    ))}
               </Flex>
             </ScrollArea>
           </Tabs.List>
 
           {seasons &&
-            seasons.map((season) => (
-              <Tabs.Panel key={season.id} value={season.season_number.toString()} pt="xs">
-                {season.season_number && <Season seasonNumber={season.season_number} />}
-              </Tabs.Panel>
-            ))}
+            seasons
+              .filter((season) => season.episode_count > 0)
+              .map((season) => (
+                <Tabs.Panel key={season.id} value={season.season_number.toString()} pt="xs">
+                  {season.season_number && <Season seasonNumber={season.season_number} />}
+                </Tabs.Panel>
+              ))}
         </Tabs>
       </Container>
 

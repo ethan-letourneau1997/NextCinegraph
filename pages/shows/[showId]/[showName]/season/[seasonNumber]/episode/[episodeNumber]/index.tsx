@@ -155,6 +155,7 @@ export default function Episode() {
         sx={{
           position: tablet ? 'static' : 'absolute',
         }}
+        top={95}
         bg={tablet ? 'dark.7' : 'transparent'}
         // bg="dark.7"
         p="xs"
@@ -179,7 +180,8 @@ export default function Episode() {
           <Text fz={mobile ? 'sm' : 'lg'}>Back to Seasons</Text>
         </Anchor>
       </Flex>
-      <Container p={0}>
+
+      <Container p={0} pt={5}>
         <Flex justify="space-between" py="xs" px="md">
           {prevSeasonNumber && prevEpisodeNumber ? (
             <Anchor
@@ -246,7 +248,7 @@ export default function Episode() {
             w="100%"
             h={10}
             sx={{
-              zIndex: 500,
+              zIndex: 90,
               backgroundImage: 'linear-gradient(to bottom, #101113, transparent)',
               // backgroundImage: 'linear-gradient(to top, #101113, red)',
               // border: '1px solid white',
@@ -258,7 +260,7 @@ export default function Episode() {
         {episodeDetails ? (
           <Grid justify="center" m={0} gutter={35} columns={20}>
             <Grid.Col px="xs" span={19} sm={11} md={12}>
-              <Text fz={24} c="gray.0">
+              <Text fz={28} c="gray.0">
                 {episodeDetails.name}
               </Text>
 
@@ -359,7 +361,6 @@ export default function Episode() {
                               <Anchor
                                 truncate
                                 fw={300}
-                                color="gray.4"
                                 component={Link}
                                 href={`/people/${producer.id}/${encodeURIComponent(
                                   producer.name || ''
