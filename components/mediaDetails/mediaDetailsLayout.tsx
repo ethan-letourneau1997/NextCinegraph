@@ -45,7 +45,7 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
   return (
     <Box>
       <Container display={mobile ? 'none' : 'block'}>
-        <BannerImage items={mediaDetails} />
+        <BannerImage aspectRatio={16 / 7} mediaBackdrop={mediaDetails.backdrop_path} />
       </Container>
 
       <Container pos="relative" top={mobile ? 0 : -40} py="xl" px={50}>

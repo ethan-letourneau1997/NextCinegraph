@@ -3,12 +3,15 @@ import { Anchor, AspectRatio, Box, Image, SimpleGrid, Skeleton, Title } from '@m
 import Link from 'next/link';
 import { MediaItemType } from '../Types/types';
 
-export default function MediaGrid(props: { items: MediaItemType[]; title: string }) {
-  const { items } = props;
+interface MediaGridProps {
+  items: MediaItemType[];
+  title: string;
+}
 
+export default function MediaGrid({ items, title }: MediaGridProps) {
   return (
     <Box>
-      <Title>{props.title}</Title>
+      <Title>{title}</Title>
       <SimpleGrid cols={6} mt="xl">
         {items.map(
           (item) =>

@@ -335,6 +335,7 @@ export interface SeasonType {
 }
 
 export interface EpisodeDetails {
+  credits: Credits;
   air_date?: string;
   episode_number?: number;
   id: number;

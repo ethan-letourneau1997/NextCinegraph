@@ -39,7 +39,7 @@ export const fetchEpisodeDetails = async (
 ) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${showId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${apiKey}&language=en-US`
+      `https://api.themoviedb.org/3/tv/${showId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${apiKey}&append_to_response=credits&language=en-US`
     );
     if (!response.ok) {
       throw new Error('Network response was not ok');

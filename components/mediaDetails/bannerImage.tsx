@@ -3,13 +3,14 @@ import { AspectRatio, BackgroundImage, Box, Group, Skeleton } from '@mantine/cor
 import { MediaItemType } from '../../Types/types';
 
 interface BannerImageProps {
-  items: MediaItemType;
+  mediaBackdrop: MediaItemType['backdrop_path'];
+  aspectRatio: number;
 }
 
-export default function BannerImage({ items }: BannerImageProps) {
+export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageProps) {
   return (
     <Box>
-      <AspectRatio ratio={16 / 7}>
+      <AspectRatio ratio={aspectRatio}>
         <Skeleton
           sx={{
             zIndex: -10,
@@ -19,10 +20,10 @@ export default function BannerImage({ items }: BannerImageProps) {
           // sx={{
           //   zIndex: -10,
           // }}
-          src={`https://image.tmdb.org/t/p/original${items.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original${mediaBackdrop}`}
         >
           <Group position="apart" h="100%" w="100%">
-            <Box h="100%" w={30} pos="relative">
+            <Box h="100%" w={15} pos="relative">
               <Box
                 h="100%"
                 w="100%"
@@ -32,7 +33,7 @@ export default function BannerImage({ items }: BannerImageProps) {
                 }}
               />
             </Box>
-            <Box h="100%" w={100} pos="relative">
+            <Box h="100%" w={15} pos="relative">
               <Box
                 h="100%"
                 w="100%"
