@@ -71,9 +71,9 @@ export default function Seasons() {
             }`,
           }}
         >
-          <FaChevronLeft size={tablet ? 12 : 16} />
+          <FaChevronLeft size={tablet ? 12 : 14} />
           <Space w={3} />
-          <Text fz={mobile ? 'sm' : 'lg'}>{showName}</Text>
+          <Text fz={mobile ? 'sm' : 'md'}>{showName}</Text>
         </Anchor>
       </Flex>
       <Container>

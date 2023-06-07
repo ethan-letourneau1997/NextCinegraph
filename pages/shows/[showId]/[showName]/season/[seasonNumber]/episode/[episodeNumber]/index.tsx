@@ -10,6 +10,7 @@ import {
   Grid,
   Divider,
   Stack,
+  Title,
 } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -175,13 +176,13 @@ export default function Episode() {
             }/seasons`,
           }}
         >
-          <FaChevronLeft size={tablet ? 12 : 16} />
+          <FaChevronLeft size={tablet ? 12 : 14} />
           <Space w={3} />
-          <Text fz={mobile ? 'sm' : 'lg'}>Back to Seasons</Text>
+          <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
         </Anchor>
       </Flex>
 
-      <Container p={0} pt={5}>
+      <Container p={0}>
         <Flex justify="space-between" py="xs" px="md">
           {prevSeasonNumber && prevEpisodeNumber ? (
             <Anchor
@@ -260,9 +261,9 @@ export default function Episode() {
         {episodeDetails ? (
           <Grid justify="center" m={0} gutter={35} columns={20}>
             <Grid.Col px="xs" span={19} sm={11} md={12}>
-              <Text fz={28} c="gray.0">
+              <Title size="h2" c="gray.4">
                 {episodeDetails.name}
-              </Text>
+              </Title>
 
               <Flex align="center" gap="md" pl={3} mt={3}>
                 <Flex gap={6}>
