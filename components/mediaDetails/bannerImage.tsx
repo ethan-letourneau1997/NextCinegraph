@@ -1,5 +1,6 @@
 import { AspectRatio, BackgroundImage, Box, Group, Skeleton } from '@mantine/core';
 
+import { useMediaQuery } from '@mantine/hooks';
 import { MediaItemType } from '../../Types/types';
 
 interface BannerImageProps {
@@ -7,11 +8,15 @@ interface BannerImageProps {
   aspectRatio: number;
 }
 
+// responsive styles
+
 export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageProps) {
+  const mobile = useMediaQuery('(max-width: 600px)');
   return (
     <Box>
       <AspectRatio ratio={aspectRatio}>
         <Skeleton
+          display={mobile ? 'none' : 'block'}
           sx={{
             zIndex: -10,
           }}

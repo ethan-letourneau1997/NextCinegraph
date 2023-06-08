@@ -40,21 +40,6 @@ export default function Seasons() {
       .catch((error) => console.error(error));
   }, [showId, apiKey]);
 
-  // const handleSeasonChange = (seasonNumber: number) => {
-  //   setCurrentSeason(seasonNumber);
-  // };
-
-  // let seasonSelectData: SelectItem[] = [];
-
-  // if (seasons && seasons.length > 0) {
-  //   seasonSelectData = seasons.map((season) => ({
-  //     value: season.season_number?.toString() ?? '0',
-  //     label: `${season.name}`,
-  //   }));
-  // }
-
-  // seasonSelectData.reverse(); //* reverse the order of seasonSelectData array
-
   return (
     <div>
       <Flex bg={tablet ? 'dark.7' : 'transparent'} p="xs">
@@ -140,21 +125,6 @@ export default function Seasons() {
               ))}
         </Tabs>
       </Container>
-
-      {/* <Select
-        data={seasonSelectData}
-        value={currentSeason.toString()}
-        onChange={(value) => handleSeasonChange(parseInt(value ?? '1', 10))}
-      /> */}
-      {/*
-      {seasons &&
-        seasons.map((season) => (
-          <Box key={season.id}>
-            {currentSeason === season.season_number && (
-              <Season seasonNumber={season.season_number} />
-            )}
-          </Box>
-        ))} */}
     </div>
   );
 }

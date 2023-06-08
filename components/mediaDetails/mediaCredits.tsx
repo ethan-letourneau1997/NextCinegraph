@@ -1,14 +1,4 @@
-import {
-  Anchor,
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  Group,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core';
+import { Anchor, Box, Flex, Grid, Group, Text, Title, useMantineTheme } from '@mantine/core';
 
 import { BsPersonFill } from 'react-icons/bs';
 import Image from 'next/image';
@@ -47,7 +37,6 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
   return (
     <Box mt={75}>
       <Group spacing="xs">
-        <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" />
         <Anchor
           component={Link}
           href={{
@@ -62,14 +51,23 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
             },
           }}
         >
-          <Flex align="center" c="gray.0">
-            <Title size="h3">Top Cast</Title>
+          <Flex align="center" c="gray.2">
+            <Title
+              size="h3"
+              pl={8}
+              inline
+              sx={{
+                borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
+              }}
+            >
+              Top Cast
+            </Title>
 
-            <IconChevronRight size={28} style={{ paddingBottom: 1.5 }} />
+            <IconChevronRight size={28} style={{ paddingTop: 2 }} />
           </Flex>
         </Anchor>
       </Group>
-      <Grid gutter="lg" pt="sm">
+      <Grid gutter="lg" pt="md">
         {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (
           <Grid.Col key={castMember.id} span={11} xs={11} sm={6} lg={6}>
             <Grid

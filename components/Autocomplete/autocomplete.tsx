@@ -22,7 +22,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { TbSearch } from 'react-icons/tb';
 import { useDisclosure } from '@mantine/hooks';
-import { fetchTrending } from '../../pages/api/mediaItemAPI';
+import { fetchTrending } from '../../pages/api/mediaDetailsAPI';
 import { Cast, MediaItemType } from '../../Types/types';
 
 const useStyles = createStyles((theme) => ({

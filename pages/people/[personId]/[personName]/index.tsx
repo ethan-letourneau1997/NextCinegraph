@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { PersonDetails, MediaItemType } from '../../../../Types/types';
-import { fetchPersonDetails } from '../../../api/mediaItemAPI';
+import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
 
 export default function MediaItem() {
   const router = useRouter();

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import Image from 'next/image';
-import { fetchTrending } from '../api/mediaItemAPI';
+import { fetchTrending } from '../api/mediaDetailsAPI';
 import { MediaItemType } from '../../Types/types';
 
 export default function People() {

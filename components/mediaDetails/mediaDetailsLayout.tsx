@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 
 import { useMediaQuery } from '@mantine/hooks';
 import { MediaItemType } from '../../Types/types';
-import { fetchMediaDetails } from '../../pages/api/mediaItemAPI';
+import { fetchMediaDetails } from '../../pages/api/mediaDetailsAPI';
 import BannerImage from './bannerImage';
 import { MediaCarousel } from './imageCarousels';
 import { LetterBoxd } from './letterboxd';
 import MediaCredits from './mediaCredits';
 import MediaSimilar from './mediaSimilar';
+import { EpisodesPreview } from './episodesPreview';
 
 interface MediaDetailsLayoutProps {
   mediaType: string;
@@ -51,6 +52,10 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
       <Container pos="relative" top={mobile ? 0 : -40} py="xl" px={50}>
         <LetterBoxd mediaItem={mediaDetails} mediaType={mediaType} />
         {/* <ColorBanner items={mediaDetails} mediaType="movie" /> */}
+        <EpisodesPreview
+          numSeasons={mediaDetails.number_of_seasons}
+          lastEp={mediaDetails.last_episode_to_air}
+        />
         {mediaDetails.credits ? (
           <MediaCredits
             credits={mediaType === 'movie' ? mediaDetails.credits : mediaDetails.aggregate_credits}
@@ -61,9 +66,8 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
         {mediaDetails.images.backdrops.length > 4 && mediaDetails.images.posters.length > 4 ? (
           <MediaCarousel images={mediaDetails.images} />
         ) : null}
-        {mediaDetails.similar ? (
-          <MediaSimilar mediaType={mediaType} similar={mediaDetails.recommendations} />
-        ) : null}
+
+        <MediaSimilar mediaType={mediaType} similar={mediaDetails.recommendations} />
       </Container>
     </Box>
   );

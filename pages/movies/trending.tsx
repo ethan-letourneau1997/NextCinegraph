@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MediaGrid from '../../components/mediaGrid';
 
-import { fetchTrending } from '../api/mediaItemAPI';
+import { fetchTrending } from '../api/mediaDetailsAPI';
 import { MediaItemType } from '../../Types/types';
 
 export default function Trending() {

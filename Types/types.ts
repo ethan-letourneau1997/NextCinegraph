@@ -1,6 +1,7 @@
 export type SearchResults = MediaItemType[];
 
 export interface MediaItemType {
+  last_episode_to_air: EpisodeDetails;
   aggregate_credits: Credits;
   number_of_episodes: number;
   recommendations: Similar;
@@ -42,6 +43,7 @@ export interface MediaItemType {
   revenue?: number;
   videos: Videos;
   images: Images;
+  created_by?: CreatedBy[];
 }
 
 export interface Images {
@@ -350,6 +352,21 @@ export interface EpisodeDetails {
   vote_count?: number;
   crew?: Crew[];
   guest_stars?: GuestStar[];
+  images?: EpisodeImages;
+}
+
+export interface EpisodeImages {
+  stills: Still[];
+}
+
+export interface Still {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: any;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
 }
 
 export interface Crew {

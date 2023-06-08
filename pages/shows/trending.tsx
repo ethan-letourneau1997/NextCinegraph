@@ -2,7 +2,7 @@ import { Container } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { MediaItemType } from '../../Types/types';
 import MediaGrid from '../../components/mediaGrid';
-import { fetchTrending } from '../api/mediaItemAPI';
+import { fetchTrending } from '../api/mediaDetailsAPI';
 
 export default function Trending() {
   const mediaType = 'tv';

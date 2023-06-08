@@ -1,13 +1,4 @@
-import {
-  useMantineTheme,
-  Box,
-  Group,
-  Divider,
-  Title,
-  Grid,
-  AspectRatio,
-  Anchor,
-} from '@mantine/core';
+import { useMantineTheme, Box, Group, Title, Grid, AspectRatio, Anchor } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,10 +19,19 @@ export default function MediaSimilar(props: { similar: Similar; mediaType: strin
   return (
     <Box mt={75}>
       <Group spacing="xs">
-        <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" />
-        <Title size="h3">More like this</Title>
+        <Title
+          c="gray.2"
+          size="h3"
+          pl={8}
+          inline
+          sx={{
+            borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
+          }}
+        >
+          More Like This
+        </Title>
       </Group>
-      <Grid pt="sm">
+      <Grid pt="md">
         {similar.results &&
           similar.results
             .filter((credit) => credit.original_language === 'en' && credit.poster_path)

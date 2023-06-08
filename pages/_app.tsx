@@ -57,14 +57,6 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
               Accordian: {
                 defaultProps: {},
               },
-              Title: {
-                styles: {
-                  root: {
-                    color: '#dee2e6',
-                    fontFamily: 'Montserrat',
-                  },
-                },
-              },
             },
           }}
           withGlobalStyles

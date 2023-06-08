@@ -4,7 +4,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { MediaItemType } from '../Types/types';
 import { fetchReleaseDates } from '../pages/api/dicsoverAPI';
-import { fetchSpecific } from '../pages/api/mediaItemAPI';
+import { fetchSpecific } from '../pages/api/mediaDetailsAPI';
 import SingleColumnGrid from './Discover/disoverAccordianComponents/singleColumn/singleColumnGrid';
 import SingleColumnSkeleton from './Discover/disoverAccordianComponents/singleColumn/singleColumnSkeleton';
 

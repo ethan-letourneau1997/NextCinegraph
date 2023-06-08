@@ -3,16 +3,7 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import {
-  Box,
-  Divider,
-  Group,
-  Image,
-  SegmentedControl,
-  Tabs,
-  Title,
-  useMantineTheme,
-} from '@mantine/core';
+import { Box, Group, Image, SegmentedControl, Tabs, Title, useMantineTheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import Slider from 'react-slick';
@@ -94,9 +85,19 @@ export function MediaCarousel({ images }: mediaImagesProps) {
   return (
     <>
       <Group spacing="xs" mb="md" mt={75}>
-        <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" />
-
-        <Title size="h3">Photos</Title>
+        {/* <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" /> */}
+        <Title
+          pt={1}
+          c="gray.2"
+          size="h3"
+          pl={8}
+          inline
+          sx={{
+            borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
+          }}
+        >
+          Photos
+        </Title>
 
         <SegmentedControl
           ml="xl"
@@ -128,7 +129,6 @@ export function MediaCarousel({ images }: mediaImagesProps) {
           </Slider>
         </Tabs.Panel>
         <Tabs.Panel value="backdrops">
-          {' '}
           <Slider {...backdropSettings}>
             {images.backdrops.length > 4 &&
               images.backdrops.map((posters: Poster) => (

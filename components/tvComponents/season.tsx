@@ -95,12 +95,15 @@ export default function Season(props: SeasonProps) {
                   </Text>
 
                   <Flex align="center" gap="xs" pl={3} mt={3}>
-                    <Flex gap={6}>
-                      <Flex pb={1} align="center">
-                        <BsFillStarFill size={12} color="#ffd452" />
+                    {episode.vote_average && episode.vote_average > 0 ? (
+                      <Flex gap={6}>
+                        <Flex pb={1} align="center">
+                          <BsFillStarFill size={12} color="#ffd452" />
+                        </Flex>
+
+                        <Text fz="sm"> {episode.vote_average}</Text>
                       </Flex>
-                      <Text fz="sm"> {episode.vote_average}</Text>
-                    </Flex>
+                    ) : null}
                     <Text fz="sm">{formatReleaseDate(episode.air_date)}</Text>
                     <Text fz="sm" c="brand.4">
                       {formatRuntime(episode.runtime)}
