@@ -69,7 +69,7 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
       </Group>
       <Grid gutter="lg" pt="md">
         {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (
-          <Grid.Col key={castMember.id} span={11} xs={11} sm={6} lg={6}>
+          <Grid.Col key={castMember.id} span={12} xs={12} sm={6} lg={6}>
             <Grid
               gutter={0}
               maw="100%"
@@ -110,7 +110,13 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
                 <Anchor
                   component={Link}
                   href={`/people/${castMember.id}/${encodeURIComponent(castMember.name || '')}`}
-                  underline={false}
+                  underline
+                  sx={() => ({
+                    textDecorationThickness: 1,
+                    '&:hover': {
+                      textDecorationColor: theme.colors.dark[0],
+                    },
+                  })}
                 >
                   {' '}
                   <Text color="gray.4" fz="sm" fw={600} truncate>

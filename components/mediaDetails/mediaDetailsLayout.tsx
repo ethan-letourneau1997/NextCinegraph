@@ -49,13 +49,16 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
         <BannerImage aspectRatio={16 / 7} mediaBackdrop={mediaDetails.backdrop_path} />
       </Container>
 
-      <Container pos="relative" top={mobile ? 0 : -40} py="xl" px={50}>
+      <Container pos="relative" top={mobile ? 0 : -40} py="xl" px={mobile ? 50 : 50}>
         <LetterBoxd mediaItem={mediaDetails} mediaType={mediaType} />
         {/* <ColorBanner items={mediaDetails} mediaType="movie" /> */}
-        <EpisodesPreview
-          numSeasons={mediaDetails.number_of_seasons}
-          lastEp={mediaDetails.last_episode_to_air}
-        />
+        {mediaType === 'tv' && (
+          <EpisodesPreview
+            numSeasons={mediaDetails.number_of_seasons}
+            lastEp={mediaDetails.last_episode_to_air}
+          />
+        )}
+
         {mediaDetails.credits ? (
           <MediaCredits
             credits={mediaType === 'movie' ? mediaDetails.credits : mediaDetails.aggregate_credits}

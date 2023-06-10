@@ -200,3 +200,33 @@ export async function getHighestRatedEpisode(
 
   return highestRatedEpisode;
 }
+
+export async function getHighestRatedEpisodes(
+  showId: string | string[] | undefined,
+  numSeasons: number
+): Promise<any[]> {
+  const episodes: any[] = [];
+
+  for (let season = 1; season <= numSeasons; season += 1) {
+    const url = `https://api.themoviedb.org/3/tv/${showId}/season/${season}?api_key=${TMDB_API_KEY}`;
+
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const response = await fetch(url);
+      // eslint-disable-next-line no-await-in-loop
+      const data = await response.json();
+
+      const { episodes: seasonEpisodes } = data;
+
+      // Push all episodes of the current season into the episodes array
+      episodes.push(...seasonEpisodes);
+    } catch (error) {
+      console.error(`Error fetching episodes for season ${season}:`, error);
+    }
+  }
+
+  // Sort episodes by highest to lowest vote_average
+  episodes.sort((a, b) => b.vote_average - a.vote_average);
+
+  return episodes;
+}

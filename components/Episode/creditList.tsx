@@ -22,10 +22,7 @@ export const CreditList = ({ title, credits, mobile }: CreditListProps) => {
         <Flex wrap="wrap">
           <Text fz={mobile ? 'sm' : 'md'} c="gray.1" fw={600} mr="xs">
             {title}
-            {
-              // !mobile &&
-              credits.length > 1 ? 's' : ''
-            }
+            {credits.length > 1 ? 's' : ''}
           </Text>
 
           {credits.slice(0, sliceAmount).map((credit, index) => (

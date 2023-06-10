@@ -6,7 +6,10 @@ import '../styles/globals.css';
 import Head from 'next/head';
 import { Notifications } from '@mantine/notifications';
 import { useState } from 'react';
+import { Inter } from 'next/font/google';
 import { Layout } from '../components/Layout/layout';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -19,7 +22,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   };
 
   return (
-    <>
+    <div className={inter.className}>
       <Head>
         <title>Mantine next example</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -29,6 +32,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <MantineProvider
           theme={{
+            fontFamily: 'inter',
             colorScheme,
             globalStyles: (theme) => ({
               body: {
@@ -68,7 +72,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           <Notifications />
         </MantineProvider>
       </ColorSchemeProvider>
-    </>
+    </div>
   );
 }
 

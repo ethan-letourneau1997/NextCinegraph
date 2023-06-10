@@ -67,13 +67,31 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                   ? `-${mediaItem.lastAirDate.substring(0, 4)}`
                   : null}
               </Text>
-              {mediaType === 'tv' && mediaItem.created_by && mediaItem.created_by.length > 0 ? (
+              {mediaType === 'movie' && mediaItem.created_by && mediaItem.created_by.length > 0 ? (
+                <>
+                  <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
+                    Created by
+                  </Text>
+                  <Text lineClamp={1}>
+                    {mediaItem.directingCrew?.slice(0, tablet ? 1 : 2).map((crew, index) => (
+                      <Text fz={mobile ? 'sm' : 'md'} c="brand.2" key={crew.id}>
+                        {crew.name}
+                        {mediaItem.directingCrew &&
+                        mediaItem.directingCrew &&
+                        index !== mediaItem.directingCrew.length - 1 ? (
+                          <>,&nbsp; </>
+                        ) : null}
+                      </Text>
+                    ))}
+                  </Text>
+                </>
+              ) : (
                 <>
                   <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
                     Directed by
                   </Text>
                   <Flex>
-                    {mediaItem.created_by.slice(0, tablet ? 1 : 2).map((credit, index) => (
+                    {mediaItem.created_by?.slice(0, tablet ? 1 : 2).map((credit, index) => (
                       <Anchor
                         c="brand.2"
                         key={credit.id}
@@ -90,24 +108,6 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                     ))}
                   </Flex>
                 </>
-              ) : (
-                <>
-                  <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
-                    Created by
-                  </Text>
-                  <Text lineClamp={1}>
-                    {mediaItem.directingCrew?.slice(0, tablet ? 1 : 2).map((crew, index) => (
-                      <Text fz={mobile ? 'sm' : 'md'} c="brand.2" key={crew.id}>
-                        {crew.name}
-                        {mediaItem.directingCrew &&
-                        mediaItem.directingCrew &&
-                        index !== mediaItem.directingCrew.length - 1 ? (
-                          <>,&nbsp;</>
-                        ) : null}
-                      </Text>
-                    ))}
-                  </Text>
-                </>
               )}
 
               <Group fz="sm" spacing={5} display={desktop ? 'flex' : 'none'}>
@@ -119,14 +119,14 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                   orientation="vertical"
                 />{' '}
                 {mediaItem.genres
-                  ?.slice(0, tablet ? 2 : 3) // Use the slice() method to get the first three items
+                  ?.slice(0, tablet ? 2 : 2) // Use the slice() method to get the first three items
                   .map((genre, index) => (
                     <Group spacing={0} key={genre.id}>
                       <Text fw={300}>{genre.name}</Text>
                       <Text fw={300}>
                         {mediaItem.genres &&
                         index !== 3 &&
-                        index !== mediaItem.genres.slice(0, tablet ? 2 : 3).length - 1 ? (
+                        index !== mediaItem.genres.slice(0, tablet ? 2 : 2).length - 1 ? (
                           <Center c="dark.1" pl={10} pr={5} pt={2}>
                             <FaCircle size={4} />
                           </Center>
