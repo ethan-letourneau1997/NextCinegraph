@@ -1,4 +1,4 @@
-import { Anchor, Flex, ScrollArea, Space, Tabs, Text, Container } from '@mantine/core';
+import { Anchor, Flex, ScrollArea, Space, Tabs, Text, Container, Title } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -62,9 +62,9 @@ export default function Seasons() {
         </Anchor>
       </Flex>
       <Container>
-        <Text pl={7} fz="sm" mt="xs">
+        <Title pl={7} size="h5" mt="xs" c="gray.4">
           Season
-        </Text>
+        </Title>
         <Tabs
           pt={6}
           pl="xs"

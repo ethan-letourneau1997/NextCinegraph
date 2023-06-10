@@ -177,20 +177,6 @@ export function MobileNavigation() {
           />
           <NavLink
             component={Link}
-            href="/shows/trending"
-            onClick={toggle}
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.md,
-              },
-            })}
-            pt={0}
-            pb="xs"
-            ml="xl"
-            label="Trending"
-          />
-          <NavLink
-            component={Link}
             href="/shows/top100"
             onClick={toggle}
             styles={(theme) => ({

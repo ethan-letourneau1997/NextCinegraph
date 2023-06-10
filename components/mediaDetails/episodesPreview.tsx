@@ -14,6 +14,8 @@ import {
   Group,
   Anchor,
 } from '@mantine/core';
+// import placeholderImage from 'next/still_placeholder.png';
+import Image from 'next/image';
 
 import { BsCircleFill, BsFillStarFill } from 'react-icons/bs';
 import { useMediaQuery } from '@mantine/hooks';
@@ -21,7 +23,7 @@ import { IconChevronRight } from '@tabler/icons-react';
 import Link from 'next/link';
 import { EpisodeDetails } from '../../Types/types';
 
-import { getHighestRatedEpisode, getHighestRatedEpisodes } from '../../pages/api/mediaDetailsAPI';
+import { getHighestRatedEpisodes } from '../../pages/api/mediaDetailsAPI';
 
 interface HighlightedEpisodeProps {
   episode: EpisodeDetails;
@@ -76,6 +78,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
                     </Box>
                   </Flex>
                 </Box>
+                {episode.still_path ? null : <Image alt="" fill src="/still_placeholder.png" />}
               </AspectRatio>
             </BackgroundImage>
           </Card.Section>
@@ -129,8 +132,9 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
               </Text>
             </Flex>
           ) : null}
-
-          <BsCircleFill size={3} color="#fff" />
+          {episode.vote_average && episode.vote_average > 0 ? (
+            <BsCircleFill size={3} color="#fff" />
+          ) : null}
 
           <Text c="gray.5" fw={500} fz="sm">
             S{episode.season_number} E{episode.episode_number! < 10 ? 0 : null}
@@ -160,18 +164,18 @@ export function EpisodesPreview({ numSeasons, lastEp }: EpisodesPreviewProps) {
 
   const theme = useMantineTheme();
 
-  const [topRated, setTopRated] = useState<EpisodeDetails | null>(null);
+  // const [topRated, setTopRated] = useState<EpisodeDetails | null>(null);
   const [topEpisodes, setTopEpisodes] = useState<EpisodeDetails[] | null>(null);
 
-  useEffect(() => {
-    getHighestRatedEpisode(showId, numSeasons)
-      .then((episode) => {
-        setTopRated(episode); // Episode with the highest vote average
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, [showId]);
+  // useEffect(() => {
+  //   getHighestRatedEpisode(showId, numSeasons)
+  //     .then((episode) => {
+  //       setTopRated(episode); // Episode with the highest vote average
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  // }, [showId]);
 
   useEffect(() => {
     getHighestRatedEpisodes(showId, numSeasons)
@@ -184,11 +188,11 @@ export function EpisodesPreview({ numSeasons, lastEp }: EpisodesPreviewProps) {
   }, [showId]);
 
   // check if the top rated episode is the most recent episode and if so, display top two episodes
-  let sameEpisode = null;
+  let sameEpisode = false;
   let episode1 = null;
   let episode2 = null;
 
-  if (topRated && topEpisodes) {
+  if (lastEp && topEpisodes) {
     [episode1, episode2] = topEpisodes;
     sameEpisode = episode1.id === lastEp.id;
 
@@ -225,36 +229,42 @@ export function EpisodesPreview({ numSeasons, lastEp }: EpisodesPreviewProps) {
         </Flex>
       </Anchor>
 
-      <Grid gutter={desktop ? 'md' : 'xl'} mt={desktop ? 'md' : 'xs'}>
-        <Grid.Col span={12} sm={6}>
-          {episode1 ? (
-            <HighlightedEpisode
-              episode={episode1}
-              badge="TOP RATED"
-              bgColor="#F5C518"
-              color="dark.9"
-            />
-          ) : (
-            <Box>
-              <Skeleton height={300} />
-            </Box>
-          )}
-        </Grid.Col>
-        <Grid.Col span={12} sm={6}>
-          {episode2 ? (
-            <HighlightedEpisode
-              episode={episode2}
-              badge={sameEpisode ? 'TOP RATED' : 'MOST RECENT'}
-              bgColor={sameEpisode ? '#F5C518' : 'blue.5'}
-              color="dark.9"
-            />
-          ) : (
-            <Box>
-              <Skeleton height={300} />
-            </Box>
-          )}
-        </Grid.Col>
-      </Grid>
+      {episode1 || episode2 ? (
+        <Grid gutter={desktop ? 'md' : 'xl'} mt={desktop ? 'md' : 'xs'}>
+          <Grid.Col span={12} sm={6}>
+            {episode1 ? (
+              <HighlightedEpisode
+                episode={episode1}
+                badge="TOP RATED"
+                bgColor="#F5C518"
+                color="dark.9"
+              />
+            ) : (
+              <Box>
+                <Skeleton height={300} />
+              </Box>
+            )}
+          </Grid.Col>
+          <Grid.Col span={12} sm={6}>
+            {episode2 ? (
+              <HighlightedEpisode
+                episode={episode2}
+                badge={sameEpisode ? 'TOP RATED' : 'MOST RECENT'}
+                bgColor={sameEpisode ? '#F5C518' : 'blue.5'}
+                color="dark.9"
+              />
+            ) : (
+              <Box>
+                <Skeleton height={300} />
+              </Box>
+            )}
+          </Grid.Col>
+        </Grid>
+      ) : (
+        <Text c="dimmed" italic>
+          No episodes availabe for display
+        </Text>
+      )}
     </Box>
   );
 }

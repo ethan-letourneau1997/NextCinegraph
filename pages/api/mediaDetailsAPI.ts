@@ -226,6 +226,7 @@ export async function getHighestRatedEpisodes(
   }
 
   // Sort episodes by highest to lowest vote_average
+
   episodes.sort((a, b) => b.vote_average - a.vote_average);
 
   return episodes;

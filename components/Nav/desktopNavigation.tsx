@@ -197,20 +197,6 @@ export default function DesktopNavigation() {
 
           <NavLink
             component={Link}
-            href="/shows/trending"
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.sm,
-                '&:hover': {
-                  color: 'white',
-                },
-              },
-            })}
-            label="Trending "
-          />
-
-          <NavLink
-            component={Link}
             href="/shows/popular"
             styles={(theme) => ({
               label: {

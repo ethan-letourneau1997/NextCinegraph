@@ -32,7 +32,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <MantineProvider
           theme={{
-            fontFamily: 'inter',
+            fontFamily: inter.style.fontFamily,
             colorScheme,
             globalStyles: (theme) => ({
               body: {

@@ -1,4 +1,4 @@
-import { Anchor, Box, AspectRatio, Grid, Flex, Text, Divider, Skeleton } from '@mantine/core';
+import { Anchor, Box, AspectRatio, Grid, Flex, Text, Divider, Skeleton, Card } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
@@ -80,14 +80,27 @@ export default function Season(props: SeasonProps) {
                 }}
               >
                 <Grid.Col span={20} xs={10} sm={8} lg={6}>
-                  <AspectRatio ratio={tablet ? 16 / 7 : 16 / 9}>
-                    <Skeleton />
-                    <Image
-                      fill
-                      alt=""
-                      src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
-                    />
-                  </AspectRatio>
+                  <Card shadow="md">
+                    <Card.Section>
+                      <AspectRatio ratio={tablet ? 16 / 7 : 16 / 9}>
+                        <Skeleton />
+                        {episode.still_path ? (
+                          <Image
+                            fill
+                            alt=""
+                            src={`https://image.tmdb.org/t/p/w780${episode.still_path}`}
+                          />
+                        ) : (
+                          <Image
+                            alt=""
+                            fill
+                            src="/still_placeholder.png"
+                            // style={{ borderRadius: '4px' }}
+                          />
+                        )}
+                      </AspectRatio>
+                    </Card.Section>
+                  </Card>
                 </Grid.Col>
                 <Grid.Col px="xs" span={20} xs={10} sm={12} lg={14}>
                   <Text fz="xl" c="gray.0">

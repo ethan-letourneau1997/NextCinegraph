@@ -12,19 +12,21 @@ interface GuestStarsProps {
 export function GuestStars({ mobile, episodeDetails }: GuestStarsProps) {
   return (
     <>
-      <Title
-        mt={7}
-        size={mobile ? 'h4' : 'h3'}
-        fw={600}
-        pl={8}
-        mb="sm"
-        inline
-        sx={(theme) => ({
-          borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
-        })}
-      >
-        Guest Stars
-      </Title>
+      {episodeDetails.guest_stars && episodeDetails.guest_stars.length > 0 && (
+        <Title
+          mt={7}
+          size={mobile ? 'h4' : 'h3'}
+          fw={600}
+          pl={8}
+          mb="sm"
+          inline
+          sx={(theme) => ({
+            borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
+          })}
+        >
+          Guest Stars
+        </Title>
+      )}
       <Grid mt="xs">
         {episodeDetails.guest_stars &&
           episodeDetails.guest_stars.slice(0, 4).map((castMember) => (
