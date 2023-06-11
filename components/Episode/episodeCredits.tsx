@@ -4,6 +4,7 @@ import {
   Anchor,
   AspectRatio,
   Box,
+  Breadcrumbs,
   Button,
   Container,
   Divider,
@@ -29,6 +30,8 @@ import Link from 'next/link';
 
 import { useMediaQuery } from '@mantine/hooks';
 import { FaChevronLeft } from 'react-icons/fa';
+
+import { IconChevronRight } from '@tabler/icons';
 import { Credits, Crew, Department, EpisodeDetails, GuestStar } from '../../Types/types';
 
 export function EpisodeCredits() {
@@ -36,9 +39,12 @@ export function EpisodeCredits() {
   const tablet = useMediaQuery('(max-width: 950px)');
   const mobile = useMediaQuery('(max-width: 500px)');
 
-  //* Get query params
+  //* router
   const router = useRouter();
   const { showId, showName, seasonNumber, episodeNumber } = router.query;
+
+  //* Get query params
+
   const episodeNumberString = episodeNumber as string | undefined; // Cast episodeNumber to string or undefined
   const episodeNumberValue = episodeNumberString ? parseInt(episodeNumberString, 10) : undefined; // Convert to a number if defined
 
@@ -114,6 +120,38 @@ export function EpisodeCredits() {
       department,
       crew,
     }));
+
+  const showsLink = '/shows/popular';
+
+  const showLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}`;
+
+  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}/seasons`;
+
+  const episodeLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}/season/${router.query.seasonNumber}/episode/${router.query.episodeNumber}`;
+
+  const items = [
+    { title: 'tv', href: showsLink, underline: false },
+    { title: showName, href: showLink },
+    { title: `season ${seasonNumber}`, href: seasonLink },
+    { title: `episode ${episodeNumber}`, href: episodeLink },
+    { title: 'Cast and Crew', href: '#', color: 'gray.2', underline: false },
+  ].map((item, index) => (
+    <Anchor
+      underline={item.underline}
+      c={item.color || 'dimmed'}
+      fz="sm"
+      href={item.href}
+      key={index}
+    >
+      {item.title}
+    </Anchor>
+  ));
 
   return (
     <Container fluid p={mobile ? 0 : ''} pb={50}>
@@ -210,35 +248,47 @@ export function EpisodeCredits() {
           </Menu.Dropdown>
         </Menu>
       </Affix>
-      <Flex
-        sx={{
-          position: tablet ? 'static' : 'absolute',
-        }}
-        bg={tablet ? 'dark.8' : 'transparent'}
-        // bg="dark.7"
-        p="xs"
-        pl={mobile ? 'sm' : 'md'}
-        pt={tablet ? 'xs' : 0}
-      >
-        <Anchor
-          fw={500}
-          sx={(theme) => ({
-            display: 'flex',
-            alignItems: 'center',
-            color: theme.colors.gray[5],
-          })}
-          component={Link}
-          href={{
-            pathname: `/shows/${showId}/${
-              typeof showName === 'string' ? encodeURIComponent(showName) : ''
-            }/seasons`,
+      {tablet ? (
+        <Box
+          sx={{
+            position: tablet ? 'static' : 'absolute',
           }}
+          bg={tablet ? 'dark.8' : 'transparent'}
+          // bg="dark.7"
+          p="xs"
+          pl={mobile ? 'sm' : 'md'}
+          pt={tablet ? 'xs' : 0}
         >
-          <FaChevronLeft size={tablet ? 12 : 14} />
-          <Space w={3} />
-          <Text fz={mobile ? 'sm' : 'md'}>Back to Episode</Text>
-        </Anchor>
-      </Flex>
+          <Anchor
+            fw={500}
+            sx={(theme) => ({
+              display: 'flex',
+              alignItems: 'center',
+              color: theme.colors.gray[5],
+            })}
+            component={Link}
+            href={{
+              pathname: `/shows/${showId}/${
+                typeof showName === 'string' ? encodeURIComponent(showName) : ''
+              }/season/${seasonNumber}/episode/${episodeNumber}`,
+            }}
+          >
+            <FaChevronLeft size={tablet ? 12 : 14} />
+            <Space w={3} />
+            <Text fz={mobile ? 'sm' : 'md'}>
+              Back to {showName} {seasonNumber}x
+              {episodeNumberValue && episodeNumberValue < 10
+                ? `0${episodeNumberValue}`
+                : episodeNumberValue}{' '}
+            </Text>
+          </Anchor>
+        </Box>
+      ) : (
+        <Breadcrumbs separator={<IconChevronRight size={16} />} pl="lg">
+          {items}
+        </Breadcrumbs>
+      )}
+
       <Container
         size="sm"
         p={0}
@@ -266,11 +316,12 @@ export function EpisodeCredits() {
           </AspectRatio>
           <Flex justify="center" direction="column" w="fit-content" px={mobile ? 'xs' : 0}>
             <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
-              {showName} S{seasonNumber}.E
+              {showName}
+              {/* S{seasonNumber}.E
               {episodeNumberValue && episodeNumberValue < 10
                 ? `0${episodeNumberValue}`
                 : episodeNumberValue}{' '}
-              Cast
+              Cast */}
             </Title>
             {/* <Title size="h5" c="dimmed">
               S{seasonNumber}.E

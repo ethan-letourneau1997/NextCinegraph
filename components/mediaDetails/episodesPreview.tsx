@@ -78,7 +78,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
                     </Box>
                   </Flex>
                 </Box>
-                {episode.still_path ? null : <Image alt="" fill src="/still_placeholder.png" />}
+                {episode.still_path ? null : <Image alt="" fill src="/still_placeholder_lg.png" />}
               </AspectRatio>
             </BackgroundImage>
           </Card.Section>

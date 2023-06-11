@@ -94,7 +94,7 @@ export default function Season(props: SeasonProps) {
                           <Image
                             alt=""
                             fill
-                            src="/still_placeholder.png"
+                            src="/still_placeholder_md.png"
                             // style={{ borderRadius: '4px' }}
                           />
                         )}

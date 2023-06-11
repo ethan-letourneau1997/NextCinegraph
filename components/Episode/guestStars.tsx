@@ -1,8 +1,9 @@
-import { Title, Grid, Flex, Anchor, Box, Text } from '@mantine/core';
-import { BsPersonFill } from 'react-icons/bs';
+import { Grid, Flex, Anchor, Box, Text } from '@mantine/core';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { EpisodeDetails } from '../../Types/types';
+import { TitleLink } from '../BiteSized/titleLink';
 
 interface GuestStarsProps {
   mobile?: boolean;
@@ -10,24 +11,22 @@ interface GuestStarsProps {
 }
 
 export function GuestStars({ mobile, episodeDetails }: GuestStarsProps) {
+  //* router
+  const router = useRouter();
+
   return (
     <>
-      {episodeDetails.guest_stars && episodeDetails.guest_stars.length > 0 && (
-        <Title
-          mt={7}
-          size={mobile ? 'h4' : 'h3'}
-          fw={600}
-          pl={8}
-          mb="sm"
-          inline
-          sx={(theme) => ({
-            borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
-          })}
-        >
-          Guest Stars
-        </Title>
-      )}
-      <Grid mt="xs">
+      {router.query.showName &&
+        episodeDetails.guest_stars &&
+        episodeDetails.guest_stars.length > 0 && (
+          <TitleLink
+            title="Guest Stars"
+            linkPath={`/shows/${router.query.showId}/${encodeURIComponent(
+              router.query.showName!.toString()
+            )}/season/${router.query.seasonNumber}/episode/${router.query.episodeNumber}/cast`}
+          />
+        )}
+      <Grid>
         {episodeDetails.guest_stars &&
           episodeDetails.guest_stars.slice(0, 4).map((castMember) => (
             <Grid.Col key={castMember.id} span={12} xs={6} sm={11} lg={12}>
@@ -38,37 +37,28 @@ export function GuestStars({ mobile, episodeDetails }: GuestStarsProps) {
                   borderRadius: '4px',
                 }}
               >
-                {castMember.profile_path ? (
-                  <Anchor
-                    truncate
-                    component={Link}
-                    href={`/people/${castMember.id}/${encodeURIComponent(castMember.name || '')}`}
-                    underline={false}
-                  >
-                    <Image
-                      style={{
-                        borderTopLeftRadius: '4px',
-                        borderBottomLeftRadius: '4px',
-                      }}
-                      height={mobile ? 60 : 80}
-                      width={mobile ? 60 : 80}
-                      alt=""
-                      src={`https://image.tmdb.org/t/p/w470_and_h470_face${castMember.profile_path}`}
-                    />
-                  </Anchor>
-                ) : (
-                  <Box
-                    h={mobile ? 60 : 80}
-                    w={mobile ? 60 : 80}
-                    bg="dark.4"
-                    sx={{
+                <Anchor
+                  truncate
+                  component={Link}
+                  href={`/people/${castMember.id}/${encodeURIComponent(castMember.name || '')}`}
+                  underline={false}
+                >
+                  <Image
+                    style={{
                       borderTopLeftRadius: '4px',
                       borderBottomLeftRadius: '4px',
                     }}
-                  >
-                    <BsPersonFill size={mobile ? 60 : 80} color="#18181B" />
-                  </Box>
-                )}
+                    height={mobile ? 60 : 80}
+                    width={mobile ? 60 : 80}
+                    alt=""
+                    src={
+                      castMember.profile_path
+                        ? `https://image.tmdb.org/t/p/w470_and_h470_face${castMember.profile_path}`
+                        : '/person_square_md.png'
+                    }
+                  />
+                </Anchor>
+
                 <Box pt={mobile ? 4 : 8}>
                   <Anchor
                     truncate

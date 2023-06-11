@@ -11,6 +11,7 @@ import {
   Divider,
   Stack,
   Title,
+  Breadcrumbs,
 } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,6 +20,7 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { useMediaQuery } from '@mantine/hooks';
 import { BsChevronLeft, BsChevronRight, BsFillStarFill } from 'react-icons/bs';
 
+import { IconChevronRight } from '@tabler/icons-react';
 import { EpisodeDetails, SeasonType, TVRoot } from '../../../../../../../../Types/types';
 import { fetchMediaDetails } from '../../../../../../../api/mediaDetailsAPI';
 import { fetchEpisodeDetails, fetchSeasonDetails } from '../../../../../../../api/showAPI';
@@ -28,6 +30,7 @@ import BannerImage from '../../../../../../../../components/mediaDetails/bannerI
 import { ImagesFromEpisode } from '../../../../../../../../components/Episode/imagesFromEpisode';
 import { CreditList } from '../../../../../../../../components/Episode/creditList';
 import { GuestStars } from '../../../../../../../../components/Episode/guestStars';
+import { TitleLink } from '../../../../../../../../components/BiteSized/titleLink';
 
 export default function Episode() {
   // responsive styles
@@ -150,38 +153,69 @@ export default function Episode() {
     (person) => person.job === 'Executive Producer'
   );
 
-  console.log('episodeDetails', episodeDetails);
+  const showsLink = '/shows/popular';
+
+  const showLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}`;
+
+  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}/seasons`;
+
+  const items = [
+    { title: 'tv', href: showsLink, underline: false },
+    { title: showName, href: showLink },
+    { title: `season ${seasonNumber}`, href: seasonLink },
+    { title: `episode ${episodeNumber}`, href: '#', color: 'gray.2', underline: false },
+  ].map((item, index) => (
+    <Anchor
+      underline={item.underline}
+      c={item.color || 'dimmed'}
+      fz="sm"
+      href={item.href}
+      key={index}
+    >
+      {item.title}
+    </Anchor>
+  ));
 
   return (
     <Box>
-      <Flex
-        sx={{
-          position: tablet ? 'static' : 'absolute',
-        }}
-        bg={tablet ? 'dark.7' : 'transparent'}
-        // bg="dark.7"
-        p="xs"
-        pl={30}
-        pt={tablet ? 'xs' : 0}
-      >
-        <Anchor
-          sx={(theme) => ({
-            display: 'flex',
-            alignItems: 'center',
-            color: theme.colors.gray[5],
-          })}
-          component={Link}
-          href={{
-            pathname: `/shows/${showId}/${
-              typeof showName === 'string' ? encodeURIComponent(showName) : ''
-            }/seasons`,
+      {tablet ? (
+        <Flex
+          sx={{
+            position: tablet ? 'static' : 'absolute',
           }}
+          bg={tablet ? 'dark.7' : 'transparent'}
+          // bg="dark.7"
+          p="xs"
+          pl={30}
+          pt={tablet ? 'xs' : 0}
         >
-          <FaChevronLeft size={tablet ? 12 : 14} />
-          <Space w={3} />
-          <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
-        </Anchor>
-      </Flex>
+          <Anchor
+            sx={(theme) => ({
+              display: 'flex',
+              alignItems: 'center',
+              color: theme.colors.gray[5],
+            })}
+            component={Link}
+            href={{
+              pathname: `/shows/${showId}/${
+                typeof showName === 'string' ? encodeURIComponent(showName) : ''
+              }/seasons`,
+            }}
+          >
+            <FaChevronLeft size={tablet ? 12 : 14} />
+            <Space w={3} />
+            <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
+          </Anchor>
+        </Flex>
+      ) : (
+        <Breadcrumbs separator={<IconChevronRight size={16} />} pl="lg">
+          {items}
+        </Breadcrumbs>
+      )}
 
       <Container pos="relative" p={0}>
         <Flex justify="space-between" py="xs" px="md">
@@ -307,6 +341,24 @@ export default function Episode() {
                 {episodeDetails.credits.cast && (
                   <CreditList title="Star" credits={episodeDetails.credits.cast} mobile={mobile} />
                 )}
+                {showName && (
+                  <Anchor
+                    c="gray.5"
+                    component={Link}
+                    href={{
+                      pathname: `/shows/${showId}/${
+                        typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                      }/season/${seasonNumber}/episode/${episodeNumber}/cast`,
+                    }}
+                  >
+                    <Flex>
+                      <Text italic fz="sm" c="gray.6">
+                        see full cast and crew
+                      </Text>
+                      <IconChevronRight color="#868e96" size={18} style={{ marginTop: 2.6 }} />
+                    </Flex>
+                  </Anchor>
+                )}
               </Stack>
             </Grid.Col>
 
@@ -320,18 +372,7 @@ export default function Episode() {
             episodeDetails.images.stills &&
             episodeDetails.images.stills.length >= 2 ? (
               <Grid.Col span={mobile ? 18 : 20} maw={tablet ? '95vw' : '100%%'}>
-                <Title
-                  size="h3"
-                  fw={600}
-                  pl={8}
-                  mb="md"
-                  inline
-                  sx={(theme) => ({
-                    borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
-                  })}
-                >
-                  Photos
-                </Title>
+                <TitleLink title="Photos" />
 
                 <ImagesFromEpisode episodeImages={episodeDetails.images.stills} />
               </Grid.Col>
