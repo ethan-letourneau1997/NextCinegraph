@@ -65,6 +65,7 @@ export default function Episode() {
             currentEpisodeNumber
           );
           setEpisodeDetails(episodeData);
+          console.log(episodeData);
         }
 
         //* Fetch season details
@@ -159,13 +160,18 @@ export default function Episode() {
     router.query.showName!.toString()
   )}`;
 
-  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+  const seasonsLink = `/shows/${router.query.showId}/${encodeURIComponent(
     router.query.showName!.toString()
   )}/seasons`;
+
+  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}/season/${router.query.seasonNumber}`;
 
   const items = [
     { title: 'tv', href: showsLink, underline: false },
     { title: showName, href: showLink },
+    { title: 'seasons', href: seasonsLink },
     { title: `season ${seasonNumber}`, href: seasonLink },
     { title: `episode ${episodeNumber}`, href: '#', color: 'gray.2', underline: false },
   ].map((item, index) => (
@@ -181,41 +187,43 @@ export default function Episode() {
   ));
 
   return (
-    <Box>
-      {tablet ? (
-        <Flex
-          sx={{
-            position: tablet ? 'static' : 'absolute',
-          }}
-          bg={tablet ? 'dark.7' : 'transparent'}
-          // bg="dark.7"
-          p="xs"
-          pl={30}
-          pt={tablet ? 'xs' : 0}
-        >
-          <Anchor
-            sx={(theme) => ({
-              display: 'flex',
-              alignItems: 'center',
-              color: theme.colors.gray[5],
-            })}
-            component={Link}
-            href={{
-              pathname: `/shows/${showId}/${
-                typeof showName === 'string' ? encodeURIComponent(showName) : ''
-              }/seasons`,
+    <Container fluid p={tablet ? 0 : ''}>
+      <Box>
+        {tablet ? (
+          <Flex
+            sx={{
+              position: tablet ? 'static' : 'absolute',
             }}
+            bg={tablet ? 'dark.7' : 'transparent'}
+            // bg="dark.7"
+            p="xs"
+            pl={30}
+            pt={tablet ? 'xs' : 0}
           >
-            <FaChevronLeft size={tablet ? 12 : 14} />
-            <Space w={3} />
-            <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
-          </Anchor>
-        </Flex>
-      ) : (
-        <Breadcrumbs separator={<IconChevronRight size={16} />} pl="lg">
-          {items}
-        </Breadcrumbs>
-      )}
+            <Anchor
+              sx={(theme) => ({
+                display: 'flex',
+                alignItems: 'center',
+                color: theme.colors.gray[5],
+              })}
+              component={Link}
+              href={{
+                pathname: `/shows/${showId}/${
+                  typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                }/seasons`,
+              }}
+            >
+              <FaChevronLeft size={tablet ? 12 : 14} />
+              <Space w={3} />
+              <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
+            </Anchor>
+          </Flex>
+        ) : (
+          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
+            {items}
+          </Breadcrumbs>
+        )}
+      </Box>
 
       <Container pos="relative" p={0}>
         <Flex justify="space-between" py="xs" px="md">
@@ -382,6 +390,6 @@ export default function Episode() {
           <p>Loading episode details...</p>
         )}
       </Container>
-    </Box>
+    </Container>
   );
 }

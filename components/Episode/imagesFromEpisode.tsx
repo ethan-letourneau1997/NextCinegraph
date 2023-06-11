@@ -40,7 +40,7 @@ export function ImagesFromEpisode({ episodeImages }: EpisodeImagesProps) {
 
   return (
     <Slider {...backdropSettings}>
-      {episodeImages.length > 2 &&
+      {episodeImages.length >= 2 &&
         episodeImages.map((episodeImage) => (
           <Box key={episodeImage.file_path} w="100%">
             <Box bg="dark.7">

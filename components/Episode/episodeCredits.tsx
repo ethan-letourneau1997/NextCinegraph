@@ -127,9 +127,13 @@ export function EpisodeCredits() {
     router.query.showName!.toString()
   )}`;
 
-  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+  const seasonsLink = `/shows/${router.query.showId}/${encodeURIComponent(
     router.query.showName!.toString()
   )}/seasons`;
+
+  const seasonLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}/season/${router.query.seasonNumber}`;
 
   const episodeLink = `/shows/${router.query.showId}/${encodeURIComponent(
     router.query.showName!.toString()
@@ -138,6 +142,7 @@ export function EpisodeCredits() {
   const items = [
     { title: 'tv', href: showsLink, underline: false },
     { title: showName, href: showLink },
+    { title: 'seasons', href: seasonsLink },
     { title: `season ${seasonNumber}`, href: seasonLink },
     { title: `episode ${episodeNumber}`, href: episodeLink },
     { title: 'Cast and Crew', href: '#', color: 'gray.2', underline: false },
@@ -154,7 +159,7 @@ export function EpisodeCredits() {
   ));
 
   return (
-    <Container fluid p={mobile ? 0 : ''} pb={50}>
+    <Container fluid p={tablet ? 0 : ''} pb={50}>
       <Affix position={{ bottom: rem(20), right: rem(50) }}>
         <Menu>
           <Menu.Target>

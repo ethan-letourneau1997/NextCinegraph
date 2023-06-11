@@ -1,28 +1,64 @@
-import { Anchor, Flex, ScrollArea, Space, Tabs, Text, Container, Title } from '@mantine/core';
+import {
+  Anchor,
+  Box,
+  AspectRatio,
+  Grid,
+  Flex,
+  Text,
+  Divider,
+  Skeleton,
+  Card,
+  Container,
+  Breadcrumbs,
+  Title,
+  Space,
+} from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { FaChevronLeft } from 'react-icons/fa';
+import Image from 'next/image';
 import { useMediaQuery } from '@mantine/hooks';
-import { SeasonType } from '../../../../Types/types';
-import Season from '../../../../components/tvComponents/season';
 
-export default function Seasons() {
+import { IconChevronRight } from '@tabler/icons-react';
+import { FaChevronLeft } from 'react-icons/fa';
+import { formatReleaseDate } from '../../../../components/Discover/discoverGrid';
+import { formatRuntime } from '../../../../utils/utils';
+import { Seasons, SeasonType } from '../../../../Types/types';
+
+export default function ShowSeasons() {
   // responsive styles
   const tablet = useMediaQuery('(max-width: 950px)');
   const mobile = useMediaQuery('(max-width: 600px)');
 
-  //return to top state
+  const [seasons, setSeasons] = useState<Seasons | null>(null);
+  const [error] = useState<string | null>(null);
 
-  //* Get query params
   const router = useRouter();
   const { showId, showName } = router.query;
 
-  //* set state for seasons
-  const [seasons, setSeasons] = useState<SeasonType[]>([]);
+  // breadcrumbs
+  const showsLink = '/shows/popular';
 
-  //* Set current season to the first season
-  // const [currentSeason, setCurrentSeason] = useState(1);
+  const showLink = `/shows/${router.query.showId}/${encodeURIComponent(
+    router.query.showName!.toString()
+  )}`;
+
+  const items = [
+    { title: 'tv', href: showsLink, underline: false },
+    { title: showName, href: showLink },
+    { title: 'seasons', href: '#', color: 'gray.2', underline: false },
+  ].map((item, index) => (
+    <Anchor
+      underline={item.underline}
+      c={item.color || 'dimmed'}
+      fz="sm"
+      href={item.href}
+      key={index}
+    >
+      {item.title}
+    </Anchor>
+  ));
 
   const apiKey = '0fd7a8764e6522629a3b7e78c452c348';
   useEffect(() => {
@@ -37,94 +73,140 @@ export default function Seasons() {
         setSeasons(filteredSeasons); //* Reverse the order of seasons array
         // setCurrentSeason(filteredSeasons[0].season_number); //* Set current season to the first season
       })
-      .catch((error) => console.error(error));
+      .catch(() => console.error(error));
   }, [showId, apiKey]);
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!seasons) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-      <Flex bg={tablet ? 'dark.7' : 'transparent'} p="xs">
-        <Anchor
-          sx={(theme) => ({
-            display: 'flex',
-            alignItems: 'center',
-            color: theme.colors.gray[5],
-          })}
-          component={Link}
-          href={{
-            pathname: `/shows/${showId}/${
-              typeof showName === 'string' ? encodeURIComponent(showName) : ''
-            }`,
+    <>
+      {tablet ? (
+        <Flex
+          sx={{
+            position: tablet ? 'static' : 'absolute',
           }}
+          bg={tablet ? 'dark.7' : 'transparent'}
+          // bg="dark.7"
+          p="xs"
+          pl={30}
+          pt={tablet ? 'xs' : 0}
         >
-          <FaChevronLeft size={tablet ? 12 : 14} />
-          <Space w={3} />
-          <Text fz={mobile ? 'sm' : 'md'}>{showName}</Text>
-        </Anchor>
-      </Flex>
-      <Container>
-        <Title pl={7} size="h5" mt="xs" c="gray.4">
-          Season
-        </Title>
-        <Tabs
-          pt={6}
-          pl="xs"
-          defaultValue="1"
-          unstyled
-          // styles with theme
-          styles={(theme) => ({
-            root: {
-              padding: 0,
-              //show select pointer on hover
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            },
-            tab: {
-              height: 40,
-              width: 40,
-              marginRight: 8,
+          <Anchor
+            sx={(theme) => ({
+              display: 'flex',
+              alignItems: 'center',
               color: theme.colors.gray[5],
-              paddingBottom: 8,
-              backgroundColor: 'transparent',
-              border: 'none',
-              '&[data-active]': {
-                backgroundColor: theme.colors.yellow[5],
-                borderRadius: theme.radius.xl,
-                color: theme.colors.dark[5],
-              },
-            },
-            tabLabel: {
-              fontWeight: 400,
+            })}
+            component={Link}
+            href={{
+              pathname: `/shows/${showId}/${
+                typeof showName === 'string' ? encodeURIComponent(showName) : ''
+              }`,
+            }}
+          >
+            <FaChevronLeft size={tablet ? 12 : 14} />
+            <Space w={3} />
+            <Text fz={mobile ? 'sm' : 'md'}>{showName}</Text>
+          </Anchor>
+        </Flex>
+      ) : (
+        <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl" mt="xl">
+          {items}
+        </Breadcrumbs>
+      )}
 
-              fontSize: theme.fontSizes.lg,
-            },
-          })}
-        >
-          <Tabs.List>
-            <ScrollArea scrollbarSize={0}>
-              <Flex>
-                {seasons &&
-                  seasons
-                    .filter((season) => season.episode_count > 0)
-                    .map((season) => (
-                      <Tabs.Tab key={season.id} value={season.season_number.toString()} pt="xs">
-                        {season.season_number}
-                      </Tabs.Tab>
-                    ))}
-              </Flex>
-            </ScrollArea>
-          </Tabs.List>
+      <Container size="md">
+        <Title align="center" size="h2" mb="xl" mt="md">
+          {showName}
+        </Title>
+        {seasons &&
+          seasons.map((season) => (
+            <Box key={season.id}>
+              <Grid
+                gutter="xs"
+                mb="xl"
+                columns={20}
+                justify="center"
+                maw="100%"
+                sx={{
+                  overflow: 'hidden',
+                }}
+              >
+                <Grid.Col span={6} xs={4} sm={4} md={4} lg={4}>
+                  <Card shadow="md">
+                    <Card.Section>
+                      <AspectRatio ratio={tablet ? 2 / 3 : 2 / 3}>
+                        <Skeleton />
+                        <Image
+                          fill
+                          alt=""
+                          src={
+                            season.poster_path
+                              ? `https://image.tmdb.org/t/p/w500${season.poster_path}`
+                              : '/media_placeholder_lg.png'
+                          }
+                        />
+                      </AspectRatio>
+                    </Card.Section>
+                  </Card>
+                </Grid.Col>
+                <Grid.Col px="xs" span={14} xs={16} sm={12} lg={14}>
+                  <Anchor
+                    underline={false}
+                    c="gray.5"
+                    component={Link}
+                    href={{
+                      pathname: `/shows/${showId}/${
+                        typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                      }/season/${season.season_number}`,
+                    }}
+                  >
+                    <Text fz="xl" c="gray.0">
+                      &nbsp;{season.name}
+                    </Text>
+                  </Anchor>
 
-          {seasons &&
-            seasons
-              .filter((season) => season.episode_count > 0)
-              .map((season) => (
-                <Tabs.Panel key={season.id} value={season.season_number.toString()} pt="xs">
-                  {season.season_number && <Season seasonNumber={season.season_number} />}
-                </Tabs.Panel>
-              ))}
-        </Tabs>
+                  <Flex align="center" gap="xs" pl={3} mt={3}>
+                    <Text fz="sm">{formatReleaseDate(season.air_date)}</Text>
+                    <Text fz="sm" c="brand.4">
+                      {formatRuntime(season.runtime)}
+                    </Text>
+                  </Flex>
+
+                  <Box>
+                    {season.overview ? (
+                      <Text lineClamp={3} mt="xs" fz="sm" c="gray.4">
+                        {season.overview}
+                      </Text>
+                    ) : (
+                      <Text mt="xs" fz="sm" c="gray.4">
+                        No overview available. Try adding one at{' '}
+                        <Anchor
+                          href="https://www.themoviedb.org/?language=en-US"
+                          target="_blank"
+                          fw={600}
+                          c="#0AB5E0"
+                        >
+                          TMDB
+                        </Anchor>{' '}
+                        !
+                      </Text>
+                    )}
+                  </Box>
+                </Grid.Col>
+                <Grid.Col span={20} sm={16} lg={18}>
+                  <Divider mt="md" />
+                </Grid.Col>
+              </Grid>
+            </Box>
+          ))}
       </Container>
-    </div>
+    </>
   );
 }
