@@ -114,7 +114,7 @@ export default function Season(props: SeasonProps) {
                           <BsFillStarFill size={12} color="#ffd452" />
                         </Flex>
 
-                        <Text fz="sm"> {episode.vote_average}</Text>
+                        <Text fz="sm"> {episode.vote_average.toFixed(1)}</Text>
                       </Flex>
                     ) : null}
                     <Text fz="sm">{formatReleaseDate(episode.air_date)}</Text>

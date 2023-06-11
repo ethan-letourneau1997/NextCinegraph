@@ -1,11 +1,13 @@
 import { Center, Text } from '@mantine/core';
 import { BiCameraMovie } from 'react-icons/bi';
+import Image from 'next/image';
+import { CSSProperties } from 'react';
 
 interface PlaceholderProps {
   iconSize: number;
 }
 
-export function PlaceholderMovie({ iconSize }: PlaceholderProps) {
+export function PlaceholderMedia({ iconSize }: PlaceholderProps) {
   return (
     <Center
       bg="dark.6"
@@ -18,4 +20,16 @@ export function PlaceholderMovie({ iconSize }: PlaceholderProps) {
       </Text>
     </Center>
   );
+}
+
+interface MediaPlaceholderProps {
+  radius: number;
+}
+
+export function MediaPlaceholder({ radius }: MediaPlaceholderProps) {
+  const style: CSSProperties = {
+    borderRadius: radius,
+  };
+
+  return <Image alt="" fill src="/still_placeholder.png" style={style} />;
 }

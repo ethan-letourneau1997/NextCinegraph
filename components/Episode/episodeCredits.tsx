@@ -66,7 +66,6 @@ export function EpisodeCredits() {
         setCastAndCrew(response.credits);
         setMedia(response);
         setGuestStars(response.guest_stars);
-        console.log(response.guest_stars);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -151,6 +150,8 @@ export function EpisodeCredits() {
                   Cast
                 </Text>
               </ScrollLink>
+            </Menu.Item>
+            <Menu.Item p={0}>
               <ScrollLink
                 key="guestStars"
                 activeClass="active"
@@ -255,21 +256,35 @@ export function EpisodeCredits() {
             <Image
               fill
               alt=""
-              src={`https://image.tmdb.org/t/p/original${media?.still_path}`}
+              src={
+                media?.still_path
+                  ? `https://image.tmdb.org/t/p/original${media?.still_path}`
+                  : '/still_placeholder_large.png'
+              }
               style={{ borderTopLeftRadius: '4px', borderTopRightRadius: '4px' }}
             />
           </AspectRatio>
           <Flex justify="center" direction="column" w="fit-content" px={mobile ? 'xs' : 0}>
+            <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
+              {showName} S{seasonNumber}.E
+              {episodeNumberValue && episodeNumberValue < 10
+                ? `0${episodeNumberValue}`
+                : episodeNumberValue}{' '}
+              Cast
+            </Title>
+            {/* <Title size="h5" c="dimmed">
+              S{seasonNumber}.E
+              {episodeNumberValue && episodeNumberValue < 10
+                ? `0${episodeNumberValue}`
+                : episodeNumberValue}{' '}
+            </Title> */}
             <Title size={mobile ? 'h3' : 'h2'}>
               {media?.name}
               {/* <Divider mt={5} /> */}
             </Title>
-            <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
-              {showName}&nbsp;{seasonNumber}x
-              {episodeNumberValue && episodeNumberValue < 10
-                ? `0${episodeNumberValue}`
-                : episodeNumberValue}{' '}
-            </Title>
+            {/* <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
+              {showName}
+            </Title> */}
           </Flex>
         </Flex>
       </Container>
@@ -294,7 +309,7 @@ export function EpisodeCredits() {
             {castAndCrew.cast?.map((castMember, index) => (
               // <tr key={castMember.id}>
               <Accordion
-                transitionDuration={200}
+                transitionDuration={100}
                 defaultValue="customization"
                 chevron={castMember.roles && castMember.roles.length > 1 ? <BsChevronUp /> : null}
                 styles={(theme) => ({
@@ -317,18 +332,17 @@ export function EpisodeCredits() {
                   >
                     {mobile ? (
                       <Flex gap="md" align="center">
-                        {castMember.profile_path ? (
-                          <Image
-                            height={90}
-                            width={60}
-                            alt=""
-                            src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
-                          />
-                        ) : (
-                          <Flex h={90} w={60} bg="dark.4" align="center">
-                            <BsPersonFill size={60} color="#18181B" />
-                          </Flex>
-                        )}
+                        <Image
+                          height={90}
+                          width={60}
+                          alt="actor profile picture"
+                          src={
+                            castMember.profile_path
+                              ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                              : '/person_placeholder_small.png'
+                          }
+                        />
+
                         <Flex direction="column">
                           <Anchor
                             component={Link}
@@ -362,8 +376,12 @@ export function EpisodeCredits() {
                               <Image
                                 height={52.5}
                                 width={35}
-                                alt=""
-                                src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
+                                alt="actor profile picture"
+                                src={
+                                  castMember.profile_path
+                                    ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                                    : '/person_placeholder_small.png'
+                                }
                               />
                             ) : (
                               <Flex h={52.5} w={35} bg="dark.4" align="center">
@@ -473,18 +491,17 @@ export function EpisodeCredits() {
                   >
                     {mobile ? (
                       <Flex gap="md" align="center">
-                        {castMember.profile_path ? (
-                          <Image
-                            height={90}
-                            width={60}
-                            alt=""
-                            src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
-                          />
-                        ) : (
-                          <Flex h={90} w={60} bg="dark.4" align="center">
-                            <BsPersonFill size={60} color="#18181B" />
-                          </Flex>
-                        )}
+                        <Image
+                          height={90}
+                          width={60}
+                          alt=""
+                          src={
+                            castMember.profile_path
+                              ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                              : '/person_placeholder_small.png'
+                          }
+                        />
+
                         <Flex direction="column">
                           <Anchor
                             component={Link}
@@ -514,18 +531,17 @@ export function EpisodeCredits() {
                       <Grid>
                         <Grid.Col span={4}>
                           <Flex align="center" gap="xs" fw={600}>
-                            {castMember.profile_path ? (
-                              <Image
-                                height={52.5}
-                                width={35}
-                                alt=""
-                                src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
-                              />
-                            ) : (
-                              <Flex h={52.5} w={35} bg="dark.4" align="center">
-                                <BsPersonFill size={40} color="#18181B" />
-                              </Flex>
-                            )}
+                            <Image
+                              height={52.5}
+                              width={35}
+                              alt=""
+                              src={
+                                castMember.profile_path
+                                  ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                                  : '/person_placeholder_small.png'
+                              }
+                            />
+
                             <Anchor
                               component={Link}
                               href={`/people/${castMember.id}/${encodeURIComponent(
@@ -574,13 +590,13 @@ export function EpisodeCredits() {
             <Element key={index} name={department.department} className="element">
               <Box>
                 <Flex pl={12} pr="sm" gap={3} align="center">
-                  <Text size={mobile ? 'lg' : 'xl'} fw={800} id={department.department}>
-                    {' '}
+                  <Title size={mobile ? 'h3' : 'h2'} id={department.department}>
                     {department.department}
-                  </Text>
-                  <Text c="dark.1" fw={300} fz={mobile ? 'md' : 'lg'}>
+                  </Title>
+                  <Text c="dark.1" pt={2} fw={300} fz={mobile ? 'lg' : 22}>
                     ({department.crew.length})
                   </Text>
+
                   <Divider
                     my="sm"
                     variant="dotted"

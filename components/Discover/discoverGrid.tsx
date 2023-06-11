@@ -18,7 +18,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 import { MediaItemType } from '../../Types/types';
 import { useStore } from '../../store/store';
-import { PlaceholderMovie } from '../BiteSized/placeholders';
+import { MediaPlaceholder } from '../BiteSized/placeholders';
 
 export function formatReleaseDate(inputDate: string | undefined) {
   if (!inputDate) {
@@ -89,7 +89,7 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                         src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
                       />
                     ) : (
-                      <PlaceholderMovie iconSize={35} />
+                      <MediaPlaceholder radius={4} />
                     )}
                   </AspectRatio>
                 </Anchor>
