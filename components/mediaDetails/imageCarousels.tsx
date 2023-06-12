@@ -3,13 +3,14 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { Box, Group, Image, SegmentedControl, Tabs, Title, useMantineTheme } from '@mantine/core';
+import { Box, Group, Image, SegmentedControl, Tabs } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import Slider from 'react-slick';
 
 // import Image from "next/image";
 import { Poster, Images } from '../../Types/types';
+import { TitleLink } from '../BiteSized/titleLink';
 
 type mediaImagesProps = {
   images: Images;
@@ -17,8 +18,6 @@ type mediaImagesProps = {
 
 export function MediaCarousel({ images }: mediaImagesProps) {
   const [value, setValue] = useState('posters');
-
-  const theme = useMantineTheme();
 
   const posterSettings = {
     className: 'slider variable-width',
@@ -86,18 +85,9 @@ export function MediaCarousel({ images }: mediaImagesProps) {
     <>
       <Group spacing="xs" mb="md" mt={75}>
         {/* <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" /> */}
-        <Title
-          pt={1}
-          c="gray.2"
-          size="h3"
-          pl={8}
-          inline
-          sx={{
-            borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
-          }}
-        >
-          Photos
-        </Title>
+        <Box pl={8}>
+          <TitleLink title="Photos" />
+        </Box>
 
         <SegmentedControl
           ml="xl"

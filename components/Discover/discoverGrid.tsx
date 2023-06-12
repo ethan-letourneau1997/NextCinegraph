@@ -18,7 +18,6 @@ import { useMediaQuery } from '@mantine/hooks';
 
 import { MediaItemType } from '../../Types/types';
 import { useStore } from '../../store/store';
-import { MediaPlaceholder } from '../BiteSized/placeholders';
 
 export function formatReleaseDate(inputDate: string | undefined) {
   if (!inputDate) {
@@ -79,18 +78,18 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                   underline={false}
                 >
                   <AspectRatio ratio={2 / 3} miw={desktop ? 100 : 80}>
-                    {item.poster_path ? (
-                      <Image
-                        fill
-                        style={{
-                          borderRadius: '4px',
-                        }}
-                        alt=""
-                        src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
-                      />
-                    ) : (
-                      <MediaPlaceholder radius={4} />
-                    )}
+                    <Image
+                      fill
+                      style={{
+                        borderRadius: '4px',
+                      }}
+                      alt=""
+                      src={
+                        item.poster_path
+                          ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
+                          : '/media_placeholder_md.png'
+                      }
+                    />
                   </AspectRatio>
                 </Anchor>
               </Grid.Col>

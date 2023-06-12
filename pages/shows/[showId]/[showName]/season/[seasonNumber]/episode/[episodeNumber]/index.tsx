@@ -380,7 +380,7 @@ export default function Episode() {
             episodeDetails.images.stills &&
             episodeDetails.images.stills.length >= 2 ? (
               <Grid.Col span={mobile ? 18 : 20} maw={tablet ? '95vw' : '100%%'}>
-                <TitleLink title="Photos" />
+                <TitleLink title="Photos" bottomSpace />
 
                 <ImagesFromEpisode episodeImages={episodeDetails.images.stills} />
               </Grid.Col>

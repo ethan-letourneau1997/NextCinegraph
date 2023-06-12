@@ -15,7 +15,6 @@ import {
   Anchor,
 } from '@mantine/core';
 // import placeholderImage from 'next/still_placeholder.png';
-import Image from 'next/image';
 
 import { BsCircleFill, BsFillStarFill } from 'react-icons/bs';
 import { useMediaQuery } from '@mantine/hooks';
@@ -57,7 +56,13 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
       >
         {desktop ? (
           <Card.Section>
-            <BackgroundImage src={`https://image.tmdb.org/t/p/w780${episode.still_path}`}>
+            <BackgroundImage
+              src={
+                episode.still_path
+                  ? `https://image.tmdb.org/t/p/w780${episode.still_path}`
+                  : '/still_placeholder_lg.png'
+              }
+            >
               <AspectRatio ratio={16 / 7} display="flex">
                 <Box>
                   <Flex justify="flex-end" h="100%" w="100%">
@@ -78,7 +83,6 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
                     </Box>
                   </Flex>
                 </Box>
-                {episode.still_path ? null : <Image alt="" fill src="/still_placeholder_lg.png" />}
               </AspectRatio>
             </BackgroundImage>
           </Card.Section>
@@ -133,7 +137,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
             </Flex>
           ) : null}
           {episode.vote_average && episode.vote_average > 0 ? (
-            <BsCircleFill size={3} color="#fff" />
+            <BsCircleFill size={3} color="#ced4da" />
           ) : null}
 
           <Text c="gray.5" fw={500} fz="sm">

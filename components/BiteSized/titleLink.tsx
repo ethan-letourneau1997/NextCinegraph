@@ -1,4 +1,4 @@
-import { Anchor, Box, Flex, Title, useMantineTheme } from '@mantine/core';
+import { Anchor, Box, Flex, Space, Title, useMantineTheme } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 
 import Link from 'next/link';
@@ -8,13 +8,14 @@ interface TitleLinkProps {
   title: string;
   color?: string;
   size?: string;
+  bottomSpace?: boolean;
 }
 
-export function TitleLink({ linkPath, title, size, color }: TitleLinkProps) {
+export function TitleLink({ linkPath, title, size, color, bottomSpace }: TitleLinkProps) {
   const theme = useMantineTheme();
 
   return (
-    <Box mb="md">
+    <Box>
       {linkPath ? (
         <Anchor
           component={Link}
@@ -55,6 +56,7 @@ export function TitleLink({ linkPath, title, size, color }: TitleLinkProps) {
           {title}
         </Title>
       )}
+      {bottomSpace ? <Space h="md" /> : null}
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Anchor, Box, Flex, Grid, Group, Text, Title, useMantineTheme } from '@mantine/core';
+import { Anchor, Box, Flex, Grid, Group, Text, useMantineTheme } from '@mantine/core';
 
 import { BsPersonFill } from 'react-icons/bs';
 import Image from 'next/image';
@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 
-import { IconChevronRight } from '@tabler/icons';
 import { Credits } from '../../Types/types';
+import { TitleLink } from '../BiteSized/titleLink';
 
 interface MediaCreditsProps {
   credits: Credits;
@@ -16,17 +16,6 @@ interface MediaCreditsProps {
 
 export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) {
   const router = useRouter();
-
-  let mediaId: string | string[] | undefined;
-  let mediaName: string | string[] | undefined;
-
-  if (mediaType === 'movie') {
-    mediaId = router.query.movieId;
-    mediaName = router.query.movieName;
-  } else if (mediaType === 'tv') {
-    mediaId = router.query.showId;
-    mediaName = router.query.showName;
-  }
 
   const theme = useMantineTheme();
 
@@ -37,35 +26,14 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
   return (
     <Box mt={75}>
       <Group spacing="xs">
-        <Anchor
-          component={Link}
-          href={{
-            pathname: `/${mediaType === 'tv' ? 'shows' : 'movies'}/${mediaId}/${
-              typeof mediaName === 'string' ? encodeURIComponent(mediaName) : ''
-            }/cast`,
-          }}
-          sx={{
-            // change color on hover
-            '&:hover': {
-              color: theme.colors.yellow[5],
-            },
-          }}
-        >
-          <Flex align="center" c="gray.2">
-            <Title
-              size="h3"
-              pl={8}
-              inline
-              sx={{
-                borderLeft: `2.5px solid ${theme.colors.yellow[5]}`,
-              }}
-            >
-              Top Cast
-            </Title>
-
-            <IconChevronRight size={28} style={{ paddingTop: 2 }} />
-          </Flex>
-        </Anchor>
+        <TitleLink
+          title="Top Cast"
+          linkPath={`/${mediaType === 'tv' ? 'shows' : 'movies'}/${
+            router.query.showId || router.query.movieId
+          }/${encodeURIComponent(
+            router.query.showName?.toString() || router.query.movieName!.toString()
+          )}/cast`}
+        />
       </Group>
       <Grid gutter="lg" pt="md">
         {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (
@@ -90,7 +58,11 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
                     height={80}
                     width={80}
                     alt=""
-                    src={`https://image.tmdb.org/t/p/w470_and_h470_face${castMember.profile_path}`}
+                    src={
+                      castMember.profile_path
+                        ? `https://image.tmdb.org/t/p/w470_and_h470_face${castMember.profile_path}`
+                        : '/person_square_sm.png'
+                    }
                   />
                 ) : (
                   <Box

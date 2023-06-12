@@ -322,25 +322,9 @@ export function EpisodeCredits() {
           <Flex justify="center" direction="column" w="fit-content" px={mobile ? 'xs' : 0}>
             <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
               {showName}
-              {/* S{seasonNumber}.E
-              {episodeNumberValue && episodeNumberValue < 10
-                ? `0${episodeNumberValue}`
-                : episodeNumberValue}{' '}
-              Cast */}
             </Title>
-            {/* <Title size="h5" c="dimmed">
-              S{seasonNumber}.E
-              {episodeNumberValue && episodeNumberValue < 10
-                ? `0${episodeNumberValue}`
-                : episodeNumberValue}{' '}
-            </Title> */}
-            <Title size={mobile ? 'h3' : 'h2'}>
-              {media?.name}
-              {/* <Divider mt={5} /> */}
-            </Title>
-            {/* <Title color="gray.7" size={mobile ? 'h4' : 'h3'}>
-              {showName}
-            </Title> */}
+
+            <Title size={mobile ? 'h3' : 'h2'}>{media?.name}</Title>
           </Flex>
         </Flex>
       </Container>

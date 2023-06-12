@@ -45,7 +45,11 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
             <Image
               fill
               alt=""
-              src={`https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`}
+              src={
+                mediaItem.poster_path
+                  ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
+                  : '/media_placeholder_lg.png'
+              }
               style={{
                 borderRadius: '4px',
                 border: '.5px solid #3F3F46',

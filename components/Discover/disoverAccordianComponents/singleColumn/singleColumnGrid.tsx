@@ -47,7 +47,11 @@ export default function SingleColumnGrid(props: {
                         border: '1px solid hsla(0, 0%, 30%, .25)',
                       }}
                       alt="poster"
-                      src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                      src={
+                        item.poster_path
+                          ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
+                          : '/media_placeholder_sm.png'
+                      }
                       fill
                     />
                   </AspectRatio>

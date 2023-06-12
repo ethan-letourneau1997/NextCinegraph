@@ -20,6 +20,7 @@ export function GuestStars({ mobile, episodeDetails }: GuestStarsProps) {
         episodeDetails.guest_stars &&
         episodeDetails.guest_stars.length > 0 && (
           <TitleLink
+            bottomSpace
             title="Guest Stars"
             linkPath={`/shows/${router.query.showId}/${encodeURIComponent(
               router.query.showName!.toString()

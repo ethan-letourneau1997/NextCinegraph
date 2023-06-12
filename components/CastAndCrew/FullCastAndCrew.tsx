@@ -18,7 +18,7 @@ import {
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { BsChevronUp, BsPersonFill } from 'react-icons/bs';
+import { BsChevronUp } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
 import { Link as ScrollLink, Element } from 'react-scroll';
@@ -34,9 +34,9 @@ interface FullCastAndCrewProps {
 
 export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
   // responsive styles
-
   const mobile = useMediaQuery('(max-width: 500px)');
 
+  //* Get query params
   const router = useRouter();
 
   let mediaId: string | string[] | undefined;
@@ -190,18 +190,18 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
           </Menu.Dropdown>
         </Menu>
       </Affix>
-      <Container
-        size="sm"
-        p="xs"
-        pb="xl"
-        sx={(theme) => ({
-          border: `1px solid ${theme.colors.dark[4]}`,
-          borderBottom: 'none',
-        })}
-      >
+      <Container size="sm" p="xs" pb="xl">
         <Flex gap="sm">
           <AspectRatio ratio={2 / 3} w={70}>
-            <Image fill alt="" src={`https://image.tmdb.org/t/p/w342${media?.poster_path}`} />
+            <Image
+              fill
+              alt=""
+              src={
+                media?.poster_path
+                  ? `https://image.tmdb.org/t/p/w342${media.poster_path}`
+                  : '/media_placeholder_sm.png'
+              }
+            />
           </AspectRatio>
           <Flex justify="center" direction="column" w="fit-content">
             <Text size={mobile ? 28 : 28} fw={600} inline>
@@ -221,9 +221,6 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
         p={0}
         py="xl"
         //sx with theme prop
-        sx={(theme) => ({
-          border: `1px solid ${theme.colors.dark[4]}`,
-        })}
       >
         <Element name="Cast" className="element">
           <Flex pl={12} pr="sm" gap={3} align="center">
@@ -269,18 +266,17 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                   >
                     {mobile ? (
                       <Flex gap="md" align="center">
-                        {castMember.profile_path ? (
-                          <Image
-                            height={90}
-                            width={60}
-                            alt=""
-                            src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
-                          />
-                        ) : (
-                          <Flex h={90} w={60} bg="dark.4" align="center">
-                            <BsPersonFill size={60} color="#18181B" />
-                          </Flex>
-                        )}
+                        <Image
+                          height={90}
+                          width={60}
+                          alt=""
+                          src={
+                            castMember.profile_path
+                              ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                              : '/person_placeholder_sm.png'
+                          }
+                        />
+
                         <Flex direction="column">
                           <Anchor
                             component={Link}
@@ -313,19 +309,19 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                       <Grid>
                         <Grid.Col span={mediaType === 'tv' ? 4 : 6}>
                           <Flex align="center" gap="xs" fw={600}>
-                            {castMember.profile_path ? (
-                              <Image
-                                height={52.5}
-                                width={35}
-                                alt=""
-                                src={`https://image.tmdb.org/t/p/w92${castMember.profile_path}`}
-                              />
-                            ) : (
-                              <Flex h={52.5} w={35} bg="dark.4" align="center">
-                                <BsPersonFill size={40} color="#18181B" />
-                              </Flex>
-                            )}
+                            <Image
+                              height={52.5}
+                              width={35}
+                              alt=""
+                              src={
+                                castMember.profile_path
+                                  ? `https://image.tmdb.org/t/p/w92${castMember.profile_path}`
+                                  : '/person_placeholder_sm.png'
+                              }
+                            />
+
                             <Anchor
+                              truncate
                               component={Link}
                               href={`/people/${castMember.id}/${encodeURIComponent(
                                 castMember.name || ''
