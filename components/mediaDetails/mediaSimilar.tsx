@@ -65,7 +65,11 @@ export default function MediaSimilar(props: { similar: Similar; mediaType: strin
                       }}
                       fill
                       alt=""
-                      src={`https://image.tmdb.org/t/p/w500${credit.poster_path}`}
+                      src={
+                        credit.poster_path
+                          ? `https://image.tmdb.org/t/p/w500${credit.poster_path}`
+                          : '/media_placeholder_lg.png'
+                      }
                     />
                   </AspectRatio>
                 </Anchor>
