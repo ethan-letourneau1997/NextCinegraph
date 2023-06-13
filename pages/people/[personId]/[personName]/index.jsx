@@ -17,11 +17,11 @@ import {
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { PersonDetails, MediaItemType, KnownFor } from '../../../../Types/types';
-import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
+import { useMediaQuery } from '@mantine/hooks';
+
 import { formatReleaseDate } from '../../../../components/Discover/discoverGrid';
 import { TitleLink } from '../../../../components/BiteSized/titleLink';
-import { useMediaQuery } from '@mantine/hooks';
+import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
 
 export default function MediaItem() {
   // responsive styles
@@ -30,26 +30,26 @@ export default function MediaItem() {
   // const smallTable = useMediaQuery('(max-width: 800px)');
   const mobile = useMediaQuery('(max-width: 36em)');
 
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState(null);
 
   const router = useRouter();
   const { personId } = router.query;
 
-  const [mediaDetails, setMediaDetails] = useState<PersonDetails | null>(null);
-  const [crewDepartments, setCrewDepartments] = useState<Record<string, MediaItemType[]>>({});
+  const [mediaDetails, setMediaDetails] = useState();
+  const [crewDepartments, setCrewDepartments] = useState();
 
-  type Department =
-    | 'Editing'
-    | 'Costume & Make-Up'
-    | 'Lighting'
-    | 'Production'
-    | 'Directing'
-    | 'Visual Effects'
-    | 'Art'
-    | 'Sound'
-    | 'Camera'
-    | 'Actors'
-    | 'Writing';
+  // type Department =
+  //   | 'Editing'
+  //   | 'Costume & Make-Up'
+  //   | 'Lighting'
+  //   | 'Production'
+  //   | 'Directing'
+  //   | 'Visual Effects'
+  //   | 'Art'
+  //   | 'Sound'
+  //   | 'Camera'
+  //   | 'Actors'
+  //   | 'Writing';
 
   // Add an extra item for 'Acting'
 
@@ -60,33 +60,30 @@ export default function MediaItem() {
 
     async function fetchDetails() {
       try {
-        const id = personId as string;
+        const id = personId;
         const details = await fetchPersonDetails(parseInt(id, 10));
         setMediaDetails(details);
-        setValue(mediaDetails?.known_for_department);
+        mediaDetails && setValue(mediaDetails.known_for_department);
 
         if (details.combined_credits) {
-          const departments: { [key in Department]: any[] } = details.combined_credits.crew.reduce(
-            (acc, credit) => {
-              const department = credit.department as Department;
-              if (!acc[department]) {
-                acc[department] = [];
-              }
-              acc[department].push(credit);
-              acc[department].sort((a, b) => {
-                const releaseDateA = a.release_date ?? a.first_air_date;
-                const releaseDateB = b.release_date ?? b.first_air_date;
-                if (!releaseDateA && !releaseDateB) return 0;
-                if (!releaseDateA) return 1;
-                if (!releaseDateB) return -1;
-                const releaseYearA = parseInt(releaseDateA.slice(0, 4), 10);
-                const releaseYearB = parseInt(releaseDateB.slice(0, 4), 10);
-                return releaseYearB - releaseYearA;
-              });
-              return acc;
-            },
-            {} as { [key in Department]: any[] }
-          );
+          const departments = details.combined_credits.crew.reduce((acc, credit) => {
+            const { department } = credit;
+            if (!acc[department]) {
+              acc[department] = [];
+            }
+            acc[department].push(credit);
+            acc[department].sort((a, b) => {
+              const releaseDateA = a.release_date ?? a.first_air_date;
+              const releaseDateB = b.release_date ?? b.first_air_date;
+              if (!releaseDateA && !releaseDateB) return 0;
+              if (!releaseDateA) return 1;
+              if (!releaseDateB) return -1;
+              const releaseYearA = parseInt(releaseDateA.slice(0, 4), 10);
+              const releaseYearB = parseInt(releaseDateB.slice(0, 4), 10);
+              return releaseYearB - releaseYearA;
+            });
+            return acc;
+          }, {});
 
           setCrewDepartments(departments);
         } else {
@@ -118,14 +115,15 @@ export default function MediaItem() {
 
   let known_for;
   if (mediaDetails.known_for_department === 'Acting') {
-    known_for = mediaDetails.combined_credits.cast;
-    known_for.sort((a, b) => b.popularity - a.popularity);
+    known_for = mediaDetails.combined_credits?.cast;
+    known_for && known_for.sort((a, b) => b.popularity - a.popularity);
   } else {
-    known_for = crewDepartments[mediaDetails.known_for_department];
-    known_for.sort((a, b) => b.popularity - a.popularity);
+    mediaDetails.known_for_department &&
+      (known_for = crewDepartments[mediaDetails.known_for_department]) &&
+      known_for.sort((a, b) => b.popularity - a.popularity);
   }
 
-  const paragraphs = mediaDetails.biography.split('\n');
+  const paragraphs = mediaDetails.biography?.split('\n');
 
   const departmentNames = Object.keys(crewDepartments);
   const selectData = departmentNames.map((department) => ({
@@ -205,7 +203,7 @@ export default function MediaItem() {
                 showLabel="Read more"
                 hideLabel="Read Less"
               >
-                {paragraphs.map((paragraph, index) => (
+                {paragraphs?.map((paragraph, index) => (
                   <Text pb={14} key={index}>
                     {paragraph}
                   </Text>

@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/movies/[movieId]/[movieName]/casttsx",
-    "components/mediaDetails"
+    "components/mediaDetails",
+    "pages/people/[personId]/[personName]/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

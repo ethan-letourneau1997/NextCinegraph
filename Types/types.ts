@@ -1,6 +1,8 @@
 export type SearchResults = MediaItemType[];
 
 export interface MediaItemType {
+  combined_credits: any;
+  sort(arg0: (a: any, b: any) => number): unknown;
   last_episode_to_air: EpisodeDetails;
   aggregate_credits: Credits;
   number_of_episodes: number;
@@ -138,7 +140,8 @@ export interface PersonDetails {
   homepage?: any;
   id: number;
   imdb_id?: string;
-  known_for_department?: string;
+  known_for_department: string;
+
   name?: string;
   place_of_birth?: string;
   popularity?: number;
