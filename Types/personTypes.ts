@@ -68,6 +68,7 @@ export interface Crew {
 }
 
 export interface KnownFor {
+  name: string;
   adult: boolean;
   backdrop_path?: string;
   genre_ids: number[];
