@@ -1,3 +1,4 @@
+import { PersonType } from '../../Types/personTypes';
 import { MediaItemType } from '../../Types/types';
 
 const TMDB_API_KEY = '0fd7a8764e6522629a3b7e78c452c348';
@@ -27,7 +28,7 @@ export async function fetchPopular(mediaType: string): Promise<MediaItemType[]> 
 }
 
 // * Fetches person items from TMDB API
-export async function fetchPersonDetails(mediaID: number): Promise<MediaItemType> {
+export async function fetchPersonDetails(mediaID: number): Promise<PersonType> {
   const response = await fetch(
     `https://api.themoviedb.org/3/person/${mediaID}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=combined_credits`
   );

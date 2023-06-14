@@ -19,9 +19,10 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useMediaQuery } from '@mantine/hooks';
 
+import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
 import { formatReleaseDate } from '../../../../components/Discover/discoverGrid';
 import { TitleLink } from '../../../../components/BiteSized/titleLink';
-import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
+import { PersonType, KnownFor } from '../../../../Types/personTypes';
 
 export default function MediaItem() {
   // responsive styles
@@ -30,28 +31,16 @@ export default function MediaItem() {
   // const smallTable = useMediaQuery('(max-width: 800px)');
   const mobile = useMediaQuery('(max-width: 36em)');
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<string | null>(null);
 
   const router = useRouter();
   const { personId } = router.query;
 
-  const [mediaDetails, setMediaDetails] = useState();
-  const [crewDepartments, setCrewDepartments] = useState();
+  const [mediaDetails, setMediaDetails] = useState<PersonType | null>(null);
 
-  // type Department =
-  //   | 'Editing'
-  //   | 'Costume & Make-Up'
-  //   | 'Lighting'
-  //   | 'Production'
-  //   | 'Directing'
-  //   | 'Visual Effects'
-  //   | 'Art'
-  //   | 'Sound'
-  //   | 'Camera'
-  //   | 'Actors'
-  //   | 'Writing';
-
-  // Add an extra item for 'Acting'
+  useEffect(() => {
+    mediaDetails && setValue(mediaDetails.known_for_department);
+  }, [mediaDetails]);
 
   useEffect(() => {
     if (!personId) {
@@ -60,35 +49,9 @@ export default function MediaItem() {
 
     async function fetchDetails() {
       try {
-        const id = personId;
+        const id = personId as string;
         const details = await fetchPersonDetails(parseInt(id, 10));
         setMediaDetails(details);
-        mediaDetails && setValue(mediaDetails.known_for_department);
-
-        if (details.combined_credits) {
-          const departments = details.combined_credits.crew.reduce((acc, credit) => {
-            const { department } = credit;
-            if (!acc[department]) {
-              acc[department] = [];
-            }
-            acc[department].push(credit);
-            acc[department].sort((a, b) => {
-              const releaseDateA = a.release_date ?? a.first_air_date;
-              const releaseDateB = b.release_date ?? b.first_air_date;
-              if (!releaseDateA && !releaseDateB) return 0;
-              if (!releaseDateA) return 1;
-              if (!releaseDateB) return -1;
-              const releaseYearA = parseInt(releaseDateA.slice(0, 4), 10);
-              const releaseYearB = parseInt(releaseDateB.slice(0, 4), 10);
-              return releaseYearB - releaseYearA;
-            });
-            return acc;
-          }, {});
-
-          setCrewDepartments(departments);
-        } else {
-          console.error('details.combined_credits is undefined');
-        }
       } catch (error) {
         console.error(error);
       }
@@ -113,31 +76,49 @@ export default function MediaItem() {
     });
   }
 
-  let known_for;
-  if (mediaDetails.known_for_department === 'Acting') {
-    known_for = mediaDetails.combined_credits?.cast;
-    known_for && known_for.sort((a, b) => b.popularity - a.popularity);
-  } else {
-    mediaDetails.known_for_department &&
-      (known_for = crewDepartments[mediaDetails.known_for_department]) &&
-      known_for.sort((a, b) => b.popularity - a.popularity);
-  }
-
   const paragraphs = mediaDetails.biography?.split('\n');
 
-  const departmentNames = Object.keys(crewDepartments);
-  const selectData = departmentNames.map((department) => ({
+  // Create a Set to store unique departments
+  const uniqueDepartments = new Set();
+
+  // Iterate over each object in the array
+  mediaDetails.combined_credits?.crew.forEach((credit) => {
+    // Add the department to the Set
+    uniqueDepartments.add(credit.department);
+  });
+
+  // Convert the Set back to an array
+  const departmentsArray = Array.from(uniqueDepartments);
+
+  // Check if mediaDetails.combined_credits.cast contains one or more items
+  if (mediaDetails.combined_credits && mediaDetails.combined_credits.cast.length > 0) {
+    // Add 'Acting' department to the departmentsArray
+    departmentsArray.push('Acting');
+  }
+
+  // Use the departmentsArray to replace crewDepartments
+  const selectData: any = departmentsArray.map((department) => ({
     value: department,
     label: department,
   }));
 
-  if (
-    mediaDetails.combined_credits &&
-    mediaDetails.combined_credits.cast &&
-    mediaDetails.combined_credits.cast.length > 0
-  ) {
-    selectData.push({ value: 'Acting', label: 'Acting' });
+  // Initialize the known_for array
+  const known_for_credits: KnownFor[] = [];
+
+  // Check if known_for is 'acting'
+  if (mediaDetails && mediaDetails.known_for_department === 'acting') {
+    known_for_credits.push(...mediaDetails.combined_credits!.cast);
+  } else {
+    // Find matching objects in combined_credits.crew based on department
+    const matchingCrew = mediaDetails.combined_credits!.crew.filter(
+      (crewMember) => crewMember.department === mediaDetails.known_for_department
+    );
+    known_for_credits.push(...matchingCrew);
   }
+
+  known_for_credits.sort((a, b) => b.popularity - a.popularity);
+
+  console.log(mediaDetails.combined_credits);
 
   return (
     <Container py="xl" px="xl">
@@ -215,8 +196,8 @@ export default function MediaItem() {
               <TitleLink title="Known For" bottomSpace />
               <ScrollArea h={230}>
                 <Flex gap="sm">
-                  {known_for &&
-                    known_for.map((known_for_item) => (
+                  {known_for_credits &&
+                    known_for_credits.slice(0, 10).map((known_for_item) => (
                       <Box>
                         <Card shadow="md">
                           <Card.Section>
@@ -248,13 +229,13 @@ export default function MediaItem() {
                 <Select
                   value={value}
                   onChange={setValue}
-                  label="Your favorite framework/library"
+                  label=""
                   placeholder="Pick one"
                   data={selectData}
                 />
               </Box>
               <Flex>
-                {value === 'Acting' && (
+                {value === 'Acting' ? (
                   <Box>
                     <Title size="h2">Acting</Title>
                     {mediaDetails.combined_credits &&
@@ -265,25 +246,41 @@ export default function MediaItem() {
                         </div>
                       ))}
                   </Box>
+                ) : (
+                  <Grid>
+                    {/* Map and render the filtered crew members */}
+                    {mediaDetails?.combined_credits?.crew.map((credit) =>
+                      credit.department === value ? (
+                        <Grid.Col span={12} key={credit.id}>
+                          <Flex>
+                            <AspectRatio ratio={2 / 3} w={60}>
+                              <Skeleton />
+                              <Image
+                                fill
+                                alt=""
+                                src={
+                                  credit.poster_path
+                                    ? `https://image.tmdb.org/t/p/original${credit.poster_path}`
+                                    : '/media_placeholder_sm.png'
+                                }
+                              />
+                            </AspectRatio>
+                            <Box>
+                              <Text>{credit.title}</Text>
+                              <Text>
+                                {' '}
+                                {credit.name}{' '}
+                                {credit.release_date?.slice(0, 4) ||
+                                  credit.first_air_date?.slice(0, 4)}
+                              </Text>
+                              <Text>{credit.job}</Text>
+                            </Box>
+                          </Flex>
+                        </Grid.Col>
+                      ) : null
+                    )}
+                  </Grid>
                 )}
-                <Box>
-                  {Object.entries(crewDepartments).map(([department, credits]) => (
-                    <div key={department}>
-                      {value === department && (
-                        <>
-                          <Title size="h3">{department}</Title>
-                          {credits.map((credit) => (
-                            <div key={credit.id}>
-                              {credit.title}
-                              {credit.name}- {credit.release_date?.slice(0, 4)}
-                              {credit.first_air_date?.slice(0, 4)}
-                            </div>
-                          ))}
-                        </>
-                      )}
-                    </div>
-                  ))}
-                </Box>
               </Flex>
             </Box>
           </Stack>

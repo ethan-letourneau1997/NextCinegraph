@@ -21,7 +21,7 @@
     "**/*.tsx",
     "pages/movies/[movieId]/[movieName]/casttsx",
     "components/mediaDetails",
-    "pages/people/[personId]/[personName]/index.jsx"
+    "pages/people/[personId]/[personName]/index.tsx"
   ],
   "exclude": ["node_modules"]
 }

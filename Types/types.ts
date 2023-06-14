@@ -38,7 +38,7 @@ export interface MediaItemType {
   release_date?: string;
   video?: boolean;
   gender?: number;
-  known_for_department?: string;
+  known_for_department: string;
   profile_path?: string;
   known_for?: KnownFor[];
   similar: Similar;
@@ -130,7 +130,7 @@ export interface KnownFor {
   vote_count: number;
 }
 
-export interface PersonDetails {
+export interface PersonDetailsType {
   adult?: boolean;
   also_known_as?: string[];
   biography?: string;
@@ -144,7 +144,7 @@ export interface PersonDetails {
 
   name?: string;
   place_of_birth?: string;
-  popularity?: number;
+  popularity: number;
   profile_path?: string;
   combined_credits?: CombinedCredits;
 }
@@ -269,7 +269,7 @@ export interface Cast {
   known_for_department?: string;
   name?: string;
   original_name?: string;
-  popularity?: number;
+  popularity: number;
   profile_path?: string;
   character?: string;
   credit_id?: string;
