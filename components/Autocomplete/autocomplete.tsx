@@ -39,7 +39,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const Autocomplete = () => {
+interface AutocompleteProps {
+  backgroundColor?: string;
+  textContent?: string;
+  buttonOpacity?: number;
+  buttonHeight?: number;
+  buttonBorder?: string;
+  textColor?: string;
+}
+
+const Autocomplete = ({
+  backgroundColor,
+  textContent,
+  buttonOpacity,
+  buttonHeight,
+  buttonBorder,
+  textColor,
+}: AutocompleteProps) => {
   // styles
   const { classes } = useStyles();
 
@@ -373,15 +389,27 @@ const Autocomplete = () => {
       </Modal.Root>
       <Group position="center">
         <Button
+          w="100%"
           className={classes.hiddenMobile}
           radius="md"
           fw={400}
-          bg="dark.5"
+          bg={backgroundColor || 'dark.5'}
           pr={100}
           onClick={open}
           mr="xl"
+          opacity={buttonOpacity || ''}
+          h={buttonHeight || 36}
+          c={textColor || ''}
+          styles={{
+            inner: {
+              display: 'block',
+            },
+          }}
+          sx={{
+            border: buttonBorder || 'none',
+          }}
         >
-          Search
+          <Text>{textContent || 'Search'}</Text>
         </Button>
         <Button className={classes.hiddenDesktop} bg="transparent" onClick={open} fz="md" p={0}>
           <FaSearch />

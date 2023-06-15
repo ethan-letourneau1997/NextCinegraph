@@ -50,7 +50,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
         mih="100%"
         h="100%"
         shadow="sm"
-        padding={desktop ? 'lg' : 'md'}
+        padding={desktop ? 'md' : 'md'}
         radius={desktop ? 'md' : 'sm'}
         bg="dark.7"
       >
@@ -105,7 +105,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
           </Text>
         ) : null}
 
-        <Group position="apart" mt={desktop ? 'md' : 'xs'}>
+        <Group position="apart" mt={desktop ? 'sm' : 'xs'}>
           <Anchor
             component={Link}
             href={{
@@ -151,7 +151,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
             {formatReleaseDate(episode.air_date)}
           </Text> */}
         </Flex>
-        <Text lineClamp={3} mt="md" size="sm" color="dimmed">
+        <Text lineClamp={3} mt={5} size="sm" color="dimmed">
           {episode.overview}
         </Text>
       </Card>
@@ -206,7 +206,7 @@ export function EpisodesPreview({ numSeasons, lastEp }: EpisodesPreviewProps) {
   }
 
   return (
-    <Box mt={75}>
+    <Box>
       <Anchor
         component={Link}
         href={`/shows/${showId}/${showName ? encodeURIComponent(showName.toString()) : ''}/seasons`}

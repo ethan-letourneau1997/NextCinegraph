@@ -83,7 +83,7 @@ export function MediaCarousel({ images }: mediaImagesProps) {
 
   return (
     <>
-      <Group spacing="xs" mb="md" mt={75}>
+      <Group spacing="xs" mb="md">
         {/* <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" /> */}
         <Box pl={8}>
           <TitleLink title="Photos" />
@@ -109,7 +109,7 @@ export function MediaCarousel({ images }: mediaImagesProps) {
                 <Box key={posters.file_path} w="100%">
                   <Box bg="dark.7">
                     <Image
-                      height={258}
+                      height={180}
                       src={`https://image.tmdb.org/t/p/w780${posters.file_path}`}
                       alt=""
                     />
@@ -125,7 +125,7 @@ export function MediaCarousel({ images }: mediaImagesProps) {
                 <Box key={posters.file_path} w="100%">
                   <Box bg="dark.7">
                     <Image
-                      height={258}
+                      height={180}
                       src={`https://image.tmdb.org/t/p/w1280${posters.file_path}`}
                       alt=""
                     />

@@ -46,6 +46,7 @@ export interface MediaItemType {
   videos: Videos;
   images: Images;
   created_by?: CreatedBy[];
+  'watch/providers': any;
 }
 
 export interface Images {
@@ -293,6 +294,7 @@ export interface Similar {
 }
 
 export interface Result {
+  media_type: string;
   adult?: boolean;
   backdrop_path?: string;
   genre_ids?: number[];

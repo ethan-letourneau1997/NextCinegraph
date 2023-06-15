@@ -45,7 +45,7 @@ export async function fetchMediaDetails(
   mediaId: number
 ): Promise<MediaItemType> {
   const response = await fetch(
-    `https://api.themoviedb.org/3/${mediaType}/${mediaId}?api_key=${TMDB_API_KEY}&language=en-US&include_image_language=hi,es,vi,ar,he,bn,en,null&append_to_response=credits,similar,seasons,release_dates,recommendations,videos,content_ratings,aggregate_credits`
+    `https://api.themoviedb.org/3/${mediaType}/${mediaId}?api_key=${TMDB_API_KEY}&language=en-US&include_image_language=hi,es,vi,ar,he,bn,en,null&append_to_response=credits,similar,seasons,release_dates,recommendations,videos,content_ratings,aggregate_credits,watch/providers`
   );
 
   if (!response.ok) {

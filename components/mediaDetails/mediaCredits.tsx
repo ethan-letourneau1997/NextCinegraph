@@ -1,6 +1,5 @@
-import { Anchor, Box, Flex, Grid, Group, Text, useMantineTheme } from '@mantine/core';
+import { Anchor, Box, Card, Flex, Grid, Group, Text, useMantineTheme } from '@mantine/core';
 
-import { BsPersonFill } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
@@ -15,16 +14,17 @@ interface MediaCreditsProps {
 }
 
 export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) {
+  // responsive styles
+  const desktop = useMediaQuery('(min-width: 950px)');
+  const tablet = useMediaQuery('(max-width: 950px)');
+  const mobile = useMediaQuery('(max-width: 500px)');
+
   const router = useRouter();
 
   const theme = useMantineTheme();
 
-  // responsive styles
-  const desktop = useMediaQuery('(min-width: 950px)');
-  const tablet = useMediaQuery('(max-width: 950px)');
-
   return (
-    <Box mt={75}>
+    <Box>
       <Group spacing="xs">
         <TitleLink
           title="Top Cast"
@@ -38,25 +38,23 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
       <Grid gutter="lg" pt="md">
         {credits.cast?.slice(0, tablet ? 6 : 12).map((castMember) => (
           <Grid.Col key={castMember.id} span={12} xs={12} sm={6} lg={6}>
-            <Grid
-              gutter={0}
-              maw="100%"
-              bg="dark.7"
-              w={desktop ? '95%' : '100%'}
-              sx={{
-                borderTopRightRadius: '4px',
-                borderBottomRightRadius: '4px',
-              }}
-            >
-              <Grid.Col span="content">
-                {castMember.profile_path ? (
+            <Card w={desktop ? '95%' : '100%'} shadow="sm" radius="sm">
+              <Card.Section>
+                <Flex
+                  maw="100%"
+                  bg="dark.7"
+                  sx={{
+                    borderTopRightRadius: '4px',
+                    borderBottomRightRadius: '4px',
+                  }}
+                >
                   <Image
                     style={{
                       borderTopLeftRadius: '4px',
                       borderBottomLeftRadius: '4px',
                     }}
-                    height={80}
-                    width={80}
+                    height={mobile ? 80 : 75}
+                    width={mobile ? 80 : 75}
                     alt=""
                     src={
                       castMember.profile_path
@@ -64,58 +62,44 @@ export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) 
                         : '/person_square_sm.png'
                     }
                   />
-                ) : (
-                  <Box
-                    h={80}
-                    w={80}
-                    bg="dark.4"
-                    sx={{
-                      borderTopLeftRadius: '4px',
-                      borderBottomLeftRadius: '4px',
-                    }}
-                  >
-                    <BsPersonFill size={80} color="#18181B" />
+                  <Box pl="xs" pt={8} pos="relative" pr="xs">
+                    <Anchor
+                      component={Link}
+                      href={`/people/${castMember.id}/${encodeURIComponent(castMember.name || '')}`}
+                      underline
+                      sx={() => ({
+                        textDecorationThickness: 1,
+                        '&:hover': {
+                          textDecorationColor: theme.colors.dark[0],
+                        },
+                      })}
+                    >
+                      {' '}
+                      <Text color="gray.4" fz="sm" fw={600} truncate>
+                        {castMember.name}
+                      </Text>
+                    </Anchor>
+                    <Text lineClamp={2} fz="sm">
+                      {castMember.character}
+                    </Text>
+                    {castMember.roles?.slice(0, 1).map((role) => (
+                      <Flex direction="column" rowGap={0} key={role.credit_id} mr={10} gap="xs">
+                        <Box pos="relative">
+                          <Text color="gray.5" fz="sm" truncate>
+                            {role.character}
+                          </Text>
+                        </Box>
+                        <Box w="fit-content">
+                          <Text fz="xs" c="dimmed" fw={300}>
+                            {role.episode_count} episodes
+                          </Text>
+                        </Box>
+                      </Flex>
+                    ))}
                   </Box>
-                )}
-              </Grid.Col>
-              <Grid.Col pl="xs" span={7} xs={9} pt={8} pos="relative" pr="xs">
-                <Anchor
-                  component={Link}
-                  href={`/people/${castMember.id}/${encodeURIComponent(castMember.name || '')}`}
-                  underline
-                  sx={() => ({
-                    textDecorationThickness: 1,
-                    '&:hover': {
-                      textDecorationColor: theme.colors.dark[0],
-                    },
-                  })}
-                >
-                  {' '}
-                  <Text color="gray.4" fz="sm" fw={600} truncate>
-                    {castMember.name}
-                  </Text>
-                </Anchor>
-
-                <Text lineClamp={2} fz="sm">
-                  {castMember.character}
-                </Text>
-
-                {castMember.roles?.slice(0, 1).map((role) => (
-                  <Flex direction="column" rowGap={0} key={role.credit_id} mr={10} gap="xs">
-                    <Box pos="relative">
-                      <Text color="gray.5" fz="sm" truncate>
-                        {role.character}
-                      </Text>
-                    </Box>
-                    <Box w="fit-content">
-                      <Text fz="xs" c="dimmed" fw={300}>
-                        {role.episode_count} episodes
-                      </Text>
-                    </Box>
-                  </Flex>
-                ))}
-              </Grid.Col>
-            </Grid>
+                </Flex>
+              </Card.Section>
+            </Card>
           </Grid.Col>
         ))}
       </Grid>

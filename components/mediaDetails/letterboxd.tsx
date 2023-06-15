@@ -8,6 +8,7 @@ import {
   Grid,
   Group,
   SimpleGrid,
+  Space,
   Spoiler,
   Text,
   Title,
@@ -23,6 +24,12 @@ import React from 'react';
 import Trailer from './trailer';
 import { formatReleaseDate } from '../Discover/discoverGrid';
 import { MediaItemType } from '../../Types/types';
+import { WhereToWatch } from './whereToWatch';
+import MediaCredits from './mediaCredits';
+import { MediaCarousel } from './imageCarousels';
+
+import { MediaSlider } from '../general/mediaSlider';
+import { EpisodesPreview } from './episodesPreview';
 
 interface LetterBoxdProp {
   mediaItem: MediaItemType;
@@ -41,22 +48,50 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
     <Box>
       <Grid gutter="xl">
         <Grid.Col span={12} xs={4} sm={3}>
-          <AspectRatio ratio={2 / 3}>
-            <Image
-              fill
-              alt=""
-              src={
-                mediaItem.poster_path
-                  ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
-                  : '/media_placeholder_lg.png'
-              }
-              style={{
-                borderRadius: '4px',
-                border: '.5px solid #3F3F46',
-              }}
-            />
-          </AspectRatio>
+          {tablet ? (
+            <AspectRatio ratio={16 / 9} mt="sm">
+              <Image
+                fill
+                alt=""
+                src={
+                  mediaItem.poster_path
+                    ? `https://image.tmdb.org/t/p/w780${mediaItem.backdrop_path}`
+                    : '/media_placeholder_lg.png'
+                }
+                style={{
+                  borderRadius: '4px',
+                  border: '.5px solid #3F3F46',
+                }}
+              />
+            </AspectRatio>
+          ) : (
+            <AspectRatio ratio={2 / 3}>
+              <Image
+                fill
+                alt=""
+                src={
+                  mediaItem.poster_path
+                    ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
+                    : '/media_placeholder_lg.png'
+                }
+                style={{
+                  borderRadius: '4px',
+                  border: '.5px solid #3F3F46',
+                }}
+              />
+            </AspectRatio>
+          )}
           {trailers.length > 0 ? <Trailer trailer={trailers[0]} /> : null}
+          {desktop &&
+            mediaItem['watch/providers'].results.TW &&
+            mediaItem['watch/providers'].results.TW.flatrate && (
+              <WhereToWatch providers={mediaItem['watch/providers'].results.US} />
+            )}
+          {desktop &&
+            mediaItem['watch/providers'].results.TW &&
+            mediaItem['watch/providers'].results.TW.flatrate && (
+              <WhereToWatch providers={mediaItem['watch/providers'].results.TW} />
+            )}
         </Grid.Col>
 
         <Grid.Col span={12} xs={8} sm={9}>
@@ -121,7 +156,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                   mx={6}
                   color="dark.3"
                   orientation="vertical"
-                />{' '}
+                />
                 {mediaItem.genres
                   ?.slice(0, tablet ? 2 : 2) // Use the slice() method to get the first three items
                   .map((genre, index) => (
@@ -218,6 +253,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                   {formatReleaseDate(mediaItem.release_date || mediaItem.first_air_date)}
                 </Text>
               </Flex>
+
               {mediaType === 'movie' ? (
                 <Flex gap={5}>
                   <Text fw={500}>Box Office:</Text>
@@ -234,6 +270,45 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                 </Flex>
               )}
             </SimpleGrid>
+
+            {mediaType === 'tv' && (
+              <>
+                <Space h={60} />
+                <EpisodesPreview
+                  numSeasons={mediaItem.number_of_seasons}
+                  lastEp={mediaItem.last_episode_to_air}
+                />
+              </>
+            )}
+
+            {mediaItem.credits ? (
+              <>
+                <Space h={60} />
+                <MediaCredits
+                  credits={mediaType === 'movie' ? mediaItem.credits : mediaItem.aggregate_credits}
+                  mediaType={mediaType}
+                />
+              </>
+            ) : null}
+
+            {mediaItem.images.backdrops.length > 4 && mediaItem.images.posters.length > 4 ? (
+              <>
+                <Space h={60} />
+                <MediaCarousel images={mediaItem.images} />
+              </>
+            ) : null}
+
+            {mediaItem.recommendations.results && (
+              <>
+                <Space h={60} />
+                <MediaSlider
+                  title="More Like This"
+                  mediaCredits={mediaItem.recommendations.results}
+                />
+              </>
+            )}
+
+            {/* <MediaSimilar mediaType={mediaType} similar={mediaItem.recommendations} /> */}
           </Box>
         </Grid.Col>
       </Grid>
