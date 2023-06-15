@@ -12,9 +12,9 @@ import {
   Card,
   ScrollArea,
   Skeleton,
-  Select,
   Divider,
   Anchor,
+  Button,
 } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -22,28 +22,39 @@ import Image from 'next/image';
 import { useMediaQuery } from '@mantine/hooks';
 
 import Link from 'next/link';
+import { AiOutlineClose } from 'react-icons/ai';
 import { fetchPersonDetails } from '../../../api/mediaDetailsAPI';
 import { formatReleaseDate } from '../../../../components/Discover/discoverGrid';
 import { TitleLink } from '../../../../components/BiteSized/titleLink';
 import { PersonType, KnownFor } from '../../../../Types/personTypes';
+import { PersonImages } from '../../../../components/Person/personImages';
 
 export default function MediaItem() {
   // responsive styles
-  // const desktop = useMediaQuery('(min-width: 75em)');
-  const tablet = useMediaQuery('(max-width: 62em)');
+  // // const desktop = useMediaQuery('(min-width: 75em)');
+  // const tablet = useMediaQuery('(max-width: 62em)');
   // const smallTable = useMediaQuery('(max-width: 800px)');
   const mobile = useMediaQuery('(max-width: 36em)');
-
-  const [value, setValue] = useState<string | null>(null);
 
   const router = useRouter();
   const { personId } = router.query;
 
   const [mediaDetails, setMediaDetails] = useState<PersonType | null>(null);
 
-  useEffect(() => {
-    mediaDetails && setValue(mediaDetails.known_for_department);
-  }, [mediaDetails]);
+  const [selectedDepartments, updateSelectedDepartments] = useState<string[]>([]);
+
+  const toggleDepartmentSelection = (departmentName: string) => {
+    if (selectedDepartments.includes(departmentName)) {
+      // Department is already selected, so remove it from the array
+      updateSelectedDepartments(selectedDepartments.filter((dep) => dep !== departmentName));
+    } else {
+      // Department is not selected, so add it to the array
+      updateSelectedDepartments([...selectedDepartments, departmentName]);
+    }
+  };
+
+  const isDepartmentSelected = (departmentName: string) =>
+    selectedDepartments.includes(departmentName);
 
   useEffect(() => {
     if (!personId) {
@@ -54,7 +65,26 @@ export default function MediaItem() {
       try {
         const id = personId as string;
         const details = await fetchPersonDetails(parseInt(id, 10));
+
+        // Add 'department' property to each cast member
+        if (details.combined_credits && details.combined_credits.cast) {
+          details.combined_credits.cast.forEach((castMember) => {
+            // eslint-disable-next-line no-param-reassign
+            castMember.department = 'Acting';
+          });
+
+          // Add cast members to the crew array with department set to 'Acting'
+          if (details.combined_credits.crew) {
+            details.combined_credits.crew.push(...details.combined_credits.cast);
+          } else {
+            details.combined_credits.crew = [...details.combined_credits.cast];
+          }
+        }
+
         setMediaDetails(details);
+        if (!isDepartmentSelected(details.known_for_department)) {
+          toggleDepartmentSelection(details.known_for_department);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -108,24 +138,19 @@ export default function MediaItem() {
   // Convert the Set back to an array
   const departmentsArray = Array.from(uniqueDepartments);
 
-  // Check if mediaDetails.combined_credits.cast contains one or more items
-  if (mediaDetails.combined_credits && mediaDetails.combined_credits.cast.length > 0) {
-    // Add 'Acting' department to the departmentsArray
-    departmentsArray.push('Acting');
-  }
-
-  // Use the departmentsArray to replace crewDepartments
-  const selectData: any = departmentsArray.map((department) => ({
-    value: department,
-    label: department,
-  }));
+  // Alphabetize the departments
+  departmentsArray.sort();
 
   // Initialize the known_for array
   const known_for_credits: KnownFor[] = [];
 
   // Check if known_for is 'acting'
   if (mediaDetails && mediaDetails.known_for_department === 'Acting') {
-    known_for_credits.push(...mediaDetails.combined_credits!.cast);
+    const matchingCrew = mediaDetails.combined_credits!.crew.filter(
+      (crewMember) => crewMember.department === mediaDetails.known_for_department
+    );
+    known_for_credits.push(...matchingCrew);
+    // known_for_credits.push(...mediaDetails.combined_credits!.cast);
   } else {
     // Find matching objects in combined_credits.crew based on department
     const matchingCrew = mediaDetails.combined_credits!.crew.filter(
@@ -136,11 +161,9 @@ export default function MediaItem() {
 
   known_for_credits.sort((a, b) => b.popularity - a.popularity);
 
-  console.log(mediaDetails.combined_credits);
-
   return (
     <Container py="xl" px="xl" pos="relative">
-      <Grid mt="xl" gutter="xl">
+      <Grid justify="flex-end" mt="xl" gutter="xl">
         <Grid.Col span={12} xs={3}>
           <Box>
             <Center>
@@ -216,7 +239,7 @@ export default function MediaItem() {
             </Box>
             <Box mt="xl">
               <TitleLink title="Known For" bottomSpace />
-              <ScrollArea h={230}>
+              <ScrollArea offsetScrollbars>
                 <Flex gap="sm">
                   {known_for_credits &&
                     known_for_credits.slice(0, 10).map((known_for_item) => (
@@ -258,171 +281,107 @@ export default function MediaItem() {
                 </Flex>
               </ScrollArea>
             </Box>
-            <Box mt="xl">
+            <Box mt="xl" mih={200}>
               <TitleLink title="Credits" bottomSpace />
-              <Box>
-                <Select
-                  styles={(theme) => ({
-                    item: {
-                      fontWeight: 600,
-                      // applies styles to selected item
-                      '&[data-selected]': {
-                        '&, &:hover': {
-                          backgroundColor:
-                            theme.colorScheme === 'dark'
-                              ? theme.colors.yellow[5]
-                              : theme.colors.teal[1],
-                          color:
-                            theme.colorScheme === 'dark'
-                              ? theme.colors.dark[9]
-                              : theme.colors.teal[9],
-                        },
-                      },
+              <ScrollArea maw="100%" offsetScrollbars>
+                {/* {departmentsArray.map((department) =>
+                  isDepartmentSelected(department) ? (
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={() => toggleDepartmentSelection(department)}
+                      color={isDepartmentSelected(department) ? 'yellow.5' : 'dark.1'}
+                    >
+                      {department}
+                    </Button>
+                  ) : null
+                )} */}
+                <Button.Group>
+                  {(departmentsArray as string[]).map((department: string) => (
+                    <Button
+                      rightIcon={isDepartmentSelected(department) ? <AiOutlineClose /> : null}
+                      size="xs"
+                      variant="outline"
+                      onClick={() => toggleDepartmentSelection(department)}
+                      color={isDepartmentSelected(department) ? 'yellow.5' : 'dark.1'}
+                    >
+                      {department}
+                    </Button>
+                  ))}
+                </Button.Group>
+              </ScrollArea>
 
-                      // applies styles to hovered item (with mouse or keyboard)
-                      '&[data-hovered]': {},
-                    },
-                  })}
-                  c="yellow.5"
-                  value={value}
-                  onChange={setValue}
-                  label=""
-                  placeholder="Pick one"
-                  data={selectData}
-                />
-              </Box>
-              <Title mt="md" size="h4">
-                {value}
-              </Title>
-              <Box mih="30vh">
-                {value === 'Acting' ? (
-                  <Stack spacing={0}>
-                    {mediaDetails.combined_credits &&
-                      mediaDetails.combined_credits.cast.map((credit) => (
-                        <>
-                          <Divider my={10} />
-                          <Flex gap="sm">
-                            <Anchor
-                              component={Link}
-                              href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
-                                credit.id
-                              }/${
-                                credit.media_type === 'movie'
-                                  ? encodeURIComponent(credit.title)
-                                  : encodeURIComponent(credit.name || '')
-                              }`}
-                              underline={false}
-                            >
-                              <AspectRatio ratio={2 / 3} w={50}>
-                                <Skeleton />
-                                <Image
-                                  fill
-                                  alt=""
-                                  src={
-                                    credit.poster_path
-                                      ? `https://image.tmdb.org/t/p/w342${credit.poster_path}`
-                                      : '/media_placeholder_sm.png'
-                                  }
-                                />
-                              </AspectRatio>
-                            </Anchor>
-                            <Box maw="75%">
-                              <Anchor
-                                fw={600}
-                                fz="sm"
-                                c="gray.1"
-                                truncate
-                                component={Link}
-                                href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
-                                  credit.id
-                                }/${
-                                  credit.media_type === 'movie'
-                                    ? encodeURIComponent(credit.title)
-                                    : encodeURIComponent(credit.name || '')
-                                }`}
-                                underline={false}
-                              >
-                                {' '}
-                                <Text truncate>{credit.title || credit.name}</Text>
-                              </Anchor>
-                              <Text truncate fz={tablet ? 'sm' : 'md'}>
-                                {credit.character}
-                              </Text>
-                              <Text fz={tablet ? 'sm' : 'md'} c="dimmed">
-                                {credit.release_date?.slice(0, 4) ||
-                                  credit.first_air_date?.slice(0, 4)}
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </>
-                      ))}
-                  </Stack>
-                ) : (
-                  <Stack spacing={0}>
-                    {/* Map and render the filtered crew members */}
-                    {mediaDetails?.combined_credits?.crew.map((credit) =>
-                      credit.department === value ? (
-                        <>
-                          <Divider my={10} />
-                          <Flex gap="sm">
-                            <Anchor
-                              component={Link}
-                              href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
-                                credit.id
-                              }/${
-                                credit.media_type === 'movie'
-                                  ? encodeURIComponent(credit.title)
-                                  : encodeURIComponent(credit.name || '')
-                              }`}
-                              underline={false}
-                            >
-                              <AspectRatio ratio={2 / 3} w={50}>
-                                <Skeleton />
-                                <Image
-                                  fill
-                                  alt=""
-                                  src={
-                                    credit.poster_path
-                                      ? `https://image.tmdb.org/t/p/w342${credit.poster_path}`
-                                      : '/media_placeholder_sm.png'
-                                  }
-                                />
-                              </AspectRatio>
-                            </Anchor>
-                            <Box maw="75%">
-                              <Anchor
-                                fw={600}
-                                fz="sm"
-                                c="gray.1"
-                                truncate
-                                component={Link}
-                                href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
-                                  credit.id
-                                }/${
-                                  credit.media_type === 'movie'
-                                    ? encodeURIComponent(credit.title)
-                                    : encodeURIComponent(credit.name || '')
-                                }`}
-                                underline={false}
-                              >
-                                <Text truncate>{credit.title || credit.name}</Text>
-                              </Anchor>
+              <Stack spacing={0}>
+                {selectedDepartments.length === 0 ? (
+                  <Text mt="md">No categories selected.</Text>
+                ) : null}
+                {/* Map and render the filtered crew members */}
+                {mediaDetails?.combined_credits?.crew.map((credit) =>
+                  isDepartmentSelected(credit.department) ? (
+                    <>
+                      <Divider my={10} />
+                      <Flex gap="sm">
+                        <Anchor
+                          component={Link}
+                          href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
+                            credit.id
+                          }/${
+                            credit.media_type === 'movie'
+                              ? encodeURIComponent(credit.title)
+                              : encodeURIComponent(credit.name || '')
+                          }`}
+                          underline={false}
+                        >
+                          <AspectRatio ratio={2 / 3} w={50}>
+                            <Skeleton />
+                            <Image
+                              fill
+                              alt=""
+                              src={
+                                credit.poster_path
+                                  ? `https://image.tmdb.org/t/p/w342${credit.poster_path}`
+                                  : '/media_placeholder_sm.png'
+                              }
+                            />
+                          </AspectRatio>
+                        </Anchor>
+                        <Box maw="75%">
+                          <Anchor
+                            fw={600}
+                            fz="sm"
+                            c="gray.1"
+                            truncate
+                            component={Link}
+                            href={`/${credit.media_type === 'movie' ? 'movies' : 'shows'}/${
+                              credit.id
+                            }/${
+                              credit.media_type === 'movie'
+                                ? encodeURIComponent(credit.title)
+                                : encodeURIComponent(credit.name || '')
+                            }`}
+                            underline={false}
+                          >
+                            <Text truncate>{credit.title || credit.name}</Text>
+                          </Anchor>
 
-                              <Text fz="sm">{credit.job}</Text>
-                              <Text fz="sm" c="dimmed">
-                                {credit.release_date?.slice(0, 4) ||
-                                  credit.first_air_date?.slice(0, 4)}
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </>
-                      ) : null
-                    )}
-                  </Stack>
+                          <Text fz="sm">{credit.job || credit.character}</Text>
+                          <Text fz="sm" c="dimmed">
+                            {credit.release_date?.slice(0, 4) || credit.first_air_date?.slice(0, 4)}
+                          </Text>
+                        </Box>
+                      </Flex>
+                    </>
+                  ) : null
                 )}
-              </Box>
+              </Stack>
             </Box>
           </Stack>
+        </Grid.Col>
+        <Grid.Col span={12} xs={9} pt="xl">
+          <TitleLink title="Images" bottomSpace />
+          <Box maw={mobile ? '98%' : '100%'} mx="auto">
+            <PersonImages episodeImages={mediaDetails.images.profiles} />
+          </Box>
         </Grid.Col>
       </Grid>
     </Container>

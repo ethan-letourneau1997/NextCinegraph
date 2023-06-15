@@ -30,7 +30,7 @@ export async function fetchPopular(mediaType: string): Promise<MediaItemType[]> 
 // * Fetches person items from TMDB API
 export async function fetchPersonDetails(mediaID: number): Promise<PersonType> {
   const response = await fetch(
-    `https://api.themoviedb.org/3/person/${mediaID}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=combined_credits`
+    `https://api.themoviedb.org/3/person/${mediaID}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=combined_credits,images`
   );
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);

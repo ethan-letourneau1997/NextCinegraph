@@ -1,4 +1,5 @@
 export interface PersonType {
+  images: PersonImages;
   adult: boolean;
   also_known_as: string[];
   biography: string;
@@ -18,10 +19,12 @@ export interface PersonType {
 
 export interface CombinedCredits {
   cast: Cast[];
-  crew: Crew[];
+  crew: Cast[];
 }
 
 export interface Cast {
+  job: string;
+  department: string;
   name: string;
   first_air_date: string;
   adult: boolean;
@@ -45,6 +48,7 @@ export interface Cast {
 }
 
 export interface Crew {
+  character: string;
   first_air_date: any;
   name: string;
   adult: boolean;
@@ -87,4 +91,18 @@ export interface KnownFor {
   department?: string;
   job?: string;
   media_type: string;
+}
+
+interface PersonImages {
+  profiles: PersonImage[];
+}
+
+interface PersonImage {
+  aspect_ratio: 0.667;
+  height: 861;
+  iso_639_1: null;
+  file_path: '/eOh4ubpOm2Igdg0QH2ghj0mFtC.jpg';
+  vote_average: 5.326;
+  vote_count: 7;
+  width: 574;
 }
