@@ -1,9 +1,13 @@
-import { Flex, Menu, NavLink, UnstyledButton, createStyles } from '@mantine/core';
+import { Flex, Menu, NavLink, UnstyledButton, createStyles, useMantineTheme } from '@mantine/core';
 
 import Link from 'next/link';
 
 export default function DesktopNavigation() {
-  const useStyles = createStyles((theme) => ({
+  //theme
+  const theme = useMantineTheme();
+
+  // styles
+  const useStyles = createStyles(() => ({
     hiddenMobile: {
       [theme.fn.smallerThan('sm')]: {
         display: 'none',
@@ -26,7 +30,7 @@ export default function DesktopNavigation() {
         label="Home"
         component={Link}
         href="/"
-        styles={(theme) => ({
+        styles={() => ({
           root: {
             '&:hover': {
               backgroundColor: 'transparent',
@@ -58,19 +62,27 @@ export default function DesktopNavigation() {
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown
-          bg="hsl(300, 12%, 6%)"
           sx={{
-            border: '1px solid hsla(300, 12%, 20%, .7)',
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            border: 'none',
+            backdropFilter: 'saturate(180%) blur(20px)',
           }}
         >
           <NavLink
             component={Link}
             href="/movies/top100"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -79,11 +91,18 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/movies/popular"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -92,26 +111,40 @@ export default function DesktopNavigation() {
 
           <NavLink
             component={Link}
-            href="/movies/now_playing"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
+            href="/movies/now_playing"
             label="Now Playing"
           />
 
           <NavLink
             component={Link}
             href="/movies/upcoming"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -120,11 +153,18 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/movies/highestGrossing"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -134,11 +174,18 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/movies/popular"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -163,19 +210,27 @@ export default function DesktopNavigation() {
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown
-          bg="hsl(300, 12%, 6%)"
           sx={{
-            border: '1px solid hsla(300, 12%, 20%, .7)',
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            border: 'none',
+            backdropFilter: 'saturate(180%) blur(20px)',
           }}
         >
           <NavLink
             component={Link}
             href="/shows/top100"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -184,11 +239,18 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/shows/popular"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -198,11 +260,18 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/shows/popular"
-            styles={(theme) => ({
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
               label: {
                 fontSize: theme.fontSizes.sm,
                 '&:hover': {
-                  color: 'white',
+                  color: theme.colors.gray[2],
                 },
               },
             })}
@@ -218,7 +287,7 @@ export default function DesktopNavigation() {
         }}
         component={Link}
         href="/people/people"
-        styles={(theme) => ({
+        styles={() => ({
           root: {
             '&:hover': {
               backgroundColor: 'transparent',

@@ -43,9 +43,6 @@ export function NavigationLayout() {
       sx={{
         zIndex: 1000,
         width: '100vw',
-        '&:hover': {
-          backgroundImage: 'linear-gradient(to bottom, black, transparent)',
-        },
       }}
     >
       <Flex justify="space-between" p="sm">

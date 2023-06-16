@@ -3,7 +3,6 @@ import { useMediaQuery } from '@mantine/hooks';
 import {
   AspectRatio,
   Box,
-  Button,
   Center,
   Container,
   Text,
@@ -11,9 +10,6 @@ import {
   Title,
   createStyles,
   Flex,
-  Input,
-  Tooltip,
-  useMantineTheme,
 } from '@mantine/core';
 import Image from 'next/image';
 import { MediaItemType, Result } from '../Types/types';
@@ -27,9 +23,6 @@ import {
 import { MediaSlider } from '../components/general/mediaSlider';
 
 import Autocomplete from '../components/Autocomplete/autocomplete';
-import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons-react';
-import { BiSearch } from 'react-icons/bi';
-import styles from '@/styles/Burger.module.css';
 
 const useStyles = createStyles((theme) => ({
   hiddenMobile: {
@@ -51,9 +44,6 @@ export default function HomePage() {
 
   // styles
   const { classes } = useStyles();
-
-  //theme
-  const theme = useMantineTheme();
 
   // loading state
   const [isLoading, setIsLoading] = useState(true);
@@ -154,7 +144,7 @@ export default function HomePage() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   animation: 'kenBurnsEffect 40s infinite',
-                  filter: 'brightness(75%)',
+                  // filter: 'brightness(95%)',
                 }}
               >
                 <Image
@@ -174,7 +164,7 @@ export default function HomePage() {
                 top={0}
                 sx={{
                   zIndex: 1200,
-                  // backgroundImage: 'linear-gradient(to bottom, #101113, transparent)',
+                  backgroundImage: 'linear-gradient(to bottom, #101113, transparent)',
                 }}
               />
               <Flex
@@ -182,7 +172,7 @@ export default function HomePage() {
                 h="100%"
                 w="100%"
                 bg="rgba(0, 0, 0, 0.4)"
-                pt="30vh"
+                pt="25vh"
                 align="stretch"
                 justify="space-between"
                 sx={{
@@ -192,75 +182,16 @@ export default function HomePage() {
                 <Center pr="15%">
                   <Stack className={classes.hiddenMobile}>
                     <Box>
-                      <Title pl="xs" c="yellow.5" size={45}>
+                      <Title c="yellow.5" size={45}>
                         Cinegraph.
                       </Title>
-                      <Title pl="xs" c="gray.0" size={45}>
+                      <Title c="gray.0" size={45}>
                         Explore the Media You Love.
                       </Title>
                     </Box>
-                    {/* <Button
-                      fz="md"
-                      h={40}
-                      fw={700}
-                      ml="sm"
-                      w={200}
-                      color="gray.0"
-                      // color="gray.0"
-                      // c="dark.9"
-                      variant="outline"
-                      backdrop-filter: blur(10px);
-                    >
-                      Get Started
-                    </Button> */}
-                    <Box w="50vw">
-                      <Button
-                        c="dark.2"
-                        fz="md"
-                        fw={400}
-                        size="md"
-                        rightIcon={<BiSearch />}
-                        // h={40}
-                        styles={{
-                          root: {
-                            borderRadius: 4,
-                            // backgroundColor: 'hsla(220, 0%, 30%, .3)',
-                            backgroundColor: 'rgba(0, 0, 0, .5)',
-                            // background: theme.colors.dark[9],
-                            // border: '.5px solid rgba(255, 255, 255, .2)',
-                            backdropFilter: 'saturate(180%) blur(20px)',
-                          },
-                          rightIcon: {
-                            paddingLeft: 20,
-                          },
-                        }}
-                      >
-                        Search movies, shows, and more
-                      </Button>
-                      {/* <Input
-                        mt="md"
-                        radius="sm"
-                        styles={{
-                          wrapper: {
-                            borderRadius: 4,
-                            backgroundColor: 'rgba(255, 255, 255, .1)',
 
-                            backdropFilter: 'blur(5px)',
-                          },
-                          input: { backgroundColor: 'transparent' },
-                        }}
-                        sx={{}}
-                        placeholder="Search movies, shows, and more"
-                        rightSection={<BiSearch />}
-                      /> */}
-                      {/* <Autocomplete
-                        backgroundColor="#101113"
-                        buttonOpacity={0.85}
-                        buttonHeight={45}
-                        buttonBorder="1px solid #25262b"
-                        textContent="Search movies, tv shows, and stars"
-                        textColor="#909296"
-                      /> */}
+                    <Box w="50vw">
+                      <Autocomplete alt />
                     </Box>
                   </Stack>
                 </Center>

@@ -85,7 +85,7 @@
   }
 
   25% {
-    transform: scale(1.4) translateX(-10%) translateY(-10%);
+    transform: scale(1.6) translateX(-10%) translateY(-15%);
   }
 
   50% {
@@ -93,7 +93,7 @@
   }
 
   75% {
-    transform: scale(1.4) translateX(10%) translateY(10%);
+    transform: scale(1.6) translateX(10%) translateY(15%);
   }
   100% {
     transform: scale(1) translateX(0%) translateY(0%);

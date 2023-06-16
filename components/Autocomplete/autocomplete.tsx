@@ -12,6 +12,7 @@ import {
   Text,
   TextInput,
   createStyles,
+  useMantineTheme,
 } from '@mantine/core';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -21,7 +22,8 @@ import { HiTrendingUp } from 'react-icons/hi';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TbSearch } from 'react-icons/tb';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { BiSearch } from 'react-icons/bi';
 import { fetchTrending } from '../../pages/api/mediaDetailsAPI';
 import { Cast, MediaItemType } from '../../Types/types';
 
@@ -40,22 +42,16 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface AutocompleteProps {
-  backgroundColor?: string;
-  textContent?: string;
-  buttonOpacity?: number;
-  buttonHeight?: number;
-  buttonBorder?: string;
-  textColor?: string;
+  alt?: boolean;
 }
 
-const Autocomplete = ({
-  backgroundColor,
-  textContent,
-  buttonOpacity,
-  buttonHeight,
-  buttonBorder,
-  textColor,
-}: AutocompleteProps) => {
+const Autocomplete = ({ alt }: AutocompleteProps) => {
+  // responsive styles
+  const desktop = useMediaQuery('(min-width: 768px)');
+
+  //theme
+  const theme = useMantineTheme();
+
   // styles
   const { classes } = useStyles();
 
@@ -99,6 +95,7 @@ const Autocomplete = ({
   }, []);
 
   const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    //responsive styles
     const { value } = e.target;
     setQuery(value);
 
@@ -161,15 +158,22 @@ const Autocomplete = ({
   return (
     <div>
       <Modal.Root
+        fullScreen={!desktop}
         radius="sm"
         opened={opened}
         onClose={handleClose}
-        size={700}
+        size={desktop ? 700 : ''}
         // scrollAreaComponent={ScrollArea.Autosize}
       >
         <Modal.Overlay blur={3} />
-        <Modal.Content>
-          <Modal.Header p={0}>
+        <Modal.Content
+          sx={{
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            border: 'none',
+            backdropFilter: 'saturate(150%) blur(30px)',
+          }}
+        >
+          <Modal.Header p={0} bg="transparent">
             <Modal.Title w="100%" pt={10}>
               <TextInput
                 px="md"
@@ -180,7 +184,7 @@ const Autocomplete = ({
                 onChange={handleInputChange}
                 value={query}
                 bg="transparent"
-                styles={(theme) => ({
+                styles={() => ({
                   input: {
                     backgroundColor: 'transparent',
                     borderWidth: 0,
@@ -258,8 +262,8 @@ const Autocomplete = ({
                                 fill
                               />
                             </AspectRatio>
-                            <Box w={550}>
-                              <Text fw={600} color="brand.0" truncate>
+                            <Box w={desktop ? 550 : 'fit-content'}>
+                              <Text fw={600} color="gray.4" truncate>
                                 {item.name}
                               </Text>
 
@@ -267,12 +271,12 @@ const Autocomplete = ({
                                 <Group spacing={0}>
                                   {item.known_for.slice(0, 2).map((knownItem, personIndex) => (
                                     <React.Fragment key={knownItem.id}>
-                                      <Text fz="sm" c="dimmed">
+                                      <Text truncate fz="sm" c="dimmed">
                                         {knownItem.title || knownItem.name}
                                       </Text>
                                       {item.known_for &&
                                         personIndex !== item.known_for.slice(0, 2).length - 1 && (
-                                          <Text fz="sm" c="dimmed">
+                                          <Text truncate fz="sm" c="dimmed">
                                             ,&nbsp;
                                           </Text>
                                         )}
@@ -326,11 +330,11 @@ const Autocomplete = ({
                                 fill
                               />
                             </AspectRatio>
-                            <Box w={550}>
-                              <Text fw={600} color="brand.0" truncate>
+                            <Box w={desktop ? 550 : 'fit-content'}>
+                              <Text fw={600} color="gray.3" truncate>
                                 {item.title || item.name}
                               </Text>
-                              <Text fz="sm" c="dimmed">
+                              <Text truncate fz="sm" c="dark.1">
                                 {item.release_date?.substring(0, 4) ||
                                   item.first_air_date?.substring(0, 4)}
                               </Text>
@@ -340,13 +344,13 @@ const Autocomplete = ({
                                     .slice(0, 2)
                                     .map((credit: Cast, movieCreditsIndex: number) => (
                                       <React.Fragment key={credit.id}>
-                                        <Text fz="sm" c="dimmed">
+                                        <Text truncate fz="sm" c="dark.1">
                                           {credit.name}
                                         </Text>
                                         {item.credits &&
                                           movieCreditsIndex !==
                                             item.credits.slice(0, 2).length - 1 && (
-                                            <Text fz="sm" c="dimmed">
+                                            <Text truncate fz="sm" c="dark.1">
                                               ,&nbsp;
                                             </Text>
                                           )}
@@ -361,13 +365,13 @@ const Autocomplete = ({
                                       .slice(0, 2)
                                       .map((credit: Cast, tvCreditsIndex: number) => (
                                         <React.Fragment key={credit.id}>
-                                          <Text fz="sm" c="dimmed">
+                                          <Text truncate fz="sm" c="dark.1">
                                             {credit.name}
                                           </Text>
                                           {item.credits &&
                                             tvCreditsIndex !==
                                               item.credits.slice(0, 2).length - 1 && (
-                                              <Text fz="sm" c="dimmed">
+                                              <Text truncate fz="sm" c="dark.1">
                                                 ,&nbsp;
                                               </Text>
                                             )}
@@ -387,43 +391,75 @@ const Autocomplete = ({
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
-      <Group position="center">
+      {alt ? (
         <Button
-          w="100%"
-          className={classes.hiddenMobile}
-          radius="md"
+          radius="sm"
+          mb="xl"
+          unstyled
+          c="dark.2"
+          fz="md"
           fw={400}
-          bg={backgroundColor || 'dark.5'}
-          pr={100}
+          size="md"
           onClick={open}
-          mr="xl"
-          opacity={buttonOpacity || ''}
-          h={buttonHeight || 36}
-          c={textColor || ''}
-          variant="dark"
-          styles={(theme) => ({
+          rightIcon={
+            <Box pt={4}>
+              <BiSearch size={16} />
+            </Box>
+          }
+          py="xs"
+          px="lg"
+          styles={{
             root: {
+              borderRadius: 6,
+              backgroundColor: 'rgba(0, 0, 0, .6)',
+              border: 'none',
+              backdropFilter: 'saturate(180%) blur(20px)',
               '&:hover': {
-                backgroundColor: theme.colors.dark[6],
+                backgroundColor: 'rgba(0, 0, 0, .8)',
+                cursor: 'pointer',
               },
             },
             inner: {
-              display: 'block',
-              '&:hover': {
-                backgroundColor: 'dark.9',
-              },
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 30,
             },
-          })}
-          sx={{
-            border: buttonBorder || 'none',
+
+            rightIcon: {
+              paddingLeft: 20,
+            },
           }}
         >
-          <Text>{textContent || 'Search'}</Text>
+          Search movies, shows, and more
         </Button>
-        <Button className={classes.hiddenDesktop} bg="transparent" onClick={open} fz="md" p={0}>
-          <FaSearch />
-        </Button>
-      </Group>
+      ) : (
+        <Group position="center">
+          <Button
+            unstyled
+            className={classes.hiddenMobile}
+            bg="transparent"
+            onClick={open}
+            mt="lg"
+            fz="md"
+            mr="md"
+            c="dark.0"
+            p={0}
+            sx={{
+              border: 'none',
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
+            <FaSearch size={18} />
+          </Button>
+
+          <Button className={classes.hiddenDesktop} bg="transparent" onClick={open} fz="md" p={0}>
+            <FaSearch />
+          </Button>
+        </Group>
+      )}
     </div>
   );
 };
