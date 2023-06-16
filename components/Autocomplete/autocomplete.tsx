@@ -400,11 +400,20 @@ const Autocomplete = ({
           opacity={buttonOpacity || ''}
           h={buttonHeight || 36}
           c={textColor || ''}
-          styles={{
+          variant="dark"
+          styles={(theme) => ({
+            root: {
+              '&:hover': {
+                backgroundColor: theme.colors.dark[6],
+              },
+            },
             inner: {
               display: 'block',
+              '&:hover': {
+                backgroundColor: 'dark.9',
+              },
             },
-          }}
+          })}
           sx={{
             border: buttonBorder || 'none',
           }}
