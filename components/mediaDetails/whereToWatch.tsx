@@ -1,4 +1,4 @@
-import { AspectRatio, Box, Group, Text } from '@mantine/core';
+import { AspectRatio, Box, Group, Text, Tooltip } from '@mantine/core';
 
 import Image from 'next/image';
 
@@ -11,6 +11,7 @@ interface Providers {
 }
 
 interface provider {
+  provider_name: string;
   logo_path: string;
 }
 
@@ -22,27 +23,29 @@ export function WhereToWatch({ providers }: WhereToWatchProps) {
       </Text>
       <Group spacing="sm" pt="xs">
         {providers.flatrate.map((provider) => (
-          <AspectRatio
-            ratio={1 / 1}
-            w={40}
-            sx={
-              {
-                //   border: '1px solid',
-                //   borderColor: theme.colors.dark[4],
-                //   borderRadius: 4,
+          <Tooltip label={provider.provider_name} color="dark">
+            <AspectRatio
+              ratio={1 / 1}
+              w={40}
+              sx={
+                {
+                  //   border: '1px solid',
+                  //   borderColor: theme.colors.dark[4],
+                  //   borderRadius: 4,
+                }
               }
-            }
-          >
-            <Image
-              style={{
-                borderRadius: '4px',
-                filter: 'brightness(90%)',
-              }}
-              alt="poster"
-              src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-              fill
-            />
-          </AspectRatio>
+            >
+              <Image
+                style={{
+                  borderRadius: '4px',
+                  filter: 'brightness(90%)',
+                }}
+                alt="poster"
+                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                fill
+              />
+            </AspectRatio>
+          </Tooltip>
         ))}
       </Group>
       {/* <Accordion variant="separated" defaultValue="customization" mt="xl">

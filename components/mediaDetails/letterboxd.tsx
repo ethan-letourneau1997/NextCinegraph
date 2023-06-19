@@ -83,8 +83,8 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
           )}
           {trailers.length > 0 ? <Trailer trailer={trailers[0]} /> : null}
           {desktop &&
-            mediaItem['watch/providers'].results.TW &&
-            mediaItem['watch/providers'].results.TW.flatrate && (
+            mediaItem['watch/providers'].results &&
+            mediaItem['watch/providers'].results.flatrate && (
               <WhereToWatch providers={mediaItem['watch/providers'].results.US} />
             )}
           {desktop &&
@@ -99,7 +99,6 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
             <Title size="h2">{mediaItem.title || mediaItem.name}</Title>
             <Flex gap={6}>
               <Text fz={mobile ? 'sm' : 'md'} c="brand.2">
-                {' '}
                 {mediaItem.release_date?.substring(0, 4) ||
                   mediaItem.first_air_date?.substring(0, 4)}
                 {mediaType === 'tv' && mediaItem.lastAirDate
