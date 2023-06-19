@@ -10,13 +10,21 @@ interface MediaSliderProps {
   titles?: boolean;
   slice?: number;
   width?: number;
+  titlePadding?: number;
 }
 
-export function MediaSlider({ mediaCredits, title, titles, slice, width }: MediaSliderProps) {
+export function MediaSlider({
+  mediaCredits,
+  title,
+  titles,
+  slice,
+  width,
+  titlePadding,
+}: MediaSliderProps) {
   return (
     <Box>
       <TitleLink title={title} bottomSpace />
-      <ScrollArea offsetScrollbars>
+      <ScrollArea offsetScrollbars mt={titlePadding || 0}>
         <Flex gap="sm">
           {mediaCredits &&
             mediaCredits.slice(0, slice || 10).map((known_for_item) => (

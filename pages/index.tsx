@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useMediaQuery } from '@mantine/hooks';
+
 import {
-  AspectRatio,
   Box,
   Center,
   Container,
@@ -10,8 +9,10 @@ import {
   Title,
   createStyles,
   Flex,
+  Overlay,
 } from '@mantine/core';
-import Image from 'next/image';
+
+import { useMediaQuery } from '@mantine/hooks';
 import { MediaItemType, Result } from '../Types/types';
 import {
   fetchTrendingItems,
@@ -39,11 +40,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function HomePage() {
-  // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-
   // styles
   const { classes } = useStyles();
+  const mobile = useMediaQuery('(max-width: 48em)');
 
   // loading state
   const [isLoading, setIsLoading] = useState(true);
@@ -87,26 +86,6 @@ export default function HomePage() {
     });
   }, []);
 
-  function getRandomNumber() {
-    return Math.floor(Math.random() * 20);
-  }
-
-  const [randomNumber, setRandomNumber] = useState(getRandomNumber());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRandomNumber(getRandomNumber());
-    }, 10000); // 30 seconds
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   setAnimationTrigger(animationTrigger + 1);
-  // }, [randomNumber]);
-
   if (isLoading) {
     return (
       <Container fluid>
@@ -119,6 +98,7 @@ export default function HomePage() {
 
   return (
     <Box
+      bg="dark.9"
       pos="absolute"
       top={0}
       w="100vw"
@@ -128,94 +108,84 @@ export default function HomePage() {
     >
       {trendingItems.length > 0 && (
         <>
-          <AspectRatio ratio={16 / (tablet ? 9 : 6)}>
-            <Box
+          <Box className={classes.hiddenMobile}>
+            <Box className="youtube-container" pos="relative">
+              <Overlay opacity={0.2} />
+              <iframe
+                src="https://www.youtube.com/embed/AxnLyiz5oeE?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&hd=1&playlist=AxnLyiz5oeE"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </Box>
+            <Flex
+              top={0}
+              pos="absolute"
+              direction="column"
+              h="100%"
+              w="100%"
+              // bg="rgba(0, 0, 0, 0.4)"
+              pt="25vh"
+              align="stretch"
+              justify="space-between"
               sx={{
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                zIndex: 1000,
               }}
             >
-              <AspectRatio
-                ratio={16 / (tablet ? 9 : 6)}
-                pos="absolute"
-                w="100%"
-                sx={{
-                  zIndex: 100,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  animation: 'kenBurnsEffect 40s infinite',
-                  // filter: 'brightness(95%)',
-                }}
-              >
-                <Image
-                  alt=""
-                  src={
-                    trendingItems.length > 0 && trendingItems[randomNumber].backdrop_path
-                      ? `https://image.tmdb.org/t/p/original${trendingItems[randomNumber].backdrop_path}`
-                      : '/still_placeholder_lg.png'
-                  }
-                  fill
-                />
-              </AspectRatio>
-              <Box
-                h="30%"
-                w="100%"
-                pos="absolute"
-                top={0}
-                sx={{
-                  zIndex: 1200,
-                  backgroundImage: 'linear-gradient(to bottom, #101113, transparent)',
-                }}
-              />
-              <Flex
-                direction="column"
-                h="100%"
-                w="100%"
-                bg="rgba(0, 0, 0, 0.4)"
-                pt="25vh"
-                align="stretch"
-                justify="space-between"
-                sx={{
-                  zIndex: 1200,
-                }}
-              >
-                <Center pr="15%">
-                  <Stack className={classes.hiddenMobile}>
-                    <Box>
-                      <Title c="yellow.5" size={45}>
-                        Cinegraph.
-                      </Title>
-                      <Title c="gray.0" size={45}>
-                        Explore the Media You Love.
-                      </Title>
-                    </Box>
-
-                    <Box w="50vw">
-                      <Autocomplete alt />
-                    </Box>
-                  </Stack>
-                </Center>
-                <Flex justify="flex-end">
-                  {trendingItems.length > 0 && trendingItems[randomNumber].backdrop_path && (
-                    <Title mb="sm" size="h5" pos="relative" mr="xl">
-                      {trendingItems[randomNumber].name || trendingItems[randomNumber].title}
+              <Center pr="15%">
+                <Stack>
+                  <Box>
+                    <Title c="yellow.5" size={45}>
+                      Cinegraph.
                     </Title>
-                  )}
-                </Flex>
-              </Flex>
+                    <Title c="gray.0" size={45}>
+                      Explore the Media You Love.
+                    </Title>
+                  </Box>
+                  <Box w="50vw">
+                    <Autocomplete alt />
+                  </Box>
+                </Stack>
+              </Center>
+            </Flex>
+          </Box>
+          <Box className={classes.hiddenDesktop} mt={130} mb={70}>
+            <Box pl="lg">
+              <Title c="yellow.5" size={mobile ? 'h1' : 45}>
+                Cinegraph.
+              </Title>
+              <Title c="gray.0" size={mobile ? 'h1' : 45}>
+                Explore the Media You Love.
+              </Title>
             </Box>
-          </AspectRatio>
-          <Container fluid px="xl">
-            <Box mt="xl">
-              <Stack spacing="lg">
-                <MediaSlider mediaCredits={nowPlaying} title="Now Playing" slice={20} width={150} />
+          </Box>
+
+          <Container size="xl" sx={{ zIndex: 2000 }} pos="relative">
+            <Box my={30}>
+              <Stack spacing="xl">
                 <MediaSlider
+                  titlePadding={6}
+                  mediaCredits={trendingItems}
+                  title="Trending"
+                  slice={20}
+                  width={mobile ? 130 : 150}
+                />
+
+                <MediaSlider
+                  titlePadding={6}
+                  mediaCredits={nowPlaying}
+                  title="Now Playing"
+                  slice={8}
+                  width={mobile ? 130 : 150}
+                />
+                <MediaSlider
+                  titlePadding={6}
                   mediaCredits={upcomingMovies}
                   title="Coming Soon"
                   slice={20}
-                  width={150}
+                  width={mobile ? 130 : 150}
                 />
-                <MediaSlider mediaCredits={trendingItems} title="Trending" slice={20} width={150} />
               </Stack>
             </Box>
           </Container>

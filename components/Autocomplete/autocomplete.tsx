@@ -180,6 +180,7 @@ const Autocomplete = ({ alt }: AutocompleteProps) => {
                 pb={4}
                 data-autofocus
                 icon={<TbSearch />}
+                fw={800}
                 placeholder="Search Movies, TV Shows, and People"
                 onChange={handleInputChange}
                 value={query}
@@ -398,7 +399,7 @@ const Autocomplete = ({ alt }: AutocompleteProps) => {
           unstyled
           c="dark.2"
           fz="md"
-          fw={400}
+          fw={600}
           size="md"
           onClick={open}
           rightIcon={
@@ -411,7 +412,7 @@ const Autocomplete = ({ alt }: AutocompleteProps) => {
           styles={{
             root: {
               borderRadius: 6,
-              backgroundColor: 'rgba(0, 0, 0, .6)',
+              backgroundColor: 'rgba(0, 0, 0, .7)',
               border: 'none',
               backdropFilter: 'saturate(180%) blur(20px)',
               '&:hover': {

@@ -95,6 +95,7 @@ export default function HomeGrid() {
                     title="Coming Soon"
                   />
                 )}
+                ``
               </Grid.Col>
               <Grid.Col span={6} h={225}>
                 {' '}
