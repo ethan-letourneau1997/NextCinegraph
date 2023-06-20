@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { TitleLink } from '../BiteSized/titleLink';
 import { Result } from '../../Types/types';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface MediaSliderProps {
   mediaCredits: Result[];
@@ -25,6 +26,9 @@ export function MediaSlider({
   color,
   size,
 }: MediaSliderProps) {
+  // responsive styles
+  const mobile = useMediaQuery('(max-width: 48em)');
+
   return (
     <Box>
       <TitleLink title={title} bottomSpace color={color} size={size} />
@@ -60,9 +64,9 @@ export function MediaSlider({
                         w={width || 120}
                         mih={180}
                         sx={() => ({
-                          transition: ' 0.3s all ease-in-out',
+                          transition: mobile ? '' : ' 0.3s all ease-in-out',
                           '&:hover': {
-                            transform: 'scale(1.04)',
+                            transform: mobile ? '' : 'scale(1.04)',
                           },
                         })}
                       >
