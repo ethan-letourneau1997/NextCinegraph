@@ -11,6 +11,8 @@ interface MediaSliderProps {
   slice?: number;
   width?: number;
   titlePadding?: number;
+  color?: string;
+  size?: string;
 }
 
 export function MediaSlider({
@@ -20,16 +22,27 @@ export function MediaSlider({
   slice,
   width,
   titlePadding,
+  color,
+  size,
 }: MediaSliderProps) {
   return (
     <Box>
-      <TitleLink title={title} bottomSpace />
+      <TitleLink title={title} bottomSpace color={color} size={size} />
       <ScrollArea offsetScrollbars mt={titlePadding || 0}>
         <Flex gap="sm">
           {mediaCredits &&
             mediaCredits.slice(0, slice || 10).map((known_for_item) => (
               <Box>
-                <Card shadow="md">
+                <Card
+                  shadow="md"
+                  sx={(theme) => ({
+                    border: '1px solid transparent',
+                    '&:hover': {
+                      border: `1px solid ${theme.colors.yellow[5]}`,
+                      boxSizing: 'content-box',
+                    },
+                  })}
+                >
                   <Card.Section>
                     <Anchor
                       component={Link}
@@ -42,7 +55,17 @@ export function MediaSlider({
                       }`}
                       underline={false}
                     >
-                      <AspectRatio ratio={2 / 3} w={width || 120} mih={180}>
+                      <AspectRatio
+                        ratio={2 / 3}
+                        w={width || 120}
+                        mih={180}
+                        sx={() => ({
+                          transition: ' 0.3s all ease-in-out',
+                          '&:hover': {
+                            transform: 'scale(1.04)',
+                          },
+                        })}
+                      >
                         <Skeleton />
                         <Image
                           fill

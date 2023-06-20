@@ -90,7 +90,6 @@ export default function SeasonLayout() {
             position: tablet ? 'static' : 'absolute',
           }}
           bg={tablet ? 'dark.7' : 'transparent'}
-          // bg="dark.7"
           p="xs"
           pl={30}
           pt={tablet ? 'xs' : 0}

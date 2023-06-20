@@ -1,6 +1,7 @@
 import { Accordion, Box, Divider, Text } from '@mantine/core';
 
 import { BsChevronRight } from 'react-icons/bs';
+import { useMediaQuery } from '@mantine/hooks';
 import DatePickers from './disoverAccordianComponents/datePickers';
 import Genres from './disoverAccordianComponents/genreToggles';
 import Keywords from './disoverAccordianComponents/keywordAutocomplete';
@@ -22,6 +23,9 @@ export default function Discover({
 
   desktop,
 }: DiscoverPropTypes) {
+  // responsive styles
+  const mobile = useMediaQuery('(max-width: 48em)');
+
   const isMovie = type === 'movie';
 
   const showMeValue = useStore((state) => state.showMeValue);
@@ -59,8 +63,7 @@ export default function Discover({
             })}
           >
             <Accordion.Item value="sort by">
-              <Accordion.Control px="md" disabled={showMeValue !== 'all'}>
-                {' '}
+              <Accordion.Control px="md" py={mobile ? 0 : 'md'} disabled={showMeValue !== 'all'}>
                 <Text fw={500}>Sort by</Text>
               </Accordion.Control>
               <Accordion.Panel>
@@ -72,7 +75,7 @@ export default function Discover({
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="where to watch">
-              <Accordion.Control px="md" disabled={showMeValue !== 'all'}>
+              <Accordion.Control py={mobile ? 0 : 'md'} px="md" disabled={showMeValue !== 'all'}>
                 <Text fw={500}>Where to Watch</Text>
               </Accordion.Control>
               <Accordion.Panel>
@@ -83,7 +86,7 @@ export default function Discover({
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="filters">
-              <Accordion.Control px="md">
+              <Accordion.Control py={mobile ? 0 : 'md'} px="md">
                 <Text fw={500}>Filters</Text>
               </Accordion.Control>
               <Accordion.Panel>

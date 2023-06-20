@@ -22,8 +22,6 @@ import { useMediaQuery } from '@mantine/hooks';
 
 import { IconChevronRight } from '@tabler/icons-react';
 import { FaChevronLeft } from 'react-icons/fa';
-import { formatReleaseDate } from '../../../../components/Discover/discoverGrid';
-import { formatRuntime } from '../../../../utils/utils';
 import { Seasons, SeasonType } from '../../../../Types/types';
 
 export default function ShowSeasons() {
@@ -167,21 +165,18 @@ export default function ShowSeasons() {
                       }/season/${season.season_number}`,
                     }}
                   >
-                    <Text fz="xl" c="gray.0">
+                    <Title size="h4" c="dark.0">
                       &nbsp;{season.name}
-                    </Text>
+                    </Title>
                   </Anchor>
 
-                  <Flex align="center" gap="xs" pl={3} mt={3}>
-                    <Text fz="sm">{formatReleaseDate(season.air_date)}</Text>
-                    <Text fz="sm" c="brand.4">
-                      {formatRuntime(season.runtime)}
-                    </Text>
-                  </Flex>
+                  <Text pl={5} mt={3} fz="sm" c="dark.1" fw={550}>
+                    {season.air_date.substring(0, 4)}
+                  </Text>
 
-                  <Box>
+                  <Box pl={5}>
                     {season.overview ? (
-                      <Text lineClamp={3} mt="xs" fz="sm" c="gray.4">
+                      <Text lineClamp={3} mt="xs" fz="sm" c="dimmed">
                         {season.overview}
                       </Text>
                     ) : (

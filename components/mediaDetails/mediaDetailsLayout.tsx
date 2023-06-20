@@ -15,8 +15,7 @@ interface MediaDetailsLayoutProps {
 
 export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsLayoutProps) {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
 
   const [mediaDetails, setMediaDetails] = useState<MediaItemType | null>(null);
 
@@ -46,7 +45,7 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
         <BannerImage aspectRatio={16 / 7} mediaBackdrop={mediaDetails.backdrop_path} />
       </Container>
 
-      <Container pos="relative" top={mobile ? 0 : -40} py="xl" px={mobile ? 50 : 50}>
+      <Container pos="relative" top={tablet ? 0 : -40} py="xl" px={tablet ? 40 : 50}>
         <LetterBoxd mediaItem={mediaDetails} mediaType={mediaType} />
       </Container>
     </Box>

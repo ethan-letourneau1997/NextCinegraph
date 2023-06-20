@@ -45,7 +45,7 @@ export default function DesktopNavigation() {
           },
         })}
       />
-      <Menu shadow="md" trigger="hover" zIndex={1500}>
+      <Menu shadow="md" trigger="hover" offset={-5} zIndex={1500}>
         <Menu.Target>
           <UnstyledButton
             p={0}
@@ -69,6 +69,7 @@ export default function DesktopNavigation() {
           }}
         >
           <NavLink
+            fw={550}
             component={Link}
             href="/movies/top100"
             sx={{
@@ -89,6 +90,7 @@ export default function DesktopNavigation() {
             label="Top 100"
           />
           <NavLink
+            fw={550}
             component={Link}
             href="/movies/popular"
             sx={{
@@ -110,6 +112,7 @@ export default function DesktopNavigation() {
           />
 
           <NavLink
+            fw={550}
             component={Link}
             sx={{
               '&:hover': {
@@ -131,6 +134,7 @@ export default function DesktopNavigation() {
           />
 
           <NavLink
+            fw={550}
             component={Link}
             href="/movies/upcoming"
             sx={{
@@ -151,6 +155,7 @@ export default function DesktopNavigation() {
             label="Upcoming"
           />
           <NavLink
+            fw={550}
             component={Link}
             href="/movies/highestGrossing"
             sx={{
@@ -172,6 +177,7 @@ export default function DesktopNavigation() {
           />
 
           <NavLink
+            fw={550}
             component={Link}
             href="/movies/popular"
             sx={{
@@ -193,7 +199,7 @@ export default function DesktopNavigation() {
           />
         </Menu.Dropdown>
       </Menu>
-      <Menu shadow="md" trigger="hover" zIndex={1500}>
+      <Menu shadow="md" trigger="hover" zIndex={1500} offset={-5}>
         <Menu.Target>
           <UnstyledButton
             p={0}
@@ -219,6 +225,7 @@ export default function DesktopNavigation() {
           <NavLink
             component={Link}
             href="/shows/top100"
+            fw={550}
             sx={{
               '&:hover': {
                 backgroundColor: 'rgba(0, 0, 0, .3)',
@@ -237,6 +244,7 @@ export default function DesktopNavigation() {
             label="Top 100"
           />
           <NavLink
+            fw={550}
             component={Link}
             href="/shows/popular"
             sx={{
@@ -258,6 +266,7 @@ export default function DesktopNavigation() {
           />
 
           <NavLink
+            fw={550}
             component={Link}
             href="/shows/popular"
             sx={{

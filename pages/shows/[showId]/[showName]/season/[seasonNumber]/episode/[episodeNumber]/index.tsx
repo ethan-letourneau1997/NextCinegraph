@@ -195,7 +195,6 @@ export default function Episode() {
               position: tablet ? 'static' : 'absolute',
             }}
             bg={tablet ? 'dark.7' : 'transparent'}
-            // bg="dark.7"
             p="xs"
             pl={30}
             pt={tablet ? 'xs' : 0}
@@ -210,12 +209,12 @@ export default function Episode() {
               href={{
                 pathname: `/shows/${showId}/${
                   typeof showName === 'string' ? encodeURIComponent(showName) : ''
-                }/seasons`,
+                }/season/${seasonNumber}`,
               }}
             >
               <FaChevronLeft size={tablet ? 12 : 14} />
               <Space w={3} />
-              <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
+              <Text fz={mobile ? 'sm' : 'sm'}>Back to Season {seasonNumber}</Text>
             </Anchor>
           </Flex>
         ) : (

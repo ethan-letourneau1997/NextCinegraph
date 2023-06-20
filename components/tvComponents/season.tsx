@@ -1,4 +1,15 @@
-import { Anchor, Box, AspectRatio, Grid, Flex, Text, Divider, Skeleton, Card } from '@mantine/core';
+import {
+  Anchor,
+  Box,
+  AspectRatio,
+  Grid,
+  Flex,
+  Text,
+  Divider,
+  Skeleton,
+  Card,
+  Title,
+} from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
@@ -99,8 +110,8 @@ export default function Season(props: SeasonProps) {
               </Grid.Col>
               <Grid.Col px="xs" span={20} xs={10} sm={12} lg={14}>
                 <Anchor
-                  fz="xl"
-                  c="gray.0"
+                  // fz="xl"
+                  c="dark.0"
                   component={Link}
                   href={{
                     pathname: `/shows/${showId}/${
@@ -108,27 +119,39 @@ export default function Season(props: SeasonProps) {
                     }/season/${episode.season_number}/episode/${episode.episode_number}`,
                   }}
                 >
-                  {episode.episode_number}.&nbsp;{episode.name}
+                  <Title size="h4">
+                    {episode.episode_number}.&nbsp;{episode.name}
+                  </Title>
                 </Anchor>
 
-                <Flex align="center" gap="xs" pl={3} mt={3}>
+                <Flex align="center" gap={7} pl={3} mt={1}>
                   {episode.vote_average && episode.vote_average > 0 ? (
                     <Flex gap={6}>
                       <Flex pb={1} align="center">
                         <BsFillStarFill size={12} color="#ffd452" />
                       </Flex>
 
-                      <Text fz="sm"> {episode.vote_average.toFixed(1)}</Text>
+                      <Text fw={500} c="dark.2" fz="sm">
+                        {episode.vote_average.toFixed(1)}
+                      </Text>
                     </Flex>
                   ) : null}
-                  <Text fz="sm">{formatReleaseDate(episode.air_date)}</Text>
-                  <Text fz="sm" c="brand.4">
+                  <Text fw={500} c="dark.2">
+                    ·
+                  </Text>
+                  <Text fw={500} c="dark.2" fz="sm">
+                    {formatReleaseDate(episode.air_date)}
+                  </Text>
+                  <Text fw={500} c="dark.2">
+                    ·
+                  </Text>
+                  <Text fz="sm" fw={500} c="dark.2">
                     {formatRuntime(episode.runtime)}
                   </Text>
                 </Flex>
 
                 <Box>
-                  <Text lineClamp={3} mt="xs" fz="sm" c="gray.4">
+                  <Text lineClamp={3} mt="xs" fz="sm" c="dimmed">
                     {episode.overview}
                   </Text>
                 </Box>

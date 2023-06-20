@@ -1,15 +1,4 @@
-import {
-  Anchor,
-  AspectRatio,
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  Paper,
-  Spoiler,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Anchor, AspectRatio, Box, Divider, Flex, Grid, Paper, Text, Title } from '@mantine/core';
 
 import { BsFillStarFill } from 'react-icons/bs';
 import Image from 'next/image';
@@ -32,6 +21,9 @@ export default function SingleColumnGrid(props: {
             <Grid.Col span="content" px="sm">
               <Paper shadow="xl">
                 <Anchor
+                  sx={(theme) => ({
+                    textDecorationColor: theme.colors.gray[0],
+                  })}
                   component={Link}
                   href={`/${props.mediaType === 'movie' ? 'movies' : 'shows'}/${item.id}/${
                     item.title
@@ -60,11 +52,11 @@ export default function SingleColumnGrid(props: {
             </Grid.Col>
             <Grid.Col span="auto">
               <Flex justify="space-between">
-                <Text fz={desktop ? 'sm' : 'xs'} fw={400}>
+                <Text fz={desktop ? 'sm' : 'xs'} fw={300}>
                   {index + 1}
                 </Text>
                 {props.subject === 'highestGrossing' && (
-                  <Text fz={desktop ? 'sm' : 'xs'} fw={400} c="yellow.4" mr="lg">
+                  <Text fz={desktop ? 'sm' : 'xs'} fw={400} c="dark.0" mr="lg">
                     ${item.revenue?.toLocaleString()}
                   </Text>
                 )}
@@ -75,47 +67,57 @@ export default function SingleColumnGrid(props: {
                 href={`/${props.mediaType === 'movie' ? 'movies' : 'shows'}/${item.id}/${
                   item.title ? encodeURIComponent(item.title) : encodeURIComponent(item.name || '')
                 }`}
+                sx={(theme) => ({
+                  '&:hover': {
+                    textDecorationColor: theme.colors.gray[0],
+                  },
+                })}
               >
-                {' '}
-                <Title size={desktop ? 'h4' : 'h5'} order={2}>
+                <Title c="dark.0" size={desktop ? 'h4' : 'h5'} order={2}>
                   {item.title || item.name}
                 </Title>
               </Anchor>
 
               <Flex mt={1} align="center" gap={3}>
-                <BsFillStarFill size={desktop ? 14 : 12} color="#ffd452" />
-                <Flex pt={1} gap="xs">
-                  <Text fz={desktop ? 'sm' : 'xs'} fw={600}>
-                    {' '}
-                    {item.vote_average}
-                  </Text>
-                  <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'xs'}>
+                <BsFillStarFill size={desktop ? 13 : 11} color="#fcc419" />
+                <Flex pt={1} gap={7}>
+                  {item.vote_average && item.vote_average > 0 && (
+                    <Text c="dark.1" fz={desktop ? 'sm' : 'xs'}>
+                      {item.vote_average}
+                    </Text>
+                  )}
+                  {item.vote_average && item.vote_average > 0 && (
+                    <Text c="dark.1" fz={desktop ? 'sm' : 'xs'}>
+                      ·
+                    </Text>
+                  )}
+                  <Text c="dark.1" fw={500} fz={desktop ? 'sm' : 'xs'}>
                     {item.certification}
                   </Text>
-                  <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'xs'}>
-                    {' '}
+                  {item.certification && (
+                    <Text c="dark.1" fz={desktop ? 'sm' : 'xs'}>
+                      ·
+                    </Text>
+                  )}
+                  <Text c="dark.1" fw={500} fz={desktop ? 'sm' : 'xs'}>
                     {item.release_date?.substring(0, 4) || item.first_air_date?.substring(0, 4)}
                     {props.mediaType === 'tv' && item.lastAirDate
                       ? `-${item.lastAirDate.substring(0, 4)}`
                       : null}
                   </Text>
-                  <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'xs'}>
+                  {item.release_date && (
+                    <Text c="dark.1" fz={desktop ? 'sm' : 'xs'}>
+                      ·
+                    </Text>
+                  )}
+                  <Text c="dark.1" fw={500} fz={desktop ? 'sm' : 'xs'}>
                     {item.runtimeOrEpisodeLength}
                   </Text>
                 </Flex>
               </Flex>
-
-              <Spoiler
-                fz={desktop ? 'sm' : 'xs'}
-                maxHeight={desktop ? 50 : 40}
-                showLabel="Read More"
-                hideLabel="Read Less"
-              >
-                <Text fz={desktop ? 'sm' : 'xs'} mt={3}>
-                  {' '}
-                  {item.overview}
-                </Text>
-              </Spoiler>
+              <Text mt="xs" c="dimmed" fz={desktop ? 'sm' : 'xs'} lineClamp={2} pr="md">
+                {item.overview}
+              </Text>
             </Grid.Col>
           </Grid>
 

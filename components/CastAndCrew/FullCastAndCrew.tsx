@@ -14,6 +14,7 @@ import {
   Stack,
   Table,
   Text,
+  Title,
   rem,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
@@ -34,6 +35,7 @@ interface FullCastAndCrewProps {
 
 export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
   // responsive styles
+  const desktop = useMediaQuery('(min-width: 48em)');
   const mobile = useMediaQuery('(max-width: 500px)');
 
   //* Get query params
@@ -122,7 +124,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
     }));
 
   return (
-    <Container fluid p={mobile ? 0 : ''}>
+    <Container mt={desktop ? 0 : 'md'} fluid p={mobile ? 0 : ''}>
       <Affix position={{ bottom: rem(20), right: rem(50) }}>
         <Menu>
           <Menu.Target>
@@ -192,10 +194,18 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
       </Affix>
       <Container size="sm" p="xs" pb="xl">
         <Flex gap="sm">
-          <AspectRatio ratio={2 / 3} w={70}>
+          <AspectRatio
+            ratio={2 / 3}
+            w={desktop ? 100 : 80}
+            sx={(theme) => ({
+              border: `.5px solid ${theme.colors.dark[4]}`,
+              borderRadius: 4,
+            })}
+          >
             <Image
               fill
               alt=""
+              style={{ borderRadius: 4 }}
               src={
                 media?.poster_path
                   ? `https://image.tmdb.org/t/p/w342${media.poster_path}`
@@ -203,15 +213,21 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
               }
             />
           </AspectRatio>
-          <Flex justify="center" direction="column" w="fit-content">
-            <Text size={mobile ? 28 : 28} fw={600} inline>
-              Full Cast and Crew
-              <Divider mt={5} />
-            </Text>
-            <Text pl={3} size={mobile ? 28 : 20} fw={300}>
+          <Flex justify="center" direction="column" w="fit-content" px={mobile ? 'xs' : 0}>
+            <Title color="gray.6" size={desktop ? 'h3' : 'h4'}>
               {mediaName}
-            </Text>
+            </Title>
+
+            <Title size={desktop ? 'h2' : 'h3'}> Full Cast and Crew</Title>
           </Flex>
+          {/* <Flex justify="center" direction="column" w="fit-content">
+            <Title size="h3" fw={600} inline>
+              Full Cast and Crew
+            </Title>
+            <Title c="dark.3" size="h4">
+              {mediaName}
+            </Title>
+          </Flex> */}
         </Flex>
       </Container>
 

@@ -34,7 +34,7 @@ export default function UserScore({ desktop }: UserScoreTypes) {
           marks={scoreMarks}
           styles={(theme) => ({
             label: {
-              backgroundColor: theme.colors.brand[8],
+              backgroundColor: theme.colors.dark[8],
             },
             markLabel: {
               marginTop: 3,

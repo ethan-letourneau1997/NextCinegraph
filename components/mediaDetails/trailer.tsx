@@ -1,5 +1,5 @@
 import { AspectRatio, Box, Button, Modal, useMantineTheme } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { FaPlay } from 'react-icons/fa';
 import { Video } from '../../Types/types';
 
@@ -8,6 +8,9 @@ interface trailerProps {
 }
 
 export default function Trailer({ trailer }: trailerProps) {
+  // responsive styles
+  const mobile = useMediaQuery('(max-width: 48em)');
+
   const theme = useMantineTheme();
 
   const videoUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1`;
@@ -16,7 +19,6 @@ export default function Trailer({ trailer }: trailerProps) {
 
   return (
     <Box>
-      {' '}
       <Modal
         opened={opened}
         onClose={close}
@@ -29,7 +31,7 @@ export default function Trailer({ trailer }: trailerProps) {
             padding: 0,
           },
           header: {
-            backgroundColor: theme.colors.dark[7],
+            backgroundColor: theme.colors.dark[9],
           },
         })}
         overlayProps={{
@@ -52,24 +54,47 @@ export default function Trailer({ trailer }: trailerProps) {
           </Box>
         </Box>
       </Modal>
-      <Button
-        color="dark.6"
-        onClick={open}
-        fullWidth
-        leftIcon={<FaPlay />}
-        mt="md"
-        styles={{
-          root: {
-            '&:hover': {
-              // backgroundColor: theme.colors.yellow[8],
-              color: theme.colors.yellow[5],
+      {mobile ? (
+        <Button
+          color="dark.6"
+          fullWidth
+          component="a"
+          href={videoUrl}
+          mt="md"
+          leftIcon={<FaPlay />}
+          target="_blank"
+          styles={{
+            root: {
+              '&:hover': {
+                // backgroundColor: theme.colors.yellow[8],
+                color: theme.colors.yellow[5],
+              },
+              color: theme.colors.dark[0],
             },
-            color: theme.colors.dark[0],
-          },
-        }}
-      >
-        Watch Trailer{' '}
-      </Button>
+          }}
+        >
+          Watch Trailer
+        </Button>
+      ) : (
+        <Button
+          color="dark.6"
+          onClick={open}
+          fullWidth
+          leftIcon={<FaPlay />}
+          mt="md"
+          styles={{
+            root: {
+              '&:hover': {
+                // backgroundColor: theme.colors.yellow[8],
+                color: theme.colors.yellow[5],
+              },
+              color: theme.colors.dark[0],
+            },
+          }}
+        >
+          Watch Trailer
+        </Button>
+      )}
     </Box>
   );
 }

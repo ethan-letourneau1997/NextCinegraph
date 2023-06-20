@@ -125,10 +125,11 @@ export default function DiscoverLayout({ type, title }: DiscoverLayoutProps) {
             <Button
               leftIcon={<IconArrowUp size="1rem" />}
               color="yellow.5"
+              fw={800}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
               sx={(theme) => ({
-                color: theme.colors.brand[9],
+                color: theme.colors.dark[9],
               })}
             >
               To Top

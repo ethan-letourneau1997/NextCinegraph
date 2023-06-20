@@ -23,8 +23,6 @@ import {
 } from './api/homeApi';
 import { MediaSlider } from '../components/general/mediaSlider';
 
-import Autocomplete from '../components/Autocomplete/autocomplete';
-
 const useStyles = createStyles((theme) => ({
   hiddenMobile: {
     [theme.fn.smallerThan('sm')]: {
@@ -99,7 +97,7 @@ export default function HomePage() {
   return (
     <Box
       bg="dark.9"
-      pos="absolute"
+      // pos="absolute"
       top={0}
       w="100vw"
       sx={{
@@ -108,9 +106,9 @@ export default function HomePage() {
     >
       {trendingItems.length > 0 && (
         <>
-          <Box className={classes.hiddenMobile}>
+          <Box>
             <Box className="youtube-container" pos="relative">
-              <Overlay opacity={0.2} />
+              <Overlay opacity={0.4} className={classes.hiddenMobile} />
               <iframe
                 src="https://www.youtube.com/embed/AxnLyiz5oeE?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&hd=1&playlist=AxnLyiz5oeE"
                 title="YouTube video player"
@@ -120,13 +118,14 @@ export default function HomePage() {
               />
             </Box>
             <Flex
-              top={0}
+              className={classes.hiddenMobile}
+              top={100}
               pos="absolute"
               direction="column"
               h="100%"
               w="100%"
               // bg="rgba(0, 0, 0, 0.4)"
-              pt="25vh"
+              pt="22vh"
               align="stretch"
               justify="space-between"
               sx={{
@@ -143,19 +142,19 @@ export default function HomePage() {
                       Explore the Media You Love.
                     </Title>
                   </Box>
-                  <Box w="50vw">
-                    <Autocomplete alt />
-                  </Box>
+                  {/* <Box w="50vw">
+                    <Autocomplete alt />{' '}
+                  </Box> */}
                 </Stack>
               </Center>
             </Flex>
           </Box>
-          <Box className={classes.hiddenDesktop} mt={130} mb={70}>
-            <Box pl="lg">
-              <Title c="yellow.5" size={mobile ? 'h1' : 45}>
+          <Box className={classes.hiddenDesktop} mt={40} mb={60}>
+            <Box px="lg">
+              <Title c="yellow.5" size={mobile ? 'h2' : 45}>
                 Cinegraph.
               </Title>
-              <Title c="gray.0" size={mobile ? 'h1' : 45}>
+              <Title c="gray.0" size={mobile ? 'h2' : 45}>
                 Explore the Media You Love.
               </Title>
             </Box>
@@ -165,26 +164,32 @@ export default function HomePage() {
             <Box my={30}>
               <Stack spacing="xl">
                 <MediaSlider
-                  titlePadding={6}
+                  titlePadding={mobile ? 4 : 6}
                   mediaCredits={trendingItems}
                   title="Trending"
-                  slice={20}
-                  width={mobile ? 130 : 150}
+                  slice={8}
+                  width={mobile ? 120 : 147}
+                  color="gray.3"
+                  size={mobile ? 'h4' : 'h3'}
                 />
 
                 <MediaSlider
-                  titlePadding={6}
+                  titlePadding={mobile ? 4 : 6}
                   mediaCredits={nowPlaying}
                   title="Now Playing"
                   slice={8}
-                  width={mobile ? 130 : 150}
+                  width={mobile ? 120 : 147}
+                  color="gray.3"
+                  size={mobile ? 'h4' : 'h3'}
                 />
                 <MediaSlider
-                  titlePadding={6}
+                  titlePadding={mobile ? 4 : 6}
                   mediaCredits={upcomingMovies}
                   title="Coming Soon"
-                  slice={20}
-                  width={mobile ? 130 : 150}
+                  slice={8}
+                  width={mobile ? 120 : 147}
+                  color="gray.3"
+                  size={mobile ? 'h4' : 'h3'}
                 />
               </Stack>
             </Box>

@@ -32,7 +32,7 @@ export default function DatePickers({ desktop }: CheckBoxTypes) {
           mx="auto"
           styles={(theme) => ({
             label: {
-              backgroundColor: theme.colors.brand[8],
+              backgroundColor: theme.colors.dark[8],
             },
             markLabel: {
               fontSize: theme.fontSizes.xs,

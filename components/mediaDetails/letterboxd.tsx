@@ -38,9 +38,9 @@ interface LetterBoxdProp {
 
 export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const trailers = mediaItem.videos.results.filter((video) => video.type === 'Trailer');
 
@@ -48,39 +48,22 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
     <Box>
       <Grid gutter="xl">
         <Grid.Col span={12} xs={4} sm={3}>
-          {tablet ? (
-            <AspectRatio ratio={16 / 9} mt="sm">
-              <Image
-                fill
-                alt=""
-                src={
-                  mediaItem.poster_path
-                    ? `https://image.tmdb.org/t/p/w780${mediaItem.backdrop_path}`
-                    : '/media_placeholder_lg.png'
-                }
-                style={{
-                  borderRadius: '4px',
-                  border: '.5px solid #3F3F46',
-                }}
-              />
-            </AspectRatio>
-          ) : (
-            <AspectRatio ratio={2 / 3}>
-              <Image
-                fill
-                alt=""
-                src={
-                  mediaItem.poster_path
-                    ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
-                    : '/media_placeholder_lg.png'
-                }
-                style={{
-                  borderRadius: '4px',
-                  border: '.5px solid #3F3F46',
-                }}
-              />
-            </AspectRatio>
-          )}
+          <AspectRatio ratio={2 / 3}>
+            <Image
+              fill
+              alt=""
+              src={
+                mediaItem.poster_path
+                  ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
+                  : '/media_placeholder_lg.png'
+              }
+              style={{
+                borderRadius: '4px',
+                border: '.5px solid #3F3F46',
+              }}
+            />
+          </AspectRatio>
+
           {trailers.length > 0 ? <Trailer trailer={trailers[0]} /> : null}
           {desktop &&
             mediaItem['watch/providers'].results &&
@@ -98,53 +81,70 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
           <Box>
             <Title size="h2">{mediaItem.title || mediaItem.name}</Title>
             <Flex gap={6}>
-              <Text fz={mobile ? 'sm' : 'md'} c="brand.2">
+              <Text fz={mobile ? 'sm' : 'md'} c="gray.3">
                 {mediaItem.release_date?.substring(0, 4) ||
                   mediaItem.first_air_date?.substring(0, 4)}
                 {mediaType === 'tv' && mediaItem.lastAirDate
                   ? `-${mediaItem.lastAirDate.substring(0, 4)}`
                   : null}
               </Text>
-              {mediaType === 'movie' && mediaItem.created_by && mediaItem.created_by.length > 0 ? (
+              {mediaType === 'tv' && mediaItem.created_by && mediaItem.created_by.length > 0 ? (
                 <>
                   <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
                     Created by
                   </Text>
                   <Text lineClamp={1}>
-                    {mediaItem.directingCrew?.slice(0, tablet ? 1 : 2).map((crew, index) => (
-                      <Text fz={mobile ? 'sm' : 'md'} c="brand.2" key={crew.id}>
-                        {crew.name}
-                        {mediaItem.directingCrew &&
-                        mediaItem.directingCrew &&
-                        index !== mediaItem.directingCrew.length - 1 ? (
-                          <>,&nbsp; </>
-                        ) : null}
-                      </Text>
+                    {mediaItem.created_by?.slice(0, tablet ? 1 : 2).map((crew, index) => (
+                      <Anchor
+                        component={Link}
+                        href={`/people/${crew.id}/${encodeURIComponent(crew.name || '')}`}
+                        // underline={false}
+                        sx={(theme) => ({
+                          textDecorationColor: theme.colors.dark[0],
+                          textDecorationThickness: 1,
+                          '&:hover': {
+                            textDecorationColor: theme.colors.accent[0],
+                          },
+                        })}
+                      >
+                        <Text fz={mobile ? 'sm' : 'md'} c="gray.3" key={crew.id}>
+                          {crew.name}
+                          {mediaItem.created_by &&
+                          mediaItem.created_by &&
+                          index !== mediaItem.created_by.length - 1 ? (
+                            <>,&nbsp; </>
+                          ) : null}
+                        </Text>
+                      </Anchor>
                     ))}
                   </Text>
                 </>
               ) : (
                 <>
-                  <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
-                    Directed by
-                  </Text>
-                  <Flex>
-                    {mediaItem.created_by?.slice(0, tablet ? 1 : 2).map((credit, index) => (
-                      <Anchor
-                        c="brand.2"
-                        key={credit.id}
-                        fz={mobile ? 'sm' : 'md'}
-                        component={Link}
-                        href={`/people/${credit.id}/${encodeURIComponent(credit.name || '')}`}
-                      >
-                        {' '}
-                        {credit.name}
-                        {!tablet && index !== mediaItem.created_by!.length - 1 ? (
-                          <>,&nbsp;</>
-                        ) : null}
-                      </Anchor>
-                    ))}
-                  </Flex>
+                  {mediaItem.directingCrew && mediaItem.directingCrew.length > 0 && (
+                    <>
+                      <Text fz={mobile ? 'sm' : 'md'} c="dimmed">
+                        Directed by
+                      </Text>
+                      <Flex>
+                        {mediaItem.directingCrew?.slice(0, tablet ? 1 : 2).map((credit, index) => (
+                          <Anchor
+                            c="gray.3"
+                            key={credit.id}
+                            fz={mobile ? 'sm' : 'md'}
+                            component={Link}
+                            href={`/people/${credit.id}/${encodeURIComponent(credit.name || '')}`}
+                          >
+                            {' '}
+                            {credit.name}
+                            {!tablet && index !== mediaItem.directingCrew!.length - 1 ? (
+                              <>,&nbsp;</>
+                            ) : null}
+                          </Anchor>
+                        ))}
+                      </Flex>
+                    </>
+                  )}
                 </>
               )}
 
@@ -197,7 +197,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
             >
               {mediaItem.overview}
             </Spoiler>
-            <Divider my="xs" color="dark.5" />
+            <Divider my={desktop ? 'md' : 'xs'} color="dark.5" />
             <Title fw={600} size="h5" pt="sm">
               Details
             </Title>
@@ -206,9 +206,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                 <Text fw={500}>Score:</Text>
                 <Group spacing={4}>
                   <BsFillStarFill size={12} color="#ffd452" />
-                  <Text c="dark.0" fz="sm">
-                    {mediaItem.vote_average?.toFixed(1)}
-                  </Text>
+                  <Text c="dark.0">{mediaItem.vote_average?.toFixed(1)}</Text>
                 </Group>
               </Flex>
               <Flex gap={5}>
@@ -297,7 +295,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
               </>
             ) : null}
 
-            {mediaItem.recommendations.results && (
+            {mediaItem.recommendations.results && mediaItem.recommendations.results.length > 0 && (
               <>
                 <Space h={60} />
                 <MediaSlider
@@ -306,8 +304,6 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                 />
               </>
             )}
-
-            {/* <MediaSimilar mediaType={mediaType} similar={mediaItem.recommendations} /> */}
           </Box>
         </Grid.Col>
       </Grid>

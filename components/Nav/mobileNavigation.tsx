@@ -3,11 +3,14 @@ import { Accordion, Divider, NavLink, Text } from '@mantine/core';
 import { AiFillHome } from 'react-icons/ai';
 import Link from 'next/link';
 import { TbMovie } from 'react-icons/tb';
-import { useDisclosure } from '@mantine/hooks';
 // import styles from '@/styles/Burger.module.css';
 
-export function MobileNavigation() {
-  const [, { toggle }] = useDisclosure(false);
+interface MobileNavigationProps {
+  toggleMobileNav: any;
+}
+
+export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
+  // const [, { toggle }] = useDisclosure(false);
   // styles
 
   return (
@@ -67,7 +70,7 @@ export function MobileNavigation() {
             label="Home"
             component={Link}
             href="/"
-            onClick={toggle}
+            onClick={toggleMobileNav}
             p={0}
             styles={(theme) => ({
               label: {
@@ -88,7 +91,7 @@ export function MobileNavigation() {
           <NavLink
             component={Link}
             href="/movies/top100"
-            onClick={toggle}
+            onClick={toggleMobileNav}
             styles={(theme) => ({
               label: {
                 fontSize: theme.fontSizes.md,
@@ -102,21 +105,7 @@ export function MobileNavigation() {
           <NavLink
             component={Link}
             href="/movies/popular"
-            onClick={toggle}
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.md,
-              },
-            })}
-            pt={0}
-            pb={8}
-            ml="xl"
-            label="Browse Movies"
-          />
-          <NavLink
-            component={Link}
-            href="/movies/popular"
-            onClick={toggle}
+            onClick={toggleMobileNav}
             styles={(theme) => ({
               label: {
                 fontSize: theme.fontSizes.md,
@@ -129,8 +118,7 @@ export function MobileNavigation() {
           />
           <NavLink
             component={Link}
-            href="/movies/trending"
-            onClick={toggle}
+            onClick={toggleMobileNav}
             styles={(theme) => ({
               label: {
                 fontSize: theme.fontSizes.md,
@@ -139,7 +127,22 @@ export function MobileNavigation() {
             pt={0}
             pb="xs"
             ml="xl"
-            label="Trending "
+            href="/movies/now_playing"
+            label="Now Playing"
+          />
+          <NavLink
+            component={Link}
+            href="/movies/upcoming"
+            onClick={toggleMobileNav}
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            pt={0}
+            pb={8}
+            ml="xl"
+            label="Upcoming"
           />
           <NavLink
             component={Link}
@@ -149,10 +152,25 @@ export function MobileNavigation() {
                 fontSize: theme.fontSizes.md,
               },
             })}
+            onClick={toggleMobileNav}
             pt={0}
             pb="xs"
             ml="xl"
-            label="Top Box Office"
+            label="Box Office"
+          />
+          <NavLink
+            component={Link}
+            href="/movies/popular"
+            onClick={toggleMobileNav}
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            pt={0}
+            pb={8}
+            ml="xl"
+            label="Browse Movies"
           />
           <Divider color="hsla(0, 0%, 30%, .5)" mb={8} mx="sm" />
         </Accordion.Panel>
@@ -160,25 +178,14 @@ export function MobileNavigation() {
 
       <Accordion.Item value="shows">
         <Accordion.Control icon={<TbMovie size={16} />}>
-          <Text fw={700}>TV Shows</Text>
+          <Text fw={600}>TV Shows</Text>
         </Accordion.Control>
         <Accordion.Panel>
           {' '}
           <NavLink
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.md,
-              },
-            })}
-            pt={0}
-            pb="xs"
-            ml="xl"
-            label="Popular TV Shows"
-          />
-          <NavLink
             component={Link}
             href="/shows/top100"
-            onClick={toggle}
+            onClick={toggleMobileNav}
             styles={(theme) => ({
               label: {
                 fontSize: theme.fontSizes.md,
@@ -188,6 +195,30 @@ export function MobileNavigation() {
             pb="xs"
             ml="xl"
             label="Top 100"
+          />
+          <NavLink
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            onClick={toggleMobileNav}
+            pt={0}
+            pb="xs"
+            ml="xl"
+            label="Popular "
+          />
+          <NavLink
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            onClick={toggleMobileNav}
+            pt={0}
+            pb="xs"
+            ml="xl"
+            label="Browse Shows"
           />
           <Divider color="hsla(0, 0%, 30%, .5)" mb={8} mx="sm" />
         </Accordion.Panel>

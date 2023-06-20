@@ -1,15 +1,4 @@
-import {
-  Anchor,
-  AspectRatio,
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  Spoiler,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Anchor, AspectRatio, Box, Divider, Flex, Grid, Stack, Text, Title } from '@mantine/core';
 
 import { BsFillStarFill } from 'react-icons/bs';
 import Image from 'next/image';
@@ -50,7 +39,7 @@ export function formatReleaseDate(inputDate: string | undefined) {
 
 export default function DiscoverGrid(props: { mediaType: string; items: MediaItemType[] }) {
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
   const { items } = props;
 
   const showMeValue = useStore((state) => state.showMeValue);
@@ -96,6 +85,11 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
               <Grid.Col span="auto">
                 <Stack spacing={0}>
                   <Anchor
+                    sx={(theme) => ({
+                      '&:hover': {
+                        textDecorationColor: theme.colors.gray[0],
+                      },
+                    })}
                     component={Link}
                     href={`/${props.mediaType === 'movie' ? 'movies' : 'shows'}/${item.id}/${
                       item.title
@@ -103,25 +97,33 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                         : encodeURIComponent(item.name || '')
                     }`}
                   >
-                    <Title fw={600} size={desktop ? 'h4' : 'h4'} order={2}>
+                    <Title c="dark.0" size={desktop ? 'h4' : 'h5'} order={2}>
                       {item.title || item.name}
                     </Title>
                   </Anchor>
 
-                  <Flex align="center" gap={10} mt={2}>
+                  <Flex align="center" gap={7} mt={3}>
                     {showMeValue === 'upcoming' ? null : (
-                      <Flex gap={10}>
+                      <Flex gap={7}>
                         {item.vote_average !== undefined && item.vote_average > 0 && (
                           <Flex align="center" gap={3}>
-                            <BsFillStarFill size={desktop ? 14 : 12} color="#fcc419" />
+                            <BsFillStarFill
+                              style={{ paddingBottom: 1 }}
+                              size={desktop ? 13 : 11}
+                              color="#fcc419"
+                            />
 
-                            <Text fz={desktop ? 'sm' : 'sm'} fw={600}>
+                            <Text fw={500} c="dark.2" fz={desktop ? 'sm' : 'sm'}>
                               {item.vote_average}
                             </Text>
                           </Flex>
                         )}
-
-                        <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'sm'}>
+                        {item.vote_average && item.vote_average > 0 && (
+                          <Text c="dark.2" fz={desktop ? 'sm' : 'sm'}>
+                            ·
+                          </Text>
+                        )}
+                        <Text c="dark.2" fw={500} fz={desktop ? 'sm' : 'sm'}>
                           {item.release_date?.substring(0, 4) ||
                             item.first_air_date?.substring(0, 4)}
                           {props.mediaType === 'tv' && item.lastAirDate
@@ -130,16 +132,31 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                         </Text>
                       </Flex>
                     )}
+                    {item.release_date && (
+                      <Text c="dark.2" fz={desktop ? 'sm' : 'sm'}>
+                        ·
+                      </Text>
+                    )}
+                    {item.first_air_date && (
+                      <Text c="dark.2" fz={desktop ? 'sm' : 'sm'}>
+                        ·
+                      </Text>
+                    )}
 
                     {showMeValue === 'upcoming' && (
-                      <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'sm'}>
+                      <Text c="dark.2" fw={500} fz={desktop ? 'sm' : 'sm'}>
                         {formatReleaseDate(item.release_date)}
                       </Text>
                     )}
 
-                    <Text c="brand.4" fw={500} fz={desktop ? 'sm' : 'sm'}>
+                    <Text c="dark.2" fw={500} fz={desktop ? 'sm' : 'sm'}>
                       {item.runtimeOrEpisodeLength}
                     </Text>
+                    {item.runtimeOrEpisodeLength && (
+                      <Text c="dark.2" fz={desktop ? 'sm' : 'sm'}>
+                        ·
+                      </Text>
+                    )}
 
                     {item.certification && (
                       <Text
@@ -148,7 +165,7 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                           paddingLeft: 6,
                           paddingRight: 6,
                         })}
-                        c="brand.4"
+                        c="dark.2"
                         fw={500}
                         fz={desktop ? 10 : 10}
                       >
@@ -162,20 +179,20 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                       {/* <Text fw={500} fz="sm">
                         In Theatres:
                       </Text> */}
-                      {/* <Text fw={500} c="brand.4" fz="sm">
+                      {/* <Text fw={500} c="dark.2" fz="sm">
                         {formatReleaseDate(item.release_date)}
                       </Text> */}
                     </Flex>
                   ) : null}
-                  <Spoiler
-                    mt={desktop ? 'md' : 6}
-                    fz={desktop ? 'sm' : 'xs'}
-                    maxHeight={desktop ? 46 : 40}
-                    showLabel="Read More"
-                    hideLabel="Read Less"
+                  <Text
+                    lineClamp={desktop ? 3 : 2}
+                    fz={desktop ? 'sm' : 'sm'}
+                    c="dimmed"
+                    mt={desktop ? 'md' : 'xs'}
+                    pr={desktop ? 'xl' : 'md'}
                   >
-                    <Text fz={desktop ? 'sm' : 'xs'}> {item.overview}</Text>
-                  </Spoiler>
+                    {item.overview}
+                  </Text>
                 </Stack>
               </Grid.Col>
             </Grid>

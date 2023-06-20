@@ -1,9 +1,13 @@
 import { Anchor, Box, Breadcrumbs } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mantine/hooks';
 import { FullCastAndCrew } from '../../../../components/CastAndCrew/FullCastAndCrew';
 
 export default function CastAndCrew() {
+  // responsive styles
+  const desktop = useMediaQuery('(min-width: 48em)');
+
   //* Get query params
   const router = useRouter();
 
@@ -31,9 +35,11 @@ export default function CastAndCrew() {
 
   return (
     <Box>
-      <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
-        {items}
-      </Breadcrumbs>
+      {desktop && (
+        <Breadcrumbs pl="sm" separator={<IconChevronRight size={16} />} ml="xl">
+          {items}
+        </Breadcrumbs>
+      )}
       <FullCastAndCrew mediaType="movie" />
     </Box>
   );
