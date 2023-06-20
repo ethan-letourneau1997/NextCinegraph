@@ -36,8 +36,8 @@ import { Credits, Crew, Department, EpisodeDetails, GuestStar } from '../../Type
 
 export function EpisodeCredits() {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   //* router
   const router = useRouter();

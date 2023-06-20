@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => ({
 export default function HomePage() {
   // styles
   const { classes } = useStyles();
-  const mobile = useMediaQuery('(max-width: 48em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   // loading state
   const [isLoading, setIsLoading] = useState(true);

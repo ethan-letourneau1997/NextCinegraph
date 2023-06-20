@@ -4,7 +4,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 export default function SingleColumnSkeleton() {
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
   return (
     <Box>
       <Grid>

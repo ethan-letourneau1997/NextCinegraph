@@ -15,9 +15,9 @@ interface MediaCreditsProps {
 
 export default function MediaCredits({ credits, mediaType }: MediaCreditsProps) {
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 950px)');
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const router = useRouter();
 

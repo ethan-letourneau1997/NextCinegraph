@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
 export function NavigationLayout() {
   // styles
   const { classes } = useStyles();
-  const mobile = useMediaQuery('(max-width: 48em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   // mobile nav state
   const [opened, { toggle }] = useDisclosure(false);

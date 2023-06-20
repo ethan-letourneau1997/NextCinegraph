@@ -20,8 +20,8 @@ import Season from '../../../../components/tvComponents/season';
 
 export default function Seasons() {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 600px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   //return to top state
 

@@ -34,9 +34,8 @@ import { TitleLink } from '../../../../../../../../components/BiteSized/titleLin
 
 export default function Episode() {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-  // const desktop = useMediaQuery('(min-width: 768px)');
-  const mobile = useMediaQuery('(max-width: 600px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   //* Get query params
   const router = useRouter();

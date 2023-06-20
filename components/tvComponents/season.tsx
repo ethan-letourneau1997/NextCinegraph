@@ -28,7 +28,7 @@ interface SeasonProps {
 
 export default function Season(props: SeasonProps) {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
 
   const [season, setSeason] = useState<SeasonType | null>(null);
   const [error, setError] = useState<string | null>(null);

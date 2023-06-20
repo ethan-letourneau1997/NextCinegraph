@@ -25,7 +25,7 @@ export default function DiscoverLayout({ type, title }: DiscoverLayoutProps) {
   const [scroll, scrollTo] = useWindowScroll();
 
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
 
   // loading state
   const [isLoading, setIsLoading] = useState(true);

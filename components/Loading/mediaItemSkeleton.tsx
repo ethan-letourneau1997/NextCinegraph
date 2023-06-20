@@ -1,10 +1,10 @@
-import { AspectRatio, Grid, Paper, Skeleton } from "@mantine/core";
+import { AspectRatio, Grid, Paper, Skeleton } from '@mantine/core';
 
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery } from '@mantine/hooks';
 
 export default function MediaItemSkeleton() {
   // responsive styles
-  const desktop = useMediaQuery("(min-width: 768px)");
+  const desktop = useMediaQuery('(min-width: 48em)');
   return (
     <Grid>
       <Grid.Col span="content" px="sm">
@@ -15,12 +15,7 @@ export default function MediaItemSkeleton() {
         </Paper>
       </Grid.Col>
       <Grid.Col span="auto">
-        <Skeleton
-          mt={desktop ? 12 : 10}
-          height={desktop ? 12 : 10}
-          w="10%"
-          radius="xl"
-        />
+        <Skeleton mt={desktop ? 12 : 10} height={desktop ? 12 : 10} w="10%" radius="xl" />
         <Skeleton mt={8} height={desktop ? 12 : 10} w="30%" radius="xl" />
         <Skeleton mt={8} height={desktop ? 12 : 10} w="30%" radius="xl" />
 

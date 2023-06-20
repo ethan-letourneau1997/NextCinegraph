@@ -21,8 +21,8 @@ import { MediaItemType } from '../../../../../../Types/types';
 
 export default function SeasonLayout() {
   // responsive styles
-  const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 600px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const router = useRouter();
   const seasonNumber = parseInt(router.query.seasonNumber!.toString(), 10);

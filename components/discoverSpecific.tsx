@@ -54,7 +54,7 @@ export default function DiscoverSpecific(props: {
   }, [props.mediaType, props.params, props.pages]);
 
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
 
   return (
     <Container mt="md" size="sm">

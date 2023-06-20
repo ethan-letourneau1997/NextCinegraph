@@ -1,9 +1,9 @@
 import { Box, ScrollArea, Flex, Card, Anchor, AspectRatio, Skeleton, Text } from '@mantine/core';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useMediaQuery } from '@mantine/hooks';
 import { TitleLink } from '../BiteSized/titleLink';
 import { Result } from '../../Types/types';
-import { useMediaQuery } from '@mantine/hooks';
 
 interface MediaSliderProps {
   mediaCredits: Result[];
@@ -42,7 +42,7 @@ export function MediaSlider({
                   sx={(theme) => ({
                     border: '1px solid transparent',
                     '&:hover': {
-                      border: `1px solid ${theme.colors.yellow[5]}`,
+                      border: mobile ? '' : `1px solid ${theme.colors.yellow[5]}`,
                       boxSizing: 'content-box',
                     },
                   })}

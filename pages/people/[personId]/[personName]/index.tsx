@@ -31,10 +31,7 @@ import { PersonImages } from '../../../../components/Person/personImages';
 
 export default function MediaItem() {
   // responsive styles
-  // // const desktop = useMediaQuery('(min-width: 75em)');
-  // const tablet = useMediaQuery('(max-width: 62em)');
-  // const smallTable = useMediaQuery('(max-width: 800px)');
-  const mobile = useMediaQuery('(max-width: 36em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const router = useRouter();
   const { personId } = router.query;

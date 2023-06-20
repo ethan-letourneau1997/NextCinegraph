@@ -9,7 +9,7 @@ interface trailerProps {
 
 export default function Trailer({ trailer }: trailerProps) {
   // responsive styles
-  const mobile = useMediaQuery('(max-width: 48em)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const theme = useMantineTheme();
 

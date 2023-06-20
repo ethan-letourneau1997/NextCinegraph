@@ -27,7 +27,7 @@ import { Seasons, SeasonType } from '../../../../Types/types';
 export default function ShowSeasons() {
   // responsive styles
   const tablet = useMediaQuery('(max-width: 950px)');
-  const mobile = useMediaQuery('(max-width: 600px)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   const [seasons, setSeasons] = useState<Seasons | null>(null);
   const [error] = useState<string | null>(null);

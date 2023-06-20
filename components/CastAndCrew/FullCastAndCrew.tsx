@@ -36,7 +36,7 @@ interface FullCastAndCrewProps {
 export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
   // responsive styles
   const desktop = useMediaQuery('(min-width: 48em)');
-  const mobile = useMediaQuery('(max-width: 500px)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   //* Get query params
   const router = useRouter();

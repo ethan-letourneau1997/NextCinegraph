@@ -9,7 +9,7 @@ export default function MediaSimilar(props: { similar: Similar; mediaType: strin
 
   // responsive styles
 
-  const tablet = useMediaQuery('(max-width: 950px)');
+  const tablet = useMediaQuery('(max-width: 64em)');
 
   // Sort the similar results by vote_count in descending order
   // similar.results.sort((a, b) => b.vote_count - a.vote_count);

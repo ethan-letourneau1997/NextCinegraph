@@ -39,7 +39,7 @@ interface EpisodesPreviewProps {
 function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpisodeProps) {
   // responsive styles
 
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
 
   const router = useRouter();
   const { showId, showName } = router.query;
@@ -161,7 +161,7 @@ function HighlightedEpisode({ episode, badge, bgColor, color }: HighlightedEpiso
 
 export function EpisodesPreview({ numSeasons, lastEp }: EpisodesPreviewProps) {
   // responsive styles
-  const desktop = useMediaQuery('(min-width: 768px)');
+  const desktop = useMediaQuery('(min-width: 48em)');
 
   const router = useRouter();
   const { showId, showName } = router.query;

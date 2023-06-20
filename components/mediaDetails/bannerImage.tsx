@@ -11,7 +11,7 @@ interface BannerImageProps {
 // responsive styles
 
 export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageProps) {
-  const mobile = useMediaQuery('(max-width: 600px)');
+  const mobile = useMediaQuery('(max-width: 30em)');
 
   return (
     <Box>
