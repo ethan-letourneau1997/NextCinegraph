@@ -12,6 +12,7 @@ export async function fetchTrending(mediaType: string): Promise<MediaItemType[]>
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
   const data = await response.json();
+
   return data.results;
 }
 

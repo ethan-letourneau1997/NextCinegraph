@@ -18,6 +18,7 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
   const tablet = useMediaQuery('(max-width: 64em)');
 
   const [mediaDetails, setMediaDetails] = useState<MediaItemType | null>(null);
+  console.log(mediaDetails);
 
   useEffect(() => {
     if (!mediaId) {

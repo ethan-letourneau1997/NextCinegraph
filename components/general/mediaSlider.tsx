@@ -60,13 +60,9 @@ export function MediaSlider({
                   <Card.Section>
                     <Anchor
                       component={Link}
-                      href={`/${known_for_item.media_type === 'movie' ? 'movies' : 'shows'}/${
+                      href={`/${known_for_item.title ? 'movies' : 'shows'}/${
                         known_for_item.id
-                      }/${
-                        known_for_item.media_type === 'movie'
-                          ? encodeURIComponent(known_for_item.title || '')
-                          : encodeURIComponent(known_for_item.name || '')
-                      }`}
+                      }/${encodeURIComponent(known_for_item.title || known_for_item.name || '')}`}
                       underline={false}
                     >
                       <AspectRatio
