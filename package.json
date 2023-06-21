@@ -19,6 +19,8 @@
     "storybook:build": "build-storybook"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/server": "^11.11.0",
     "@mantine/core": "6.0.2",
     "@mantine/dates": "6.0.2",
     "@mantine/hooks": "6.0.2",
