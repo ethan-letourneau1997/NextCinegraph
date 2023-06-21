@@ -18,9 +18,9 @@ import {
   Text,
   Title,
   rem,
+  Image,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { BsChevronUp, BsPersonFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
@@ -309,14 +309,13 @@ export function EpisodeCredits() {
             }}
           >
             <Image
-              fill
               alt=""
               src={
                 media?.still_path
                   ? `https://image.tmdb.org/t/p/original${media?.still_path}`
                   : '/still_placeholder_large.png'
               }
-              style={{ borderTopLeftRadius: '4px', borderTopRightRadius: '4px' }}
+              sx={{ borderTopLeftRadius: '4px', borderTopRightRadius: '4px' }}
             />
           </AspectRatio>
           <Flex justify="center" direction="column" w="fit-content" px={mobile ? 'xs' : 0}>
@@ -394,7 +393,7 @@ export function EpisodeCredits() {
                               textDecorationColor: theme.colors.dark[0],
                               textDecorationThickness: 1,
                               '&:hover': {
-                                textDecorationColor: theme.colors.accent[0],
+                                textDecorationColor: theme.colors.yellow[5],
                               },
                             })}
                           >
@@ -438,7 +437,7 @@ export function EpisodeCredits() {
                                 textDecorationColor: theme.colors.dark[0],
                                 textDecorationThickness: 1,
                                 '&:hover': {
-                                  textDecorationColor: theme.colors.accent[0],
+                                  textDecorationColor: theme.colors.yellow[5],
                                 },
                               })}
                             >
@@ -553,7 +552,7 @@ export function EpisodeCredits() {
                               textDecorationColor: theme.colors.dark[0],
                               textDecorationThickness: 1,
                               '&:hover': {
-                                textDecorationColor: theme.colors.accent[0],
+                                textDecorationColor: theme.colors.yellow[5],
                               },
                             })}
                           >
@@ -592,7 +591,7 @@ export function EpisodeCredits() {
                                 textDecorationColor: theme.colors.dark[0],
                                 textDecorationThickness: 1,
                                 '&:hover': {
-                                  textDecorationColor: theme.colors.accent[0],
+                                  textDecorationColor: theme.colors.yellow[5],
                                 },
                               })}
                             >
@@ -681,7 +680,7 @@ export function EpisodeCredits() {
                               textDecorationColor: theme.colors.dark[0],
                               textDecorationThickness: 1,
                               '&:hover': {
-                                textDecorationColor: theme.colors.accent[0],
+                                textDecorationColor: theme.colors.yellow[5],
                               },
                             })}
                           >

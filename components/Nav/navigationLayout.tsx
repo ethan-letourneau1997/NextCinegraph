@@ -79,7 +79,7 @@ export function NavigationLayout() {
 
   return (
     <Box
-      bg={mobile ? 'dark.9' : 'transparent'}
+      className="your-class"
       ref={ref}
       sx={{
         zIndex: 1000,
@@ -120,36 +120,37 @@ export function NavigationLayout() {
         </Center>
 
         <DesktopNavigation />
-
-        <Flex align="center" justify="flex-end" w={160} pr={mobile ? 'sm' : 'xl'} pt={5}>
-          <Box onClick={search ? handleNavClose : handleNavOpen}>
-            {search ? (
-              <CloseButton
-                size="md"
-                pl={7}
-                pb={3}
-                sx={(theme) => ({
-                  cursor: 'pointer',
-                  '&:hover': {
-                    color: theme.colors.yellow[5],
-                    backgroundColor: 'transparent',
-                  },
-                })}
-                onClick={handleNavClose}
-              />
-            ) : (
-              <Box
-                sx={(theme) => ({
-                  cursor: 'pointer',
-                  '&:hover': {
-                    color: theme.colors.yellow[5],
-                  },
-                })}
-              >
-                <FaSearch onClick={handleNavOpen} />
-              </Box>
-            )}
-          </Box>
+        <Flex>
+          <Flex align="center" justify="flex-end" w={160} pr={mobile ? 'sm' : 'xl'} pt={5}>
+            <Box onClick={search ? handleNavClose : handleNavOpen}>
+              {search ? (
+                <CloseButton
+                  size="md"
+                  pl={7}
+                  pb={3}
+                  sx={(theme) => ({
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: theme.colors.yellow[5],
+                      backgroundColor: 'transparent',
+                    },
+                  })}
+                  onClick={handleNavClose}
+                />
+              ) : (
+                <Box
+                  sx={(theme) => ({
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: theme.colors.yellow[5],
+                    },
+                  })}
+                >
+                  <FaSearch onClick={handleNavOpen} />
+                </Box>
+              )}
+            </Box>
+          </Flex>
         </Flex>
       </Flex>
 

@@ -1,7 +1,18 @@
-import { Anchor, AspectRatio, Box, Divider, Flex, Grid, Paper, Text, Title } from '@mantine/core';
+import {
+  Anchor,
+  AspectRatio,
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  Paper,
+  Text,
+  Title,
+  Image,
+} from '@mantine/core';
 
 import { BsFillStarFill } from 'react-icons/bs';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
 import { MediaItemType } from '../../../../Types/types';
@@ -44,7 +55,6 @@ export default function SingleColumnGrid(props: {
                           ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
                           : '/media_placeholder_sm.png'
                       }
-                      fill
                     />
                   </AspectRatio>
                 </Anchor>

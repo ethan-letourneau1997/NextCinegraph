@@ -1,7 +1,14 @@
-import { AspectRatio, Box, Overlay, SimpleGrid, Spoiler, Text, Tooltip } from '@mantine/core';
+import {
+  AspectRatio,
+  Box,
+  Overlay,
+  SimpleGrid,
+  Spoiler,
+  Text,
+  Tooltip,
+  Image,
+} from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-
-import Image from 'next/image';
 
 import { useElementSize } from '@mantine/hooks';
 import { useStore } from '../../../store/store';
@@ -117,8 +124,7 @@ function WhereToWatchSection({ desktop }: WhereToWatchTypes) {
                   }}
                 />
                 <Image
-                  fill
-                  style={{
+                  sx={{
                     borderRadius: '4px',
                   }}
                   alt="poster"

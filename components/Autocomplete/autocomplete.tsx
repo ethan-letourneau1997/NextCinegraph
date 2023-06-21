@@ -10,12 +10,13 @@ import {
   Text,
   TextInput,
   useMantineTheme,
+  Image,
 } from '@mantine/core';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { HiTrendingUp } from 'react-icons/hi';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { TbSearch } from 'react-icons/tb';
 import { useMediaQuery } from '@mantine/hooks';
@@ -222,7 +223,6 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
                               src={`https://image.tmdb.org/t/p/w92${
                                 item.media_type === 'person' ? item.profile_path : item.poster_path
                               }`}
-                              fill
                             />
                           </AspectRatio>
                           <Box w={desktop ? 550 : 'fit-content'}>
@@ -288,7 +288,6 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
                               src={`https://image.tmdb.org/t/p/w92${
                                 item.media_type === 'person' ? item.profile_path : item.poster_path
                               }`}
-                              fill
                             />
                           </AspectRatio>
                           <Box pos="relative">
@@ -417,7 +416,6 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
                                     ? item.profile_path
                                     : item.poster_path
                                 }`}
-                                fill
                               />
                             </AspectRatio>
                             <Box w={desktop ? 550 : 'fit-content'}>
@@ -485,7 +483,6 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
                                     ? item.profile_path
                                     : item.poster_path
                                 }`}
-                                fill
                               />
                             </AspectRatio>
                             <Box pos="relative">

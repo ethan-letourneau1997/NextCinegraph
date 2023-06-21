@@ -1,6 +1,5 @@
-import { Center, Text } from '@mantine/core';
+import { Center, Text, Image } from '@mantine/core';
 import { BiCameraMovie } from 'react-icons/bi';
-import Image from 'next/image';
 import { CSSProperties } from 'react';
 
 interface PlaceholderProps {
@@ -31,5 +30,5 @@ export function MediaPlaceholder({ radius }: MediaPlaceholderProps) {
     borderRadius: radius,
   };
 
-  return <Image alt="" fill src="/still_placeholder.png" style={style} />;
+  return <Image alt="person placeholder image" src="/still_placeholder.png" style={style} />;
 }

@@ -28,7 +28,7 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
 
           // styles added to all items titles
           '&[data-active]': {
-            color: theme.colors.accent[0],
+            color: theme.colors.yellow[5],
 
             // backgroundColor: "blue",
           },
@@ -53,7 +53,7 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
             transform: 'rotate(0deg)',
           },
           '&[data-active]': {
-            color: theme.colors.accent[0],
+            color: theme.colors.yellow[5],
 
             // backgroundColor: "blue",
           },

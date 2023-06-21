@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 
 import Slider from 'react-slick';
 
-// import Image from "next/image";
 import { Poster, Images } from '../../Types/types';
 import { TitleLink } from '../BiteSized/titleLink';
 

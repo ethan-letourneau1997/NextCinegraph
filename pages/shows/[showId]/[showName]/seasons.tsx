@@ -12,12 +12,13 @@ import {
   Breadcrumbs,
   Title,
   Space,
+  Image,
 } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+
 import { useMediaQuery } from '@mantine/hooks';
 
 import { IconChevronRight } from '@tabler/icons-react';
@@ -142,7 +143,6 @@ export default function ShowSeasons() {
                       <AspectRatio ratio={tablet ? 2 / 3 : 2 / 3}>
                         <Skeleton />
                         <Image
-                          fill
                           alt=""
                           src={
                             season.poster_path

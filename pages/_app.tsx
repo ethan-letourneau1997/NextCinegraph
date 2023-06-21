@@ -37,26 +37,13 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
             globalStyles: (theme) => ({
               body: {
                 ...theme.fn.fontStyles(),
-                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
                 color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.black,
                 lineHeight: theme.lineHeight,
               },
             }),
-            colors: {
-              brand: [
-                '#FAFAFA',
-                '#F4F4F5',
-                '#E4E4E7',
-                '#A1A1AA',
-                '#A1A1AA',
-                '#71717A',
-                '#52525B',
-                '#3F3F46',
-                '#27272A',
-                '#18181B',
-              ],
-              accent: ['#FFCA05'],
-            },
+            colors: {},
             components: {
               Accordian: {
                 defaultProps: {},
@@ -69,6 +56,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           <Layout>
             <Component {...pageProps} />
           </Layout>
+
           <Notifications />
         </MantineProvider>
       </ColorSchemeProvider>

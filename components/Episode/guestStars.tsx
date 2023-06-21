@@ -1,6 +1,6 @@
-import { Grid, Flex, Anchor, Box, Text } from '@mantine/core';
+import { Grid, Flex, Anchor, Box, Text, Image } from '@mantine/core';
 import Link from 'next/link';
-import Image from 'next/image';
+
 import { useRouter } from 'next/router';
 import { EpisodeDetails } from '../../Types/types';
 import { TitleLink } from '../BiteSized/titleLink';

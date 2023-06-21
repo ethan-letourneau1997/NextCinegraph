@@ -12,10 +12,10 @@ import {
   Spoiler,
   Text,
   Title,
+  Image,
 } from '@mantine/core';
 
 import { BsFillStarFill } from 'react-icons/bs';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { useMediaQuery } from '@mantine/hooks';
@@ -50,14 +50,13 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
         <Grid.Col span={12} xs={4} sm={3}>
           <AspectRatio ratio={2 / 3}>
             <Image
-              fill
               alt=""
               src={
                 mediaItem.poster_path
                   ? `https://image.tmdb.org/t/p/w780${mediaItem.poster_path}`
                   : '/media_placeholder_lg.png'
               }
-              style={{
+              sx={{
                 borderRadius: '4px',
                 border: '.5px solid #3F3F46',
               }}
@@ -103,7 +102,7 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
                           textDecorationColor: theme.colors.dark[0],
                           textDecorationThickness: 1,
                           '&:hover': {
-                            textDecorationColor: theme.colors.accent[0],
+                            textDecorationColor: theme.colors.yellow[5],
                           },
                         })}
                       >

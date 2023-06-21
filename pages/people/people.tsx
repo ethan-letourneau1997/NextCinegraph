@@ -1,9 +1,18 @@
-import { Anchor, AspectRatio, Container, Grid, Skeleton, Title, Text, Card } from '@mantine/core';
+import {
+  Anchor,
+  AspectRatio,
+  Container,
+  Grid,
+  Skeleton,
+  Title,
+  Text,
+  Card,
+  Image,
+} from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
-import Image from 'next/image';
 import { fetchTrending } from '../api/mediaDetailsAPI';
 import { MediaItemType } from '../../Types/types';
 
@@ -42,7 +51,6 @@ export default function People() {
                           : '/person_placeholder_md.png'
                       }
                       alt={person.name ? person.name : 'No name'}
-                      fill
                     />
                   </AspectRatio>
                 </Anchor>

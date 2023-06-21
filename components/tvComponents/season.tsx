@@ -9,12 +9,13 @@ import {
   Skeleton,
   Card,
   Title,
+  Image,
 } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+
 import { BsFillStarFill } from 'react-icons/bs';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -95,7 +96,6 @@ export default function Season(props: SeasonProps) {
                       <AspectRatio ratio={tablet ? 16 / 7 : 16 / 9}>
                         <Skeleton />
                         <Image
-                          fill
                           alt=""
                           src={
                             episode.still_path

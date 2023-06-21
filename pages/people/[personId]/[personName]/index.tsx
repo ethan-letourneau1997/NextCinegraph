@@ -15,10 +15,11 @@ import {
   Divider,
   Anchor,
   Button,
+  Image,
 } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+
 import { useMediaQuery } from '@mantine/hooks';
 
 import Link from 'next/link';
@@ -168,7 +169,6 @@ export default function MediaItem() {
                 <Card radius="md" shadow="md">
                   <Card.Section>
                     <Image
-                      fill
                       src={
                         mediaDetails.profile_path
                           ? `https://image.tmdb.org/t/p/${
@@ -258,7 +258,6 @@ export default function MediaItem() {
                               <AspectRatio ratio={2 / 3} w={120} mih={180}>
                                 <Skeleton />
                                 <Image
-                                  fill
                                   alt=""
                                   src={
                                     known_for_item.poster_path
@@ -332,7 +331,6 @@ export default function MediaItem() {
                           <AspectRatio ratio={2 / 3} w={50}>
                             <Skeleton />
                             <Image
-                              fill
                               alt=""
                               src={
                                 credit.poster_path

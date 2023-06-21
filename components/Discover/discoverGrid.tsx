@@ -1,7 +1,18 @@
-import { Anchor, AspectRatio, Box, Divider, Flex, Grid, Stack, Text, Title } from '@mantine/core';
+import {
+  Anchor,
+  AspectRatio,
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  Stack,
+  Text,
+  Title,
+  Image,
+} from '@mantine/core';
 
 import { BsFillStarFill } from 'react-icons/bs';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -68,8 +79,7 @@ export default function DiscoverGrid(props: { mediaType: string; items: MediaIte
                 >
                   <AspectRatio ratio={2 / 3} miw={desktop ? 100 : 80}>
                     <Image
-                      fill
-                      style={{
+                      sx={{
                         borderRadius: '4px',
                       }}
                       alt=""

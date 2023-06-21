@@ -1,6 +1,5 @@
-import { Anchor, Box, Card, Flex, Grid, Group, Text, useMantineTheme } from '@mantine/core';
+import { Anchor, Box, Card, Flex, Grid, Group, Text, useMantineTheme, Image } from '@mantine/core';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useMediaQuery } from '@mantine/hooks';
 import { useRouter } from 'next/router';

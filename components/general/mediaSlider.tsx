@@ -1,6 +1,16 @@
-import { Box, ScrollArea, Flex, Card, Anchor, AspectRatio, Skeleton, Text } from '@mantine/core';
+import {
+  Image,
+  Box,
+  ScrollArea,
+  Flex,
+  Card,
+  Anchor,
+  AspectRatio,
+  Skeleton,
+  Text,
+} from '@mantine/core';
 import Link from 'next/link';
-import Image from 'next/image';
+
 import { useMediaQuery } from '@mantine/hooks';
 import { TitleLink } from '../BiteSized/titleLink';
 import { Result } from '../../Types/types';
@@ -72,7 +82,6 @@ export function MediaSlider({
                       >
                         <Skeleton />
                         <Image
-                          fill
                           alt=""
                           src={
                             known_for_item.poster_path

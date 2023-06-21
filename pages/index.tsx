@@ -96,7 +96,6 @@ export default function HomePage() {
 
   return (
     <Box
-      bg="dark.9"
       // pos="absolute"
       top={0}
       w="100vw"
@@ -142,9 +141,6 @@ export default function HomePage() {
                       Explore the Media You Love.
                     </Title>
                   </Box>
-                  {/* <Box w="50vw">
-                    <Autocomplete alt />{' '}
-                  </Box> */}
                 </Stack>
               </Center>
             </Flex>

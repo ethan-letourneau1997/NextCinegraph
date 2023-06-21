@@ -16,9 +16,10 @@ import {
   Text,
   Title,
   rem,
+  Image,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+
 import { BsChevronUp } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
@@ -203,7 +204,6 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
             })}
           >
             <Image
-              fill
               alt=""
               style={{ borderRadius: 4 }}
               src={
@@ -304,7 +304,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                               textDecorationColor: theme.colors.dark[0],
                               textDecorationThickness: 1,
                               '&:hover': {
-                                textDecorationColor: theme.colors.accent[0],
+                                textDecorationColor: theme.colors.yellow[5],
                               },
                             })}
                           >
@@ -347,7 +347,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                                 textDecorationColor: theme.colors.dark[0],
                                 textDecorationThickness: 1,
                                 '&:hover': {
-                                  textDecorationColor: theme.colors.accent[0],
+                                  textDecorationColor: theme.colors.yellow[5],
                                 },
                               })}
                             >
@@ -472,7 +472,7 @@ export function FullCastAndCrew({ mediaType }: FullCastAndCrewProps) {
                               textDecorationColor: theme.colors.dark[0],
                               textDecorationThickness: 1,
                               '&:hover': {
-                                textDecorationColor: theme.colors.accent[0],
+                                textDecorationColor: theme.colors.yellow[5],
                               },
                             })}
                           >

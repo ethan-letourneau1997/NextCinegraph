@@ -1,6 +1,15 @@
-import { useMantineTheme, Box, Group, Title, Grid, AspectRatio, Anchor } from '@mantine/core';
+import {
+  useMantineTheme,
+  Box,
+  Group,
+  Title,
+  Grid,
+  AspectRatio,
+  Anchor,
+  Image,
+} from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { Similar } from '../../Types/types';
 
@@ -60,10 +69,9 @@ export default function MediaSimilar(props: { similar: Similar; mediaType: strin
                     })}
                   >
                     <Image
-                      style={{
+                      sx={{
                         borderRadius: '4px',
                       }}
-                      fill
                       alt=""
                       src={
                         credit.poster_path
