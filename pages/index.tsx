@@ -107,7 +107,7 @@ export default function HomePage() {
         <>
           <Box>
             <Box className="youtube-container" pos="relative">
-              <Overlay opacity={0.4} className={classes.hiddenMobile} />
+              <Overlay opacity={0.2} color="black" className={classes.hiddenMobile} />
               <iframe
                 src="https://www.youtube.com/embed/AxnLyiz5oeE?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&hd=1&playlist=AxnLyiz5oeE"
                 title="YouTube video player"
