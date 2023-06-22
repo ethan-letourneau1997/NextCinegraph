@@ -81,7 +81,7 @@ export function NavigationLayout() {
   return (
     <Box
       bg="hsl(220, 9%, 13%)"
-      className="nav wrapper"
+      className="nav-wrapper"
       ref={ref}
       sx={{
         zIndex: 1000,
