@@ -45,7 +45,7 @@ export default function DesktopNavigation() {
           },
         })}
       />
-      <Menu shadow="md" trigger="hover" offset={-5} zIndex={1500}>
+      <Menu shadow="md" trigger="hover" offset={-5} zIndex={5500}>
         <Menu.Target>
           <UnstyledButton
             p={0}
@@ -199,7 +199,7 @@ export default function DesktopNavigation() {
           />
         </Menu.Dropdown>
       </Menu>
-      <Menu shadow="md" trigger="hover" zIndex={1500} offset={-5}>
+      <Menu shadow="md" trigger="hover" zIndex={5500} offset={-5}>
         <Menu.Target>
           <UnstyledButton
             p={0}

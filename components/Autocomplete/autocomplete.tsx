@@ -121,7 +121,7 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
   return (
     <Box maw="100vw">
       <Flex justify="center" pos="absolute" left={0}>
-        <Box sx={{ zIndex: 3000 }} bg="dark.7" w="100vw">
+        <Box sx={{ zIndex: 3000 }} bg="dark.9" w="100vw">
           <TextInput
             px="md"
             pb={mobile ? 4 : 'xs'}
@@ -172,7 +172,7 @@ const Autocomplete = ({ closeNav, navHeight }: AutocompleteProps) => {
           )}
           <ScrollArea
             h={height - navHeight - (isEmpty ? 34 : 0)}
-            sx={{ zIndex: 8000 }}
+            sx={{ zIndex: 5000 }}
             pos="relative"
             pb="xl"
           >
