@@ -2,7 +2,17 @@ import { useState, useEffect } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { Box, Container, Text, Stack, Title, Overlay, Card, Button } from '@mantine/core';
+import {
+  Box,
+  Container,
+  Text,
+  Stack,
+  Title,
+  Overlay,
+  Card,
+  Button,
+  ColorScheme,
+} from '@mantine/core';
 
 import { useMediaQuery, useScrollIntoView } from '@mantine/hooks';
 import { MediaItemType, Result } from '../Types/types';
@@ -27,6 +37,9 @@ export default function HomePage() {
   // loading state
   const [isLoading, setIsLoading] = useState(true);
 
+  // change capacity to hide iframe flash
+  const [changeOpacity, setChangeOpacity] = useState(false);
+
   // content states
   const [trendingItems, setTrendingItems] = useState<Result[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<Result[]>([]);
@@ -37,6 +50,14 @@ export default function HomePage() {
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
     offset: 30,
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setChangeOpacity(true);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -95,8 +116,8 @@ export default function HomePage() {
             <iframe src="/bannerMovie.mp4" title="myframe" />
           </AspectRatio> */}
           <Container size="xl" mt={tablet ? 0 : 'xs'} px={tablet ? 0 : 'md'}>
-            <Card>
-              <Card.Section>
+            <Card bg="dark.9">
+              <Card.Section bg="dark.9">
                 <Box
                   className="youtube-container"
                   pos="relative"
@@ -104,9 +125,10 @@ export default function HomePage() {
                     borderRadius: 4,
                   }}
                 >
-                  {desktop && <Overlay opacity={0.4} color="#141517" />}
+                  {desktop && <Overlay opacity={changeOpacity ? 0.2 : 1} color="dark.9" />}
 
                   <iframe
+                    style={{ backgroundColor: 'black' }}
                     src="https://www.youtube.com/embed/AxnLyiz5oeE?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&hd=1&playlist=AxnLyiz5oeE"
                     title="YouTube video player"
                     frameBorder="0"
