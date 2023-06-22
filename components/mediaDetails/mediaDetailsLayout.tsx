@@ -42,11 +42,11 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
 
   return (
     <Box>
-      <Container display={tablet ? 'none' : 'block'}>
+      <Container display={tablet ? 'none' : 'block'} size="lg">
         <BannerImage aspectRatio={16 / 7} mediaBackdrop={mediaDetails.backdrop_path} />
       </Container>
 
-      <Container pos="relative" top={tablet ? 0 : -40} py="xl" px={tablet ? 40 : 50}>
+      <Container pos="relative" top={tablet ? 0 : -50} size="lg" py="xl" px={tablet ? 40 : 50}>
         <LetterBoxd mediaItem={mediaDetails} mediaType={mediaType} />
       </Container>
     </Box>

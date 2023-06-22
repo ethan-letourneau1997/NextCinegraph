@@ -4,6 +4,7 @@ import {
   Center,
   CloseButton,
   Collapse,
+  Container,
   Flex,
   NavLink,
   createStyles,
@@ -79,6 +80,7 @@ export function NavigationLayout() {
 
   return (
     <Box
+      bg="hsl(220, 9%, 13%)"
       className="your-class"
       ref={ref}
       sx={{
@@ -86,89 +88,89 @@ export function NavigationLayout() {
         width: '100vw',
       }}
     >
-      <Flex justify="space-between" p="sm">
-        <Center>
-          <Burger
-            className={classes.hiddenDesktop}
-            opened={opened}
-            onClick={toggle}
-            aria-label={label}
-          />
-          <NavLink
-            w={160}
-            c="yellow.5"
-            ml="xs"
-            fw={700}
-            component={Link}
-            href="/"
-            styles={(theme) => ({
-              label: {
-                fontSize: 25,
-                '&:hover': {
-                  color: theme.colors.dark[0],
-                  backgroundColor: theme.colors.dark[9],
+      <Container size="xl">
+        <Flex justify="space-between" p="sm">
+          <Center>
+            <Burger
+              className={classes.hiddenDesktop}
+              opened={opened}
+              onClick={toggle}
+              aria-label={label}
+            />
+            <NavLink
+              w={160}
+              p={0}
+              c="yellow.5"
+              fw={700}
+              component={Link}
+              href="/"
+              styles={(theme) => ({
+                label: {
+                  fontSize: 25,
+                  '&:hover': {
+                    color: theme.colors.dark[0],
+                    backgroundColor: 'hsl(220, 9%, 3%)',
+                  },
                 },
-              },
-              root: {
-                '&:hover': {
-                  backgroundColor: theme.colors.dark[9],
+                root: {
+                  '&:hover': {
+                    backgroundColor: 'hsl(220, 9%, 3%)',
+                  },
                 },
-              },
-            })}
-            label="Cinegraph"
-          />
-        </Center>
-
-        <DesktopNavigation />
-        <Flex>
-          <Flex align="center" justify="flex-end" w={160} pr={mobile ? 'sm' : 'xl'} pt={5}>
-            <Box onClick={search ? handleNavClose : handleNavOpen}>
-              {search ? (
-                <CloseButton
-                  size="md"
-                  pl={7}
-                  pb={3}
-                  sx={(theme) => ({
-                    cursor: 'pointer',
-                    '&:hover': {
-                      color: theme.colors.yellow[5],
-                      backgroundColor: 'transparent',
-                    },
-                  })}
-                  onClick={handleNavClose}
-                />
-              ) : (
-                <Box
-                  sx={(theme) => ({
-                    cursor: 'pointer',
-                    '&:hover': {
-                      color: theme.colors.yellow[5],
-                    },
-                  })}
-                >
-                  <FaSearch onClick={handleNavOpen} />
-                </Box>
-              )}
-            </Box>
+              })}
+              label="Cinegraph"
+            />
+          </Center>
+          <DesktopNavigation />
+          <Flex>
+            <Flex align="center" justify="flex-end" w={160} pr={mobile ? 'sm' : 'xs'} pt={5}>
+              <Box onClick={search ? handleNavClose : handleNavOpen}>
+                {search ? (
+                  <CloseButton
+                    size="md"
+                    pl={7}
+                    pb={3}
+                    sx={(theme) => ({
+                      cursor: 'pointer',
+                      '&:hover': {
+                        color: theme.colors.yellow[5],
+                        backgroundColor: 'transparent',
+                      },
+                    })}
+                    onClick={handleNavClose}
+                  />
+                ) : (
+                  <Box
+                    sx={(theme) => ({
+                      cursor: 'pointer',
+                      '&:hover': {
+                        color: theme.colors.yellow[5],
+                      },
+                    })}
+                  >
+                    <FaSearch onClick={handleNavOpen} />
+                  </Box>
+                )}
+              </Box>
+            </Flex>
           </Flex>
         </Flex>
-      </Flex>
-
-      <Collapse
-        className={classes.hiddenDesktop}
-        pb="xl"
-        w="100%"
-        bg="dark.9"
-        in={opened}
-        pos="absolute"
-        transitionDuration={250}
-        transitionTimingFunction="linear"
-        sx={{
-          zIndex: 1000,
-        }}
-      >
-        <MobileNavigation toggleMobileNav={closeMobileNav} />
-      </Collapse>
+        <Collapse
+          className={classes.hiddenDesktop}
+          pb="xl"
+          w="100%"
+          bg="dark.9"
+          in={opened}
+          pos="absolute"
+          transitionDuration={250}
+          transitionTimingFunction="linear"
+          sx={{
+            zIndex: 1000,
+          }}
+        >
+          <MobileNavigation toggleMobileNav={closeMobileNav} />
+        </Collapse>
+      </Container>
       {search && <Autocomplete closeNav={handleLinkClick} navHeight={height} />}
     </Box>
   );

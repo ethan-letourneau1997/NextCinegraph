@@ -81,7 +81,7 @@ export function MediaCarousel({ images }: mediaImagesProps) {
   }, [value, images.posters, images.backdrops]);
 
   return (
-    <>
+    <Box className="media-images">
       <Group spacing="xs" mb="md">
         {/* <Divider my={6} size="sm" color={theme.colors.yellow[5]} orientation="vertical" /> */}
         <Box pl={8}>
@@ -134,6 +134,6 @@ export function MediaCarousel({ images }: mediaImagesProps) {
           </Slider>
         </Tabs.Panel>
       </Tabs>
-    </>
+    </Box>
   );
 }
