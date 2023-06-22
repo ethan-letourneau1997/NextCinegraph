@@ -118,7 +118,7 @@ export default function DiscoverLayout({ type, title }: DiscoverLayoutProps) {
   };
 
   return (
-    <div>
+    <>
       <Affix position={{ bottom: rem(10), right: rem(15) }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
@@ -137,35 +137,37 @@ export default function DiscoverLayout({ type, title }: DiscoverLayoutProps) {
           )}
         </Transition>
       </Affix>
-      <Flex mt="xl" direction={desktop ? 'row' : 'column'}>
-        <Discover type={type} desktop={desktop} />
-        <Container
-          mt={desktop ? 0 : 'xl'}
-          fluid
-          size="md"
-          px={desktop ? 'xl' : 'xs'}
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <Title size="h2">{title}</Title>
-          {isLoading ? (
-            <DiscoverGridLoading />
-          ) : items.length === 0 ? (
-            <Text>No results to display</Text>
-          ) : (
-            <InfiniteScroll
-              dataLength={items.length}
-              next={fetchMoreItems}
-              hasMore={hasMore}
-              loader={<h4>Loading...</h4>} // Replace with your loading indicator
-              endMessage={<Text>No more results to display</Text>} // Replace with your end message
-            >
-              <DiscoverGrid mediaType={type} items={items} />
-            </InfiniteScroll>
-          )}
-        </Container>
-      </Flex>
-    </div>
+      <Container size="xl">
+        <Flex mt="xl" direction={desktop ? 'row' : 'column'}>
+          <Discover type={type} desktop={desktop} />
+          <Container
+            mt={desktop ? 0 : 'xl'}
+            fluid
+            size="xl"
+            px={desktop ? 'xl' : 'xs'}
+            sx={{
+              flexGrow: 1,
+            }}
+          >
+            <Title size="h2">{title}</Title>
+            {isLoading ? (
+              <DiscoverGridLoading />
+            ) : items.length === 0 ? (
+              <Text>No results to display</Text>
+            ) : (
+              <InfiniteScroll
+                dataLength={items.length}
+                next={fetchMoreItems}
+                hasMore={hasMore}
+                loader={<h4>Loading...</h4>} // Replace with your loading indicator
+                endMessage={<Text>No more results to display</Text>} // Replace with your end message
+              >
+                <DiscoverGrid mediaType={type} items={items} />
+              </InfiniteScroll>
+            )}
+          </Container>
+        </Flex>
+      </Container>
+    </>
   );
 }

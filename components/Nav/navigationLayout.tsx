@@ -85,7 +85,7 @@ export function NavigationLayout() {
       ref={ref}
       sx={{
         zIndex: 1000,
-        width: '100vw',
+        maxWidth: '100vw',
       }}
     >
       <Container size="xl">
