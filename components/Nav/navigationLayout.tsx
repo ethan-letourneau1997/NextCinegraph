@@ -108,12 +108,12 @@ export function NavigationLayout() {
                   fontSize: 25,
                   '&:hover': {
                     color: theme.colors.dark[0],
-                    backgroundColor: 'hsl(220, 9%, 3%)',
+                    backgroundColor: 'transparent',
                   },
                 },
                 root: {
                   '&:hover': {
-                    backgroundColor: 'hsl(220, 9%, 3%)',
+                    backgroundColor: 'transparent',
                   },
                 },
               })}

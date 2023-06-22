@@ -2,17 +2,7 @@ import { useState, useEffect } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import {
-  Box,
-  Container,
-  Text,
-  Stack,
-  Title,
-  Overlay,
-  Card,
-  Button,
-  ColorScheme,
-} from '@mantine/core';
+import { Box, Container, Text, Stack, Title, Overlay, Card, Button } from '@mantine/core';
 
 import { useMediaQuery, useScrollIntoView } from '@mantine/hooks';
 import { MediaItemType, Result } from '../Types/types';
