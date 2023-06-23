@@ -135,6 +135,7 @@ export default function HomePage() {
                       width="100%"
                       volume={0}
                       playing
+                      loop
                       onPlay={handlePlayerReady}
                       config={{
                         playerVars: { hd: 1 },
