@@ -119,7 +119,7 @@ export default function HomePage() {
           <Container size="xl" mt={tablet ? 0 : 'xs'} px={tablet ? 0 : 'md'}>
             <Card bg="dark.9">
               <Card.Section bg="dark.9">
-                <BackgroundImage src="/thumb.png">
+                <BackgroundImage src="https://res.cloudinary.com/eletourneau/image/upload/v1687543862/thumb_2_hda8cv.webp">
                   {desktop && <Overlay opacity={0.2} color="#101113" />}
                   <Box
                     className="youtube-container"
@@ -130,7 +130,7 @@ export default function HomePage() {
                     }}
                   >
                     <ReactPlayer
-                      url="https://www.youtube.com/watch?v=hRb9locnII4&hd=1"
+                      url="https://www.youtube.com/watch?v=hRb9locnII4"
                       height="100%"
                       width="100%"
                       volume={0}
