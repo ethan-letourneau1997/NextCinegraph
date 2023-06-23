@@ -289,9 +289,11 @@ export function EpisodeCredits() {
           </Anchor>
         </Box>
       ) : (
-        <Breadcrumbs separator={<IconChevronRight size={16} />} pl="lg">
-          {items}
-        </Breadcrumbs>
+        <Container size="xl">
+          <Breadcrumbs separator={<IconChevronRight size={16} />} pl="lg">
+            {items}
+          </Breadcrumbs>
+        </Container>
       )}
 
       <Container

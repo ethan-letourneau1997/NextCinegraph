@@ -217,9 +217,11 @@ export default function Episode() {
             </Anchor>
           </Flex>
         ) : (
-          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
-            {items}
-          </Breadcrumbs>
+          <Container size="xl">
+            <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
+              {items}
+            </Breadcrumbs>
+          </Container>
         )}
       </Box>
 

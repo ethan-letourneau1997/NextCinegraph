@@ -57,7 +57,11 @@ export default function DiscoverSpecific(props: {
   const desktop = useMediaQuery('(min-width: 48em)');
 
   return (
-    <Container mt="md" size="sm">
+    <Container
+      mt="md"
+      size="sm"
+      // bg="dark.8"
+    >
       <Title c="grey.1" fw={desktop ? 500 : 600} size={desktop ? 'h2' : 'h3'} order={1}>
         {props.title}
       </Title>

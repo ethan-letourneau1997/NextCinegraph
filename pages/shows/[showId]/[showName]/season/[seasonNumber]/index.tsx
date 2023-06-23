@@ -113,9 +113,11 @@ export default function SeasonLayout() {
           </Anchor>
         </Flex>
       ) : (
-        <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
-          {items}
-        </Breadcrumbs>
+        <Container size="xl">
+          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
+            {items}
+          </Breadcrumbs>
+        </Container>
       )}
       <Container size="md">
         <Flex justify="space-between" mb="xl" mt="sm">

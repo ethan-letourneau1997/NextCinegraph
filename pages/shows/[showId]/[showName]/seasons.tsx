@@ -115,9 +115,11 @@ export default function ShowSeasons() {
           </Anchor>
         </Flex>
       ) : (
-        <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl" mt="xl">
-          {items}
-        </Breadcrumbs>
+        <Container size="xl">
+          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl" mt="xl">
+            {items}
+          </Breadcrumbs>
+        </Container>
       )}
 
       <Container size="md">
@@ -142,21 +144,34 @@ export default function ShowSeasons() {
                     <Card.Section>
                       <AspectRatio ratio={tablet ? 2 / 3 : 2 / 3}>
                         <Skeleton />
-                        <Image
-                          alt=""
-                          src={
-                            season.poster_path
-                              ? `https://image.tmdb.org/t/p/w500${season.poster_path}`
-                              : '/media_placeholder_lg.png'
-                          }
-                        />
+                        <Anchor
+                          sx={{
+                            '&:hover': {
+                              opacity: !mobile ? 0.7 : 1,
+                            },
+                          }}
+                          component={Link}
+                          href={{
+                            pathname: `/shows/${showId}/${
+                              typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                            }`,
+                          }}
+                        >
+                          <Image
+                            alt=""
+                            src={
+                              season.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${season.poster_path}`
+                                : '/media_placeholder_lg.png'
+                            }
+                          />
+                        </Anchor>
                       </AspectRatio>
                     </Card.Section>
                   </Card>
                 </Grid.Col>
                 <Grid.Col px="xs" span={14} xs={16} sm={12} lg={14}>
                   <Anchor
-                    underline={false}
                     c="gray.5"
                     component={Link}
                     href={{

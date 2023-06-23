@@ -1,4 +1,4 @@
-import { Anchor, Box, Breadcrumbs } from '@mantine/core';
+import { Anchor, Box, Breadcrumbs, Container } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 import { FullCastAndCrew } from '../../../../components/CastAndCrew/FullCastAndCrew';
@@ -32,9 +32,11 @@ export default function CastAndCrew() {
 
   return (
     <Box>
-      <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
-        {items}
-      </Breadcrumbs>
+      <Container size="xl">
+        <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
+          {items}
+        </Breadcrumbs>
+      </Container>
       <FullCastAndCrew mediaType="tv" />
     </Box>
   );

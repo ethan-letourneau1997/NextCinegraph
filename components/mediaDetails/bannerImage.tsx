@@ -27,7 +27,7 @@ export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageP
                 w="100%"
                 pos="absolute"
                 sx={{
-                  backgroundImage: 'linear-gradient(to right, #141517, transparent)',
+                  backgroundImage: 'linear-gradient(to right, #101113, transparent)',
                 }}
               />
             </Box>
@@ -37,7 +37,7 @@ export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageP
                 w="100%"
                 pos="absolute"
                 sx={{
-                  backgroundImage: 'linear-gradient(to left, #141517, transparent)',
+                  backgroundImage: 'linear-gradient(to left, #101113, transparent)',
                 }}
               />
             </Box>
@@ -52,7 +52,7 @@ export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageP
           w="100%"
           h={30}
           sx={{
-            backgroundImage: 'linear-gradient(to top, #141517, transparent)',
+            backgroundImage: 'linear-gradient(to top, #101113, transparent)',
           }}
         />
       </Box>

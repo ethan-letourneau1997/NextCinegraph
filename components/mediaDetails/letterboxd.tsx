@@ -46,8 +46,8 @@ export function LetterBoxd({ mediaItem, mediaType }: LetterBoxdProp) {
 
   return (
     <Box>
-      <Grid gutter="xl">
-        <Grid.Col span={12} xs={4} sm={3}>
+      <Grid gutter="xl" justify="center">
+        <Grid.Col span={12} xs={4} sm={3} lg={2.5}>
           <AspectRatio ratio={2 / 3}>
             <Image
               alt=""

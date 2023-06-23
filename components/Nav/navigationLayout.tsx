@@ -113,7 +113,7 @@ export function NavigationLayout() {
                 },
                 root: {
                   '&:hover': {
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'hsl(220, 9%, 3%)',
                   },
                 },
               })}

@@ -2,9 +2,20 @@ import { useState, useEffect } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { Box, Container, Text, Stack, Title, Overlay, Card, Button } from '@mantine/core';
+import {
+  Box,
+  Container,
+  Text,
+  Stack,
+  Title,
+  Overlay,
+  Card,
+  Button,
+  BackgroundImage,
+} from '@mantine/core';
 
 import { useMediaQuery, useScrollIntoView } from '@mantine/hooks';
+import YouTubePlayer from 'react-youtube';
 import { MediaItemType, Result } from '../Types/types';
 import {
   fetchTrendingItems,
@@ -27,8 +38,7 @@ export default function HomePage() {
   // loading state
   const [isLoading, setIsLoading] = useState(true);
 
-  // change capacity to hide iframe flash
-  const [changeOpacity, setChangeOpacity] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   // content states
   const [trendingItems, setTrendingItems] = useState<Result[]>([]);
@@ -40,14 +50,6 @@ export default function HomePage() {
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
     offset: 30,
   });
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setChangeOpacity(true);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -91,6 +93,18 @@ export default function HomePage() {
     ); // Render a loading indicator while the useEffect is running
   }
 
+  const handlePlayerReady = (event: { target: { playVideo: () => void } }) => {
+    event.target.playVideo();
+  };
+
+  const handleVideoPlaying = () => {
+    setVisible(true);
+  };
+
+  // if (YT.PlayerState.PLAYING === 1) {
+  //   console.log('state 1');
+  // }
+
   return (
     <Box
       className={tablet ? 'homepage tablet-arrows' : 'homepage'}
@@ -102,29 +116,40 @@ export default function HomePage() {
     >
       {trendingItems.length > 0 && (
         <>
-          {/* <AspectRatio ratio={3 / 2}>
-            <iframe src="/bannerMovie.mp4" title="myframe" />
-          </AspectRatio> */}
           <Container size="xl" mt={tablet ? 0 : 'xs'} px={tablet ? 0 : 'md'}>
             <Card bg="dark.9">
               <Card.Section bg="dark.9">
-                <Box
-                  className="youtube-container"
-                  pos="relative"
-                  sx={{
-                    borderRadius: 4,
-                  }}
-                >
-                  {desktop && <Overlay opacity={changeOpacity ? 0.2 : 1} color="dark.9" />}
-
-                  <iframe
-                    style={{ backgroundColor: 'black' }}
-                    src="https://www.youtube.com/embed/AxnLyiz5oeE?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&hd=1&playlist=AxnLyiz5oeE"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+                <BackgroundImage src="/thumb.png">
+                  {desktop && <Overlay opacity={0.2} color="#101113" />}
+                  <Box
+                    className="youtube-container"
+                    pos="relative"
+                    sx={{
+                      borderRadius: 4,
+                      visibility: visible ? 'visible' : 'hidden',
+                    }}
                   >
+                    <YouTubePlayer
+                      videoId="hRb9locnII4"
+                      className="youtube-player"
+                      style={{ height: '100%', width: '100%' }}
+                      opts={{
+                        playerVars: {
+                          autoplay: 1,
+                          mute: 1,
+                          loop: 1,
+                          controls: 0,
+                          modestbranding: 1,
+                          playsinline: 1,
+                          rel: 0,
+                          hd: 1,
+                          playlist: 'hRb9locnII4',
+                        },
+                      }}
+                      onReady={handlePlayerReady}
+                      onPlay={handleVideoPlaying}
+                    />
+
                     <Box h="100%" w={15} pos="relative">
                       <Box
                         h="100%"
@@ -135,8 +160,8 @@ export default function HomePage() {
                         }}
                       />
                     </Box>
-                  </iframe>
-                </Box>
+                  </Box>
+                </BackgroundImage>
               </Card.Section>
             </Card>
             {desktop && (
