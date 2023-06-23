@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 
 import { useMediaQuery, useScrollIntoView } from '@mantine/hooks';
-import YouTubePlayer from 'react-youtube';
+import ReactPlayer from 'react-player/youtube';
 import { MediaItemType, Result } from '../Types/types';
 import {
   fetchTrendingItems,
@@ -93,11 +93,11 @@ export default function HomePage() {
     ); // Render a loading indicator while the useEffect is running
   }
 
-  const handlePlayerReady = (event: { target: { playVideo: () => void } }) => {
-    event.target.playVideo();
-  };
+  // const handlePlayerReady = (event: { target: { playVideo: () => void } }) => {
+  //   event.target.playVideo();
+  // };
 
-  const handleVideoPlaying = () => {
+  const handlePlayerReady = () => {
     setVisible(true);
   };
 
@@ -129,25 +129,16 @@ export default function HomePage() {
                       visibility: visible ? 'visible' : 'hidden',
                     }}
                   >
-                    <YouTubePlayer
-                      videoId="hRb9locnII4"
-                      className="youtube-player"
-                      style={{ height: '100%', width: '100%' }}
-                      opts={{
-                        playerVars: {
-                          autoplay: 1,
-                          mute: 1,
-                          loop: 1,
-                          controls: 0,
-                          modestbranding: 1,
-                          playsinline: 1,
-                          rel: 0,
-                          hd: 1,
-                          playlist: 'hRb9locnII4',
-                        },
+                    <ReactPlayer
+                      url="https://www.youtube.com/watch?v=hRb9locnII4&hd=1"
+                      height="100%"
+                      width="100%"
+                      volume={0}
+                      playing
+                      onPlay={handlePlayerReady}
+                      config={{
+                        playerVars: { hd: 1 },
                       }}
-                      onReady={handlePlayerReady}
-                      onPlay={handleVideoPlaying}
                     />
 
                     <Box h="100%" w={15} pos="relative">
