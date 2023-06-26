@@ -1,4 +1,4 @@
-import { AspectRatio, BackgroundImage, Box, Group } from '@mantine/core';
+import { AspectRatio, BackgroundImage, Box, Group, Overlay } from '@mantine/core';
 
 import { MediaItemType } from '../../Types/types';
 
@@ -20,6 +20,7 @@ export default function BannerImage({ mediaBackdrop, aspectRatio }: BannerImageP
           }}
         /> */}
         <BackgroundImage src={`https://image.tmdb.org/t/p/original${mediaBackdrop}`}>
+          <Overlay opacity={0.1} />
           <Group position="apart" h="100%" w="100%">
             <Box h="100%" w={15} pos="relative">
               <Box

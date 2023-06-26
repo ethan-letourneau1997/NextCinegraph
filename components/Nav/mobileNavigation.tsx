@@ -19,6 +19,8 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
       h="100vh"
       styles={(theme) => ({
         control: {
+          paddingTop: 10,
+          paddingBottom: 10,
           color: theme.colors.dark[0],
           // styles added to all items controls
           paddingLeft: theme.spacing.sm,
@@ -82,26 +84,11 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
           />
         </Accordion.Control>
       </Accordion.Item>
-      <Accordion.Item value="movies">
+      <Accordion.Item value="movies" pr="md">
         <Accordion.Control icon={<TbMovie size={16} />}>
           <Text fw={600}>Movies</Text>
         </Accordion.Control>
         <Accordion.Panel>
-          {' '}
-          <NavLink
-            component={Link}
-            href="/movies/top100"
-            onClick={toggleMobileNav}
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.md,
-              },
-            })}
-            pt={0}
-            pb="xs"
-            ml="xl"
-            label="Top 100 Movies"
-          />
           <NavLink
             component={Link}
             href="/movies/popular"
@@ -115,6 +102,20 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
             pb="xs"
             ml="xl"
             label="Popular "
+          />
+          <NavLink
+            component={Link}
+            href="/movies/top100"
+            onClick={toggleMobileNav}
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            pt={0}
+            pb="xs"
+            ml="xl"
+            label="Top 100 Movies"
           />
           <NavLink
             component={Link}
@@ -176,12 +177,23 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
         </Accordion.Panel>
       </Accordion.Item>
 
-      <Accordion.Item value="shows">
+      <Accordion.Item value="shows" pr="md">
         <Accordion.Control icon={<TbMovie size={16} />}>
           <Text fw={600}>TV Shows</Text>
         </Accordion.Control>
         <Accordion.Panel>
-          {' '}
+          <NavLink
+            styles={(theme) => ({
+              label: {
+                fontSize: theme.fontSizes.md,
+              },
+            })}
+            onClick={toggleMobileNav}
+            pt={0}
+            pb="xs"
+            ml="xl"
+            label="Popular "
+          />
           <NavLink
             component={Link}
             href="/shows/top100"
@@ -195,18 +207,6 @@ export function MobileNavigation({ toggleMobileNav }: MobileNavigationProps) {
             pb="xs"
             ml="xl"
             label="Top 100"
-          />
-          <NavLink
-            styles={(theme) => ({
-              label: {
-                fontSize: theme.fontSizes.md,
-              },
-            })}
-            onClick={toggleMobileNav}
-            pt={0}
-            pb="xs"
-            ml="xl"
-            label="Popular "
           />
           <NavLink
             styles={(theme) => ({

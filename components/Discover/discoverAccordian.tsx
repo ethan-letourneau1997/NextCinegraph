@@ -32,7 +32,7 @@ export default function Discover({
 
   return (
     <>
-      <Box miw={desktop ? 250 : '90vw'} maw={desktop ? 250 : '90vw'} mx={desktop ? 'md' : 0}>
+      <Box miw={desktop ? 250 : '90vw'} maw={desktop ? 250 : '90vw'} mx={desktop ? 0 : 0}>
         {desktop !== undefined && (
           <Accordion
             variant="separated"

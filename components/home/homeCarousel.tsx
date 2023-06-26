@@ -15,29 +15,29 @@ export function HomeCarousel({ mediaItems, title }: HomeCarouselTypes) {
   const posterSettings = {
     swipeToSlide: true,
     infinite: false,
-    slidesToShow: 8,
-    slidesToScroll: 8,
+    slidesToShow: 7,
+    slidesToScroll: 7,
     variableWidth: false,
     responsive: [
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 7,
-          slidesToScroll: 7,
+          slidesToShow: 6,
+          slidesToScroll: 6,
         },
       },
       {
         breakpoint: 1184,
         settings: {
-          slidesToShow: 7,
-          slidesToScroll: 7,
+          slidesToShow: 6,
+          slidesToScroll: 6,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 6,
-          slidesToScroll: 6,
+          slidesToShow: 5,
+          slidesToScroll: 5,
         },
       },
       {
@@ -64,7 +64,7 @@ export function HomeCarousel({ mediaItems, title }: HomeCarouselTypes) {
       <Slider {...posterSettings}>
         {mediaItems.length > 4 &&
           mediaItems.map((item: any) => (
-            <Card px={5} py={0} bg="dark.9">
+            <Card px={8} py={0} bg="dark.9">
               <Anchor
                 component={Link}
                 href={`/${item.title ? 'movies' : 'shows'}/${item.id}/${encodeURIComponent(
@@ -74,13 +74,14 @@ export function HomeCarousel({ mediaItems, title }: HomeCarouselTypes) {
                 sx={{
                   '&:hover': {
                     opacity: !mobile ? 0.7 : 1,
+                    borderRadius: 4,
                   },
                 }}
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/w780${item.poster_path}`}
                   alt=""
-                  radius="xs"
+                  radius="sm"
                 />
               </Anchor>
             </Card>

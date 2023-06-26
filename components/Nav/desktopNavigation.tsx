@@ -71,27 +71,6 @@ export default function DesktopNavigation() {
           <NavLink
             fw={550}
             component={Link}
-            href="/movies/top100"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, .3)',
-                cursor: 'pointer',
-                color: theme.colors.gray[2],
-              },
-            }}
-            styles={() => ({
-              label: {
-                fontSize: theme.fontSizes.sm,
-                '&:hover': {
-                  color: theme.colors.gray[2],
-                },
-              },
-            })}
-            label="Top 100"
-          />
-          <NavLink
-            fw={550}
-            component={Link}
             href="/movies/popular"
             sx={{
               '&:hover': {
@@ -109,6 +88,27 @@ export default function DesktopNavigation() {
               },
             })}
             label="Popular "
+          />
+          <NavLink
+            fw={550}
+            component={Link}
+            href="/movies/top100"
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
+              label: {
+                fontSize: theme.fontSizes.sm,
+                '&:hover': {
+                  color: theme.colors.gray[2],
+                },
+              },
+            })}
+            label="Top 100"
           />
 
           <NavLink
@@ -223,27 +223,6 @@ export default function DesktopNavigation() {
           }}
         >
           <NavLink
-            component={Link}
-            href="/shows/top100"
-            fw={550}
-            sx={{
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, .3)',
-                cursor: 'pointer',
-                color: theme.colors.gray[2],
-              },
-            }}
-            styles={() => ({
-              label: {
-                fontSize: theme.fontSizes.sm,
-                '&:hover': {
-                  color: theme.colors.gray[2],
-                },
-              },
-            })}
-            label="Top 100"
-          />
-          <NavLink
             fw={550}
             component={Link}
             href="/shows/popular"
@@ -264,7 +243,27 @@ export default function DesktopNavigation() {
             })}
             label="Popular "
           />
-
+          <NavLink
+            component={Link}
+            href="/shows/top100"
+            fw={550}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, .3)',
+                cursor: 'pointer',
+                color: theme.colors.gray[2],
+              },
+            }}
+            styles={() => ({
+              label: {
+                fontSize: theme.fontSizes.sm,
+                '&:hover': {
+                  color: theme.colors.gray[2],
+                },
+              },
+            })}
+            label="Top 100"
+          />
           <NavLink
             fw={550}
             component={Link}

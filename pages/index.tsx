@@ -93,17 +93,9 @@ export default function HomePage() {
     ); // Render a loading indicator while the useEffect is running
   }
 
-  // const handlePlayerReady = (event: { target: { playVideo: () => void } }) => {
-  //   event.target.playVideo();
-  // };
-
   const handlePlayerReady = () => {
     setVisible(true);
   };
-
-  // if (YT.PlayerState.PLAYING === 1) {
-  //   console.log('state 1');
-  // }
 
   return (
     <Box
@@ -116,7 +108,7 @@ export default function HomePage() {
     >
       {trendingItems.length > 0 && (
         <>
-          <Container size="xl" mt={tablet ? 0 : 'xs'} px={tablet ? 0 : 'md'}>
+          <Container size="xl" mt={tablet ? 0 : 'lg'} px={tablet ? 0 : 'md'}>
             <Card bg="dark.9">
               <Card.Section bg="dark.9">
                 <BackgroundImage src="https://res.cloudinary.com/eletourneau/image/upload/v1687543862/thumb_2_hda8cv.webp">
@@ -182,8 +174,8 @@ export default function HomePage() {
                   mt="md"
                   size="md"
                   sx={() => ({
-                    backgroundColor: 'rgba(0, 0, 0, .05)',
-                    backdropFilter: 'saturate(180%) blur(20px)',
+                    backgroundColor: 'rgba(0, 0, 0, .02)',
+                    backdropFilter: 'saturate(180%) blur(10px)',
                   })}
                   onClick={() =>
                     scrollIntoView({
@@ -192,7 +184,7 @@ export default function HomePage() {
                   }
                   // variant="light"
                 >
-                  Get Started
+                  Discover Now
                 </Button>
               </Box>
             )}

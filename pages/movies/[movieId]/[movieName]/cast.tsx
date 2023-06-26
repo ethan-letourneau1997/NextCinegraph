@@ -36,10 +36,8 @@ export default function CastAndCrew() {
   return (
     <Box>
       {desktop && (
-        <Container size="xl">
-          <Breadcrumbs pl="sm" separator={<IconChevronRight size={16} />} ml="xl">
-            {items}
-          </Breadcrumbs>
+        <Container size="xl" pt="md">
+          <Breadcrumbs separator={<IconChevronRight size={16} />}>{items}</Breadcrumbs>
         </Container>
       )}
       <FullCastAndCrew mediaType="movie" />

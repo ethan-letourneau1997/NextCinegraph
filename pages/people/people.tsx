@@ -8,6 +8,7 @@ import {
   Text,
   Card,
   Image,
+  Overlay,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
@@ -32,17 +33,18 @@ export default function People() {
   }, []);
 
   return (
-    <Container size="lg">
+    <Container size="xl">
       <Title mt="xl" size="h2">
         Popular Stars
       </Title>
       <Grid columns={24} gutter="xl" mt="sm">
         {people.map((person) => (
-          <Grid.Col span={12} xs={8} sm={6} md={24 / 5} key={person.id}>
+          <Grid.Col span={12} xs={8} sm={6} md={24 / 5} lg={4} key={person.id}>
             <Card shadow="md" h="100%">
               <Card.Section>
                 <Anchor component={Link} href={`/people/${person.id}/${person.name}`}>
                   <AspectRatio ratio={1 / 1} pos="relative">
+                    <Overlay opacity={0.15} />
                     <Skeleton visible />
                     <Image
                       src={
@@ -56,7 +58,9 @@ export default function People() {
                 </Anchor>
               </Card.Section>
               <Card.Section px="xs" pb="xs" pt={5}>
-                <Title size="h5">{person.name}</Title>
+                <Anchor c="gray.2" component={Link} href={`/people/${person.id}/${person.name}`}>
+                  <Title size="h5">{person.name}</Title>
+                </Anchor>
                 <Text fz="sm" truncate>
                   {person.known_for?.map((known_for_item) => (
                     <>{known_for_item.name || known_for_item.title}, </>

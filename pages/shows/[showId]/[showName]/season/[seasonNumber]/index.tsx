@@ -84,41 +84,40 @@ export default function SeasonLayout() {
 
   return (
     <>
-      {tablet ? (
-        <Flex
-          sx={{
-            position: tablet ? 'static' : 'absolute',
-          }}
-          bg={tablet ? 'dark.7' : 'transparent'}
-          p="xs"
-          pl={30}
-          pt={tablet ? 'xs' : 0}
-        >
-          <Anchor
-            sx={(theme) => ({
-              display: 'flex',
-              alignItems: 'center',
-              color: theme.colors.gray[5],
-            })}
-            component={Link}
-            href={{
-              pathname: `/shows/${showId}/${
-                typeof showName === 'string' ? encodeURIComponent(showName) : ''
-              }/seasons`,
+      <Container size="xl" bg={tablet ? 'dark.7' : 'transparent'}>
+        {tablet ? (
+          <Flex
+            sx={{
+              position: tablet ? 'static' : 'absolute',
             }}
+            p="xs"
+            pl={30}
+            pt={tablet ? 'xs' : 0}
           >
-            <FaChevronLeft size={tablet ? 12 : 14} />
-            <Space w={3} />
-            <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
-          </Anchor>
-        </Flex>
-      ) : (
-        <Container size="xl">
-          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
+            <Anchor
+              sx={(theme) => ({
+                display: 'flex',
+                alignItems: 'center',
+                color: theme.colors.gray[5],
+              })}
+              component={Link}
+              href={{
+                pathname: `/shows/${showId}/${
+                  typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                }/seasons`,
+              }}
+            >
+              <FaChevronLeft size={tablet ? 12 : 14} />
+              <Space w={3} />
+              <Text fz={mobile ? 'sm' : 'md'}>Back to Seasons</Text>
+            </Anchor>
+          </Flex>
+        ) : (
+          <Breadcrumbs separator={<IconChevronRight size={16} />} mt="md">
             {items}
           </Breadcrumbs>
-        </Container>
-      )}
+        )}
+      </Container>
       <Container size="md">
         <Flex justify="space-between" mb="xl" mt="sm">
           <Box miw={30}>

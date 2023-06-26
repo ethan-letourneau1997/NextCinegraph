@@ -18,7 +18,6 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
   const tablet = useMediaQuery('(max-width: 64em)');
 
   const [mediaDetails, setMediaDetails] = useState<MediaItemType | null>(null);
-  console.log(mediaDetails);
 
   useEffect(() => {
     if (!mediaId) {
@@ -42,11 +41,20 @@ export default function MediaDetailsLayout({ mediaType, mediaId }: MediaDetailsL
 
   return (
     <Box>
-      <Container display={tablet ? 'none' : 'block'} size="lg">
-        <BannerImage aspectRatio={16 / 7} mediaBackdrop={mediaDetails.backdrop_path} />
+      <Container display={tablet ? 'none' : 'block'} size="xl" pos="relative">
+        <BannerImage aspectRatio={16 / 5} mediaBackdrop={mediaDetails.backdrop_path} />
       </Container>
 
-      <Container pos="relative" top={tablet ? 0 : -50} size="lg" py="xl" px={tablet ? 40 : 50}>
+      <Container
+        pos="relative"
+        top={tablet ? 0 : -45}
+        size="xl"
+        py="xl"
+        px={tablet ? 40 : 50}
+        sx={{
+          zIndex: 700,
+        }}
+      >
         <LetterBoxd mediaItem={mediaDetails} mediaType={mediaType} />
       </Container>
     </Box>

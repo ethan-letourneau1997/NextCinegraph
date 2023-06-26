@@ -64,7 +64,6 @@ export default function Episode() {
             currentEpisodeNumber
           );
           setEpisodeDetails(episodeData);
-          console.log(episodeData);
         }
 
         //* Fetch season details
@@ -186,14 +185,14 @@ export default function Episode() {
   ));
 
   return (
-    <Container fluid p={tablet ? 0 : ''}>
-      <Box>
+    <>
+      {/* <Container size="xl" pt={tablet ? 0 : ''}> */}
+      <Container size="xl" pt={tablet ? 0 : ''} bg={tablet ? 'dark.7' : 'transparent'}>
         {tablet ? (
           <Flex
             sx={{
               position: tablet ? 'static' : 'absolute',
             }}
-            bg={tablet ? 'dark.7' : 'transparent'}
             p="xs"
             pl={30}
             pt={tablet ? 'xs' : 0}
@@ -217,13 +216,9 @@ export default function Episode() {
             </Anchor>
           </Flex>
         ) : (
-          <Container size="xl">
-            <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl">
-              {items}
-            </Breadcrumbs>
-          </Container>
+          <Breadcrumbs separator={<IconChevronRight size={16} />}>{items}</Breadcrumbs>
         )}
-      </Box>
+      </Container>
 
       <Container pos="relative" p={0}>
         <Flex justify="space-between" py="xs" px="md">
@@ -390,6 +385,6 @@ export default function Episode() {
           <p>Loading episode details...</p>
         )}
       </Container>
-    </Container>
+    </>
   );
 }

@@ -14,7 +14,7 @@ import { FaSearch } from 'react-icons/fa';
 import { useDisclosure, useElementSize, useMediaQuery, useScrollLock } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Autocomplete from '../Autocomplete/autocomplete';
+import Autocomplete from '../Autocomplete/oldAutocomplete';
 import DesktopNavigation from './desktopNavigation';
 import { MobileNavigation } from './mobileNavigation';
 

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Container } from '@mantine/core';
 import MediaGrid from '../../components/mediaGrid';
 
 import { fetchTrending } from '../api/mediaDetailsAPI';
@@ -21,9 +20,5 @@ export default function Trending() {
       });
   }, []);
 
-  return (
-    <Container size="xl">
-      <MediaGrid title="Trending Movies" items={movies} />
-    </Container>
-  );
+  return <MediaGrid title="Trending Movies" items={movies} />;
 }

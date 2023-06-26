@@ -85,42 +85,41 @@ export default function ShowSeasons() {
 
   return (
     <>
-      {tablet ? (
-        <Flex
-          sx={{
-            position: tablet ? 'static' : 'absolute',
-          }}
-          bg={tablet ? 'dark.7' : 'transparent'}
-          // bg="dark.7"
-          p="xs"
-          pl={30}
-          pt={tablet ? 'xs' : 0}
-        >
-          <Anchor
-            sx={(theme) => ({
-              display: 'flex',
-              alignItems: 'center',
-              color: theme.colors.gray[5],
-            })}
-            component={Link}
-            href={{
-              pathname: `/shows/${showId}/${
-                typeof showName === 'string' ? encodeURIComponent(showName) : ''
-              }`,
+      <Container size="xl" bg={tablet ? 'dark.7' : 'transparent'}>
+        {tablet ? (
+          <Flex
+            sx={{
+              position: tablet ? 'static' : 'absolute',
             }}
+            // bg="dark.7"
+            p="xs"
+            pl={30}
+            pt={tablet ? 'xs' : 0}
           >
-            <FaChevronLeft size={tablet ? 12 : 14} />
-            <Space w={3} />
-            <Text fz={mobile ? 'sm' : 'md'}>{showName}</Text>
-          </Anchor>
-        </Flex>
-      ) : (
-        <Container size="xl">
-          <Breadcrumbs separator={<IconChevronRight size={16} />} ml="xl" mt="xl">
+            <Anchor
+              sx={(theme) => ({
+                display: 'flex',
+                alignItems: 'center',
+                color: theme.colors.gray[5],
+              })}
+              component={Link}
+              href={{
+                pathname: `/shows/${showId}/${
+                  typeof showName === 'string' ? encodeURIComponent(showName) : ''
+                }`,
+              }}
+            >
+              <FaChevronLeft size={tablet ? 12 : 14} />
+              <Space w={3} />
+              <Text fz={mobile ? 'sm' : 'md'}>{showName}</Text>
+            </Anchor>
+          </Flex>
+        ) : (
+          <Breadcrumbs mt="xl" separator={<IconChevronRight size={16} />}>
             {items}
           </Breadcrumbs>
-        </Container>
-      )}
+        )}
+      </Container>
 
       <Container size="md">
         <Title align="center" size="h2" mb="xl" mt="md">

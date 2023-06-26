@@ -29,6 +29,7 @@ import { formatReleaseDate } from '../../../../components/Discover/discoverGrid'
 import { TitleLink } from '../../../../components/BiteSized/titleLink';
 import { PersonType, KnownFor } from '../../../../Types/personTypes';
 import { PersonImages } from '../../../../components/Person/personImages';
+import { PersonSlider } from '../../../../components/Person/personSlider';
 
 export default function MediaItem() {
   // responsive styles
@@ -140,7 +141,7 @@ export default function MediaItem() {
   departmentsArray.sort();
 
   // Initialize the known_for array
-  const known_for_credits: KnownFor[] = [];
+  let known_for_credits: KnownFor[] = [];
 
   // Check if known_for is 'acting'
   if (mediaDetails && mediaDetails.known_for_department === 'Acting') {
@@ -158,6 +159,9 @@ export default function MediaItem() {
   }
 
   known_for_credits.sort((a, b) => b.popularity - a.popularity);
+  known_for_credits = known_for_credits.filter(
+    (obj, index, self) => index === self.findIndex((o) => o.id === obj.id)
+  );
 
   return (
     <Container py="xl" px="xl" pos="relative">
@@ -235,8 +239,11 @@ export default function MediaItem() {
               </Spoiler>
             </Box>
             <Box mt="xl">
-              <TitleLink title="Known For" bottomSpace />
-              <ScrollArea offsetScrollbars>
+              {/* <TitleLink title="Known For" bottomSpace /> */}
+              {known_for_credits && known_for_credits.length > 5 && (
+                <PersonSlider mediaCredits={known_for_credits} title="Known For" />
+              )}
+              {/* <ScrollArea offsetScrollbars>
                 <Flex gap="sm">
                   {known_for_credits &&
                     known_for_credits.slice(0, 10).map((known_for_item) => (
@@ -275,7 +282,7 @@ export default function MediaItem() {
                       </Box>
                     ))}
                 </Flex>
-              </ScrollArea>
+              </ScrollArea> */}
             </Box>
             <Box mt="xl" mih={200}>
               <TitleLink title="Credits" bottomSpace />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Container } from '@mantine/core';
 import { useStore } from '../../store/store';
 import DiscoverLayout from '../../components/Discover/discoverLayout';
 
@@ -27,9 +26,5 @@ export default function UpcomingMovies() {
     return <div>Loading...</div>; // Render a loading indicator while the useEffect is running
   }
 
-  return (
-    <Container fluid>
-      <DiscoverLayout type="movie" title="Upcoming Movies" />
-    </Container>
-  );
+  return <DiscoverLayout type="movie" title="Upcoming Movies" />;
 }
