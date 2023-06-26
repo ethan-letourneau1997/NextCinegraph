@@ -192,7 +192,6 @@ export default function Autocomplete() {
                             component={Link}
                             href={`/people/${item.id}/${encodeURIComponent(item.name || '')}`}
                             underline={false}
-                            // onClick={closeNav}
                           >
                             <Flex
                               py="xs"
@@ -259,7 +258,6 @@ export default function Autocomplete() {
                                 ? encodeURIComponent(item.title)
                                 : encodeURIComponent(item.name || '')
                             }`}
-                            // onClick={closeNav}
                             underline={false}
                           >
                             <Flex
@@ -389,7 +387,6 @@ export default function Autocomplete() {
                               component={Link}
                               href={`/people/${item.id}/${encodeURIComponent(item.name || '')}`}
                               underline={false}
-                              // onClick={closeNav}
                             >
                               <Flex
                                 py="xs"
@@ -457,7 +454,6 @@ export default function Autocomplete() {
                                   ? encodeURIComponent(item.title)
                                   : encodeURIComponent(item.name || '')
                               }`}
-                              // onClick={closeNav}
                               underline={false}
                             >
                               <Flex
